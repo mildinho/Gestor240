@@ -61,7 +61,10 @@ namespace Infra.Data.Repositories
             return await _dbSet.FindAsync(Id);
         }
 
-
+        public virtual IQueryable<Tabela> ListarTodos()
+        {
+            return _context.Set<Tabela>();
+        }
 
     }
 }

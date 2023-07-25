@@ -10,7 +10,7 @@ namespace Dominio.Interfaces
     public interface IBancoRepository : IGenericoRepository<Banco>
     {
 
-
+        public string ListarTodosAsync() => $"teste";
 
     }
 }

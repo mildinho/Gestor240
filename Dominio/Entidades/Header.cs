@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
-    internal class Header
+    public class Header : ModelBase
     {
+
     }
 }

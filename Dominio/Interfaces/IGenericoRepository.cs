@@ -16,5 +16,7 @@ namespace Dominio.Interfaces
         Task DeletarAsync(int Id);
 
         Task<Tabela> SelecionarPorCodigoAsync(int Id);
+
+        IQueryable<Tabela> ListarTodos();
     }
 }

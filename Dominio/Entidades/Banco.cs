@@ -16,7 +16,7 @@ namespace Dominio.Entidades
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Range(1, 999)]
         [StringLength(3)]
-        public int Codigo { get; set; }
+        public int Codigo { get; set; } 
 
 
         [Display(Name = "Nome do Banco")]
