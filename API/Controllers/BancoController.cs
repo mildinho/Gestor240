@@ -8,18 +8,16 @@ namespace API.Controllers
     [Route("v1/[controller]")]
     public class BancoController : Controller
     {
-        private readonly IUnitOfWork _IOW;
+        private readonly IUnitOfWork _UOW;
         public BancoController(IUnitOfWork unitOfWork)
         {
-            _IOW = unitOfWork;
+            _UOW = unitOfWork;
         }
 
         [HttpGet]
         public async Task<ActionResult<Banco>> Get(string Codigo)
         {
-            var Objeto = await _IOW.Banco.PesquisarPorCodigoAsync(Codigo);
-
-            if (Objeto == null) return NotFound();
+            var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
 
             return Ok(Objeto);
         }
@@ -28,25 +26,36 @@ namespace API.Controllers
         [Route("GetAll")]
         public async Task<ActionResult<Banco>> GetAll()
         {
-            var Objeto = _IOW.Banco.ListarTodos();
-
-            if (Objeto == null) return NotFound();
+            var Objeto = _UOW.Banco.ListarTodos();
 
             return Ok(Objeto);
         }
 
-    
 
 
-    [HttpPost]
+
+        [HttpPost]
         public async Task<ActionResult<Banco>> Post(Banco tabela)
         {
-            await _IOW.Banco.InserirAsync(tabela);
 
-            await _IOW.SaveAsync();
+            if (ModelState.IsValid)
+            {
+                var Objeto = await _UOW.Banco.InserirAsync(tabela);
 
+                await _UOW.SaveAsync();
+                return Ok(Objeto);
 
-            return Ok();
+            }
+            else
+            {
+                var errors = string.Join(" | ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+
+                return BadRequest(errors);
+
+            }
+
         }
 
     }

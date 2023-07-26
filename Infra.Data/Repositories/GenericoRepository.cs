@@ -22,9 +22,10 @@ namespace Infra.Data.Repositories
             _dbSet = context.Set<Tabela>();
         }
 
-        public virtual async Task InserirAsync(Tabela tabela)
+        public virtual async Task<Tabela> InserirAsync(Tabela tabela)
         {
             await _dbSet.AddAsync(tabela);
+            return tabela;
         }
 
 

@@ -13,7 +13,7 @@ namespace Dominio.Entidades
     /*
      * G028 -> Do Layout FebraBan 
      */
-    [Index(nameof(Codigo))]
+    [Index(nameof(Codigo), IsUnique = true)]
     public class TipoOperacao : ModelBase
     {
 

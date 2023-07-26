@@ -15,7 +15,19 @@ namespace Infra.IoC
     {
         public static IServiceCollection AddInfraStructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+            
+            bool Casa = false;
+            ServerVersion serverVersion ;
+            if (Casa)
+            {
+                serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+            }
+            else
+            {
+                serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+            }
+
+
 
             services.AddDbContext<DBContexto>(options =>
                     options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,

@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 namespace Dominio.Entidades
 {
 
-    [Index(nameof(Codigo))]
+    [Index(nameof(Codigo),IsUnique = true)]
     
     public class Banco : ModelBase
     {
+
         [Display(Name = "Banco")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [Range(1, 999)]
+        [Range(1, 999,ErrorMessage = "Valor Deve Entre 1 ~ 999")]
         [StringLength(3)]
         public string Codigo { get; set; } = String.Empty;
 

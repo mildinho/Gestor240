@@ -9,7 +9,7 @@ namespace Dominio.Interfaces
     public interface IGenericoRepository<Tabela> where Tabela : class
     {
 
-        Task InserirAsync(Tabela tabela);
+        Task<Tabela> InserirAsync(Tabela tabela);
 
         Task AtualizarAsync(Tabela tabela);
 
