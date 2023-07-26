@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Dominio.Entidades
     /*
      * G025 -> Do Layout FebraBan 
      */
+    [Index(nameof(Codigo))]
     public class TipoServico : ModelBase
     {
 

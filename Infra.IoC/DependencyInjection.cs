@@ -15,11 +15,11 @@ namespace Infra.IoC
     {
         public static IServiceCollection AddInfraStructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+            var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
 
             services.AddDbContext<DBContexto>(options =>
                     options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,
-                    builder => builder.MigrationsAssembly("Quiosque")));
+                    builder => builder.MigrationsAssembly("API")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

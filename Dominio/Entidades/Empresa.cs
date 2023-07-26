@@ -7,9 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dominio.Entidades
 {
+
+    [Index(nameof(CNPJ_CPF))]
     public class Empresa : ModelBase
     {
 
@@ -55,7 +58,7 @@ namespace Dominio.Entidades
         [Display(Name = "UF")]
         [ForeignKey("UF")]
         public int UFId { get; set; }
-        public virtual UF UF { get; set; }
+        public virtual UF? UF { get; set; }
 
         public TipoInscricaoEmpresa TipoInscricao { get; set; }
 

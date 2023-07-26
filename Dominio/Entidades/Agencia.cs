@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Dominio.Entidades
 {
+  
+   
     public class Agencia : ModelBase
     {
 
@@ -17,7 +14,7 @@ namespace Dominio.Entidades
         [Display(Name = "UF")]
         [ForeignKey("Banco")]
         public int BancoId { get; set; }
-        public virtual Banco Banco { get; set; }
+        public virtual Banco? Banco { get; set; }
 
 
 
@@ -52,6 +49,9 @@ namespace Dominio.Entidades
         [StringLength(20)]
         public string NumeroConvenio { get; set; } = String.Empty;
 
-
+        private static string[] nameof(string numeroAgencia, string digitoAgencia)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

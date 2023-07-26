@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dominio.Entidades
 {
+
+    [Index(nameof(Sigla))]
     public class UF : ModelBase
     {
         [Display(Name = "UF")]

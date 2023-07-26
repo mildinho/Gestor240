@@ -1,6 +1,7 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces;
 using Infra.Data.Contexto;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,9 @@ namespace Infra.Data.Repositories
 
         }
 
-
-
-      
-
-
-
+        public async Task<IEnumerable<Banco>> PesquisarPorCodigoAsync(string Codigo)
+        {
+          return await _context.Banco.Where(x => x.Codigo == Codigo).ToListAsync();
+        }
     }
 }

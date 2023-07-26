@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Dominio.Entidades
 {
-   
+
+    [Index(nameof(Codigo))]
+    
     public class Banco : ModelBase
     {
         [Display(Name = "Banco")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Range(1, 999)]
         [StringLength(3)]
-        public int Codigo { get; set; } 
+        public string Codigo { get; set; } = String.Empty;
 
 
         [Display(Name = "Nome do Banco")]

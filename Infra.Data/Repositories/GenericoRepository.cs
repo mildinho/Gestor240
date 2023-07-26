@@ -42,7 +42,7 @@ namespace Infra.Data.Repositories
         {
             try
             {
-                var obj = await SelecionarPorCodigoAsync(Id);
+                var obj = await PesquisarPorIdAsync(Id);
                 if (obj != null)
                 {
                     _dbSet.Remove(obj);
@@ -56,7 +56,7 @@ namespace Infra.Data.Repositories
 
 
 
-        public virtual async Task<Tabela> SelecionarPorCodigoAsync(int Id)
+        public virtual async Task<Tabela> PesquisarPorIdAsync(int Id)
         {
             return await _dbSet.FindAsync(Id);
         }
