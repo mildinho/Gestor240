@@ -1,4 +1,5 @@
-﻿using Dominio.Interfaces;
+﻿using Dominio.Entidades;
+using Dominio.Interfaces;
 using Infra.Data.Contexto;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,7 +17,9 @@ namespace Infra.Data.Repositories
         private readonly IConfiguration _configuration;
 
         public IBancoRepository Banco { get; private set; }
-       
+        public ITipoOperacaoRepository TipoOperacao { get; private set; }
+        public ITipoServicoRepository TipoServico { get; private set; }
+
 
 
         public UnitOfWork(DBContexto context, IConfiguration configuration)
@@ -30,7 +33,9 @@ namespace Infra.Data.Repositories
         private void CriaInstancia()
         {
             Banco = new BancoRepository(_context, _configuration);
-           
+            TipoOperacao = new TipoOperacaoRepository(_context, _configuration);
+            TipoServico = new TipoServicoRepository(_context, _configuration);
+
         }
 
 

@@ -11,21 +11,21 @@ using System.Threading.Tasks;
 
 namespace Infra.Data.Repositories
 {
-    public class BancoRepository : GenericoRepository<Banco>, IBancoRepository
+    public class TipoOperacaoRepository : GenericoRepository<TipoOperacao>, ITipoOperacaoRepository
     {
         private readonly IConfiguration _conf;
         private readonly DBContexto _context;
 
-        public BancoRepository(DBContexto context, IConfiguration configuration) : base(context)
+        public TipoOperacaoRepository(DBContexto context, IConfiguration configuration) : base(context)
         {
             _context = context;
             _conf = configuration;
 
         }
 
-        public async Task<IEnumerable<Banco>> PesquisarPorCodigoAsync(int Codigo)
+        public async Task<IEnumerable<TipoOperacao>> PesquisarPorCodigoAsync(string Codigo)
         {
-            return await _context.Banco.Where(x => x.Codigo == Codigo).ToListAsync();
+            return await _context.TipoOperacao.Where(x => x.Codigo == Codigo).ToListAsync();
         }
     }
 }

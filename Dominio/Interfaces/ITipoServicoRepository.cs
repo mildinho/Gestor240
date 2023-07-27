@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Dominio.Interfaces
 {
-    public interface IBancoRepository : IGenericoRepository<Banco>
+    public interface ITipoServicoRepository : IGenericoRepository<TipoServico>
     {
 
-        Task<IEnumerable<Banco>> PesquisarPorCodigoAsync(int Codigo);
+        Task<IEnumerable<TipoServico>> PesquisarPorCodigoAsync(string Codigo);
 
     }
 }

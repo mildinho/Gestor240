@@ -6,27 +6,27 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    public class BancoController : Controller
+    public class TipoOperacaoController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public BancoController(IUnitOfWork unitOfWork)
+        public TipoOperacaoController(IUnitOfWork unitOfWork)
         {
             _UOW = unitOfWork;
         }
 
         [HttpGet("{Codigo}")]
-        public async Task<ActionResult<Banco>> Get(int Codigo)
+        public async Task<ActionResult<TipoOperacao>> Get(string Codigo)
         {
-            var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
+            var Objeto = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(Codigo);
 
             return Ok(Objeto);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<ActionResult<Banco>> GetAll()
+        public async Task<ActionResult<TipoOperacao>> GetAll()
         {
-            var Objeto = _UOW.Banco.ListarTodos();
+            var Objeto = _UOW.TipoOperacao.ListarTodos();
 
             return Ok(Objeto);
         }
@@ -35,17 +35,17 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Banco>> Post(Banco tabela)
+        public async Task<ActionResult<TipoOperacao>> Post(TipoOperacao tabela)
         {
-            IEnumerable<Banco> BancoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
-            if (BancoLista.Any())
+            IEnumerable<TipoOperacao> TipoOperacaoLista = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(tabela.Codigo);
+            if (TipoOperacaoLista.Any())
             {
-                return BadRequest("O código deste Banco já existe cadastrado!");
+                return BadRequest("O código deste Tipo de Operacao já existe cadastrado!");
             }
 
             if (ModelState.IsValid)
             {
-                Banco Objeto = await _UOW.Banco.InserirAsync(tabela);
+                TipoOperacao Objeto = await _UOW.TipoOperacao.InserirAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -56,7 +56,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Banco>> Patch(int Id, Banco tabela)
+        public async Task<ActionResult<TipoOperacao>> Patch(int Id, TipoOperacao tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest("O para ID está diferente do ID do Modelo!");
@@ -65,7 +65,7 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.Banco.AtualizarAsync(tabela);
+                var Objeto = await _UOW.TipoOperacao.AtualizarAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -79,7 +79,7 @@ namespace API.Controllers
         public async Task<ActionResult<int>> Delete(int Id)
         {
 
-            await _UOW.Banco.DeletarAsync(Id);
+            await _UOW.TipoOperacao.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
             return Ok(_removidos);

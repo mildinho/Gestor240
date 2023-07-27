@@ -12,8 +12,7 @@ namespace Dominio.Entidades
         [Display(Name = "Banco")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Range(1, 999,ErrorMessage = "Valor Deve Entre 1 ~ 999")]
-        [StringLength(3)]
-        public string Codigo { get; set; } = String.Empty;
+        public int Codigo { get; set; } 
 
 
         [Display(Name = "Nome do Banco")]
@@ -27,7 +26,7 @@ namespace Dominio.Entidades
         public string ISPB { get; set; } = String.Empty;
 
 
-
+          
 
     }
 }

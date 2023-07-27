@@ -4,6 +4,7 @@ using Infra.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 /*
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
@@ -15,9 +16,9 @@ namespace Infra.IoC
     {
         public static IServiceCollection AddInfraStructure(this IServiceCollection services, IConfiguration configuration)
         {
-            
+
             bool Casa = false;
-            ServerVersion serverVersion ;
+            ServerVersion serverVersion;
             if (Casa)
             {
                 serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
@@ -30,8 +31,12 @@ namespace Infra.IoC
 
 
             services.AddDbContext<DBContexto>(options =>
-                    options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,
-                    builder => builder.MigrationsAssembly("API")));
+            {
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,
+                builder => builder.MigrationsAssembly("API"));
+            }
+            );
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

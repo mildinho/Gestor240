@@ -24,17 +24,42 @@ namespace Infra.Data.Repositories
 
         public virtual async Task<Tabela> InserirAsync(Tabela tabela)
         {
+            _context.Entry<Tabela>(tabela).Property("Id").CurrentValue = 0;
+            _context.Entry<Tabela>(tabela).Property("Data_Alteracao").CurrentValue = DateTime.Now;
+            _context.Entry<Tabela>(tabela).Property("Data_Cadastro").CurrentValue = DateTime.Now;
+
             await _dbSet.AddAsync(tabela);
             return tabela;
         }
 
 
 
-        public virtual async Task AtualizarAsync(Tabela tabela)
+        public virtual async Task<Tabela> AtualizarAsync(Tabela tabela)
         {
-            _context.Entry<Tabela>(tabela).State = EntityState.Modified;
-            _context.Entry<Tabela>(tabela).Property("Data_Cadastro").IsModified = false;
+            var _Id = _context.Entry<Tabela>(tabela).Property("Id").CurrentValue;
+            
+            try
+            {
+                
+                var obj = await PesquisarPorIdAsync((int) _Id);
+                if (obj != null)
+                {
+                    _context.Entry<Tabela>(tabela).Property("Data_Cadastro").CurrentValue =
+                    _context.Entry<Tabela>(obj).Property("Data_Cadastro").CurrentValue;
+                    _dbSet.Update(tabela);
+                }
+            }
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException(e.Message);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+
+            return tabela;
         }
 
 
@@ -52,6 +77,10 @@ namespace Infra.Data.Repositories
             catch (DbUpdateException e)
             {
                 throw new IntegrityException(e.Message);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
 

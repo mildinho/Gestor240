@@ -11,7 +11,7 @@ namespace Dominio.Interfaces
 
         Task<Tabela> InserirAsync(Tabela tabela);
 
-        Task AtualizarAsync(Tabela tabela);
+        Task<Tabela> AtualizarAsync(Tabela tabela);
 
         Task DeletarAsync(int Id);
 

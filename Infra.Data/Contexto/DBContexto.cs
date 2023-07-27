@@ -10,10 +10,11 @@ namespace Infra.Data.Contexto
         public DBContexto(DbContextOptions<DBContexto> options)
            : base(options)
         {
+
         }
 
-
-
         public DbSet<Banco> Banco { get; set; }
+        public DbSet<TipoOperacao> TipoOperacao { get; set; }
+        public DbSet<TipoServico> TipoServico { get; set; }
     }
 }
