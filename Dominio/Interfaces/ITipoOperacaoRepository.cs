@@ -12,6 +12,7 @@ namespace Dominio.Interfaces
     {
 
         Task<IEnumerable<TipoOperacao>> PesquisarPorCodigoAsync(string Codigo);
+        Task<IEnumerable<TipoOperacao>> PesquisarPorDescricaoAsync(string Descricao);
 
     }
 }

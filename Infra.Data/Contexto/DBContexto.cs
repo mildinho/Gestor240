@@ -16,5 +16,9 @@ namespace Infra.Data.Contexto
         public DbSet<Banco> Banco { get; set; }
         public DbSet<TipoOperacao> TipoOperacao { get; set; }
         public DbSet<TipoServico> TipoServico { get; set; }
+        public DbSet<UF> UF { get; set; }
+
+
     }
+
 }

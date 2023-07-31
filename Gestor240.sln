@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra.IoC", "Infra.IoC\Infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Dominio\Dominio.csproj", "{065EED84-142B-4D77-8E01-0BA044897EA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{F5C07763-9C8D-4F83-AB88-A42F0E36C3B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{F5C07763-9C8D-4F83-AB88-A42F0E36C3B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDD", "TDD\TDD.csproj", "{2241B509-331D-4F66-801F-1A953E7B3E5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F5C07763-9C8D-4F83-AB88-A42F0E36C3B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5C07763-9C8D-4F83-AB88-A42F0E36C3B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5C07763-9C8D-4F83-AB88-A42F0E36C3B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2241B509-331D-4F66-801F-1A953E7B3E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2241B509-331D-4F66-801F-1A953E7B3E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2241B509-331D-4F66-801F-1A953E7B3E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2241B509-331D-4F66-801F-1A953E7B3E5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

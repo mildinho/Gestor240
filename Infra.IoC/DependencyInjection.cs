@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Runtime.CompilerServices;
 
 /*
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
@@ -35,8 +36,10 @@ namespace Infra.IoC
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,
                 builder => builder.MigrationsAssembly("API"));
+
             }
             );
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

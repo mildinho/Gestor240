@@ -6,7 +6,7 @@
         IBancoRepository Banco { get; }
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }
-
+        IUFRepository UF { get; }
 
 
         Task<int> SaveAsync();

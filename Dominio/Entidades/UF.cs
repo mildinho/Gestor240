@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 namespace Dominio.Entidades
 {
 
-    [Index(nameof(Sigla))]
+    [Index(nameof(Sigla), IsUnique = true)]
+    [Index(nameof(Descricao))]
     public class UF : ModelBase
     {
         [Display(Name = "UF")]

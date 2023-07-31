@@ -14,6 +14,7 @@ namespace Dominio.Entidades
      * G028 -> Do Layout FebraBan 
      */
     [Index(nameof(Codigo), IsUnique = true)]
+    [Index(nameof(Descricao))]
     public class TipoOperacao : ModelBase
     {
 

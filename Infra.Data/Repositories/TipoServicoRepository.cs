@@ -27,5 +27,11 @@ namespace Infra.Data.Repositories
         {
             return await _context.TipoServico.Where(x => x.Codigo == Codigo).ToListAsync();
         }
+
+        public async Task<IEnumerable<TipoServico>> PesquisarPorDescricaoAsync(string Descricao)
+        {
+            return await _context.TipoServico.Where(x => x.Descricao.ToLower().Contains(Descricao.ToLower())).ToListAsync();
+        }
+
     }
 }

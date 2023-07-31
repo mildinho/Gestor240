@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Infra.Data.Repositories
 {
@@ -15,10 +16,22 @@ namespace Infra.Data.Repositories
     {
         private readonly DBContexto _context;
         private readonly IConfiguration _configuration;
+        private TransactionScope transaction;
+
+        public void StartTransaction()
+        {
+            this.transaction = new TransactionScope();
+        }
+
+        public void CommitTransaction()
+        {
+            this.transaction.Complete();
+        }
 
         public IBancoRepository Banco { get; private set; }
         public ITipoOperacaoRepository TipoOperacao { get; private set; }
         public ITipoServicoRepository TipoServico { get; private set; }
+        public IUFRepository UF { get; private set; }
 
 
 
@@ -35,6 +48,7 @@ namespace Infra.Data.Repositories
             Banco = new BancoRepository(_context, _configuration);
             TipoOperacao = new TipoOperacaoRepository(_context, _configuration);
             TipoServico = new TipoServicoRepository(_context, _configuration);
+            UF = new UFRepository(_context, _configuration);
 
         }
 
