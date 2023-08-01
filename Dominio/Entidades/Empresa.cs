@@ -1,13 +1,6 @@
-﻿using Dominio.Biblioteca.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio.Entidades
 {
@@ -60,7 +53,13 @@ namespace Dominio.Entidades
         public int UFId { get; set; }
         public virtual UF? UF { get; set; }
 
-        public TipoInscricaoEmpresa TipoInscricao { get; set; }
+
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "Tipo de Inscrição")]
+        [ForeignKey("TipoInscricaoEmpresa")]
+        public int TipoInscricaoEmpresaId { get; set; }
+        public virtual TipoInscricaoEmpresa? TipoInscricaoEmpresa { get; set; }
 
     }
 }

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
-    public class Trailer
+    public class HeaderLote
     {
-
     }
 }

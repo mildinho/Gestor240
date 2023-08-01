@@ -1,12 +1,6 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces;
 using Infra.Data.Contexto;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace Infra.Data.Repositories
@@ -32,7 +26,8 @@ namespace Infra.Data.Repositories
         public ITipoServicoRepository TipoServico { get; private set; }
         public IUFRepository UF { get; private set; }
         public IEmpresaRepository Empresa { get; private set; }
-
+        public IFormaLancamentoRepository FormaLancamento { get; private set; }
+        public ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; private set; }
 
 
         public UnitOfWork(DBContexto context)
@@ -51,6 +46,9 @@ namespace Infra.Data.Repositories
             TipoServico = new TipoServicoRepository(_context);
             UF = new UFRepository(_context);
             Empresa = new EmpresaRepository(_context);
+            FormaLancamento = new FormaLancamentoRepository(_context);
+            TipoInscricaoEmpresa = new TipoInscricaoEmpresaRepository(_context);
+
 
         }
 

@@ -18,6 +18,8 @@ namespace Infra.Data.Contexto
         public DbSet<TipoServico> TipoServico { get; set; }
         public DbSet<UF> UF { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
+        public DbSet<FormaLancamento> FormaLancamento { get; set; }
+        public DbSet<TipoInscricaoEmpresa> TipoInscricaoEmpresa { get; set; }
 
     }
 

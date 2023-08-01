@@ -8,6 +8,8 @@
         ITipoServicoRepository TipoServico { get; }
         IUFRepository UF { get; }
         IEmpresaRepository Empresa { get; }
+        IFormaLancamentoRepository FormaLancamento { get; }
+        ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; }
 
 
         Task<int> SaveAsync();

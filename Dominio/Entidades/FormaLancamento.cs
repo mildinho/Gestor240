@@ -14,6 +14,7 @@ namespace Dominio.Entidades
      * G029 -> Do Layout FebraBan 
      */
     [Index(nameof(Codigo), IsUnique = true)]
+    [Index(nameof(Descricao))]
     public class FormaLancamento : ModelBase
     {
 

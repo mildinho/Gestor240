@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
-    public class Header : ModelBase
+    public class TrailerLote
     {
 
     }

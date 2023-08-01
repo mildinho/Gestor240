@@ -16,6 +16,72 @@ namespace Infra.Data.Contexto
 
             dbContext.Database.EnsureCreated();
 
+            if (!dbContext.TipoInscricaoEmpresa.Any())
+            {
+                var registros = new TipoInscricaoEmpresa[]
+                {
+                    new TipoInscricaoEmpresa{Codigo = 0, Descricao = "Isento / Não Informado"},
+                    new TipoInscricaoEmpresa{Codigo = 1, Descricao = "CPF"},
+                    new TipoInscricaoEmpresa{Codigo = 2, Descricao = "CNPJ / CGC"},
+                    new TipoInscricaoEmpresa{Codigo = 3, Descricao = "PIS / PASEP"},
+                    new TipoInscricaoEmpresa{Codigo = 9, Descricao = "Outros"},
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.TipoInscricaoEmpresa.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
+
+            if (!dbContext.FormaLancamento.Any())
+            {
+
+                var registros = new FormaLancamento[]
+                {
+                    new FormaLancamento{Codigo = "01", Descricao = "Crédito em Conta Corrente / Salário"},
+                    new FormaLancamento{Codigo = "02", Descricao = "Cheque Pagamento / Administrativo"},
+                    new FormaLancamento{Codigo = "03", Descricao = "DOC / TED"},
+                    new FormaLancamento{Codigo = "04", Descricao = "Cartão Salário"},
+                    new FormaLancamento{Codigo = "05", Descricao = "Crédito em Conta Poupança"},
+                    new FormaLancamento{Codigo = "10", Descricao = "OP à Disposição"},
+                    new FormaLancamento{Codigo = "11", Descricao = "Pagamento de Contas e Tributos com Código de Barras"},
+                    new FormaLancamento{Codigo = "16", Descricao = "Tributo - DARF Normal"},
+                    new FormaLancamento{Codigo = "17", Descricao = "Tributo - GPS"},
+                    new FormaLancamento{Codigo = "18", Descricao = "Tributo - DARF Simples"},
+                    new FormaLancamento{Codigo = "19", Descricao = "Tributo IPTU - Prefeituras"},
+                    new FormaLancamento{Codigo = "20", Descricao = "Pagamento com Autenticação"},
+                    new FormaLancamento{Codigo = "21", Descricao = "Tributo - DARJ"},
+                    new FormaLancamento{Codigo = "22", Descricao = "Tributo - GARE-SP ICMS"},
+                    new FormaLancamento{Codigo = "23", Descricao = "Tributo - GARE-SP DR"},
+                    new FormaLancamento{Codigo = "24", Descricao = "Tributo - GARE-SP ITCMD"},
+                    new FormaLancamento{Codigo = "25", Descricao = "Tributo - IPVA"},
+                    new FormaLancamento{Codigo = "26", Descricao = "Tributo - Licenciamento"},
+                    new FormaLancamento{Codigo = "27", Descricao = "Tributo - DPVAT"},
+                    new FormaLancamento{Codigo = "30", Descricao = "Liquidação de Títulos do Próprio Banco"},
+                    new FormaLancamento{Codigo = "31", Descricao = "Pagamento de Títulos de Outros Bancos"},
+                    new FormaLancamento{Codigo = "40", Descricao = "Extrato de Conta Corrente"},
+                    new FormaLancamento{Codigo = "41", Descricao = "TED – Outra Titularidade"},
+                    new FormaLancamento{Codigo = "43", Descricao = "TED – Mesma Titularidade"},
+                    new FormaLancamento{Codigo = "44", Descricao = "TED para Transferência de Conta Investimento"},
+                    new FormaLancamento{Codigo = "45", Descricao = "PIX Transferência"},
+                    new FormaLancamento{Codigo = "47", Descricao = "PIX QR-CODE"},
+                    new FormaLancamento{Codigo = "50", Descricao = "Débito em Conta Corrente"},
+                    new FormaLancamento{Codigo = "70", Descricao = "Extrato para Gestão de Caixa"},
+                    new FormaLancamento{Codigo = "71", Descricao = "Depósito Judicial em Conta Corrente"},
+                    new FormaLancamento{Codigo = "72", Descricao = "Depósito Judicial em Poupança"},
+                    new FormaLancamento{Codigo = "73", Descricao = "Extrato de Conta Investimento"},
+                    new FormaLancamento{Codigo = "80", Descricao = "Pagamento de Tributos Municipais ISS – LCP 157 – próprio Banco"},
+                    new FormaLancamento{Codigo = "81", Descricao = "Pagamento de Tributos Municipais ISS – LCP 157 – outros Bancos"}
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.FormaLancamento.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
 
             if (!dbContext.TipoServico.Any())
             {
