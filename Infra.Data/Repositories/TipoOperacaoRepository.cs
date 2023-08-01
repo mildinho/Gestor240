@@ -13,14 +13,11 @@ namespace Infra.Data.Repositories
 {
     public class TipoOperacaoRepository : GenericoRepository<TipoOperacao>, ITipoOperacaoRepository
     {
-        private readonly IConfiguration _conf;
         private readonly DBContexto _context;
 
-        public TipoOperacaoRepository(DBContexto context, IConfiguration configuration) : base(context)
+        public TipoOperacaoRepository(DBContexto context) : base(context)
         {
             _context = context;
-            _conf = configuration;
-
         }
 
         public async Task<IEnumerable<TipoOperacao>> PesquisarPorCodigoAsync(string Codigo)

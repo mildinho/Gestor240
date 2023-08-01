@@ -13,19 +13,21 @@ namespace Infra.Data.Repositories
 {
     public class BancoRepository : GenericoRepository<Banco>, IBancoRepository
     {
-        private readonly IConfiguration _conf;
         private readonly DBContexto _context;
 
-        public BancoRepository(DBContexto context, IConfiguration configuration) : base(context)
+        public BancoRepository(DBContexto context) : base(context)
         {
             _context = context;
-            _conf = configuration;
-
         }
 
         public async Task<IEnumerable<Banco>> PesquisarPorCodigoAsync(int Codigo)
         {
             return await _context.Banco.Where(x => x.Codigo == Codigo).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Banco>> PesquisarPorNomeAsync(string Nome)
+        {
+            return await _context.Banco.Where(x => x.Nome.ToLower() == Nome.ToLower()).ToListAsync();
         }
     }
 }

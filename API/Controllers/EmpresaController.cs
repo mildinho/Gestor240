@@ -1,43 +1,41 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    public class TipoOperacaoController : Controller
+    public class EmpresaController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public TipoOperacaoController(IUnitOfWork unitOfWork)
+        public EmpresaController(IUnitOfWork unitOfWork)
         {
             _UOW = unitOfWork;
         }
 
-        [HttpGet("Codigo")]
-        public async Task<ActionResult<TipoOperacao>> Codigo(string Codigo)
+        [HttpGet("CNPJ_CPF")]
+        public async Task<ActionResult<Empresa>> CNPJ_CPFAsync(double CNPJ_CPF)
         {
-            var Objeto = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(Codigo);
+            var Objeto = await _UOW.Empresa.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
 
             return Ok(Objeto);
         }
 
-
-        [HttpGet("Descricao")]
-        public async Task<ActionResult<TipoOperacao>> Descricao(string Descricao)
+        [HttpGet("Nome")]
+        public async Task<ActionResult<Empresa>> Nome(string Descricao)
         {
-            var Objeto = await _UOW.TipoOperacao.PesquisarPorDescricaoAsync(Descricao);
+            var Objeto = await _UOW.Empresa.PesquisarPorNomeAsync(Descricao);
 
             return Ok(Objeto);
         }
-
-
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<TipoOperacao> GetAll()
+        public ActionResult<Empresa> GetAll()
         {
-            var Objeto =  _UOW.TipoOperacao.ListarTodos();
+            var Objeto = _UOW.Empresa.ListarTodos();
 
             return Ok(Objeto);
         }
@@ -46,17 +44,17 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<TipoOperacao>> Post(TipoOperacao tabela)
+        public async Task<ActionResult<Empresa>> Post(Empresa tabela)
         {
-            IEnumerable<TipoOperacao> TipoOperacaoLista = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(tabela.Codigo);
-            if (TipoOperacaoLista.Any())
+            IEnumerable<Empresa> EmpresaLista = await _UOW.Empresa.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
+            if (EmpresaLista.Any())
             {
-                return BadRequest("O código deste Tipo de Operacao já existe cadastrado!");
+                return BadRequest("já existe este CNPJ cadastrado!");
             }
 
             if (ModelState.IsValid)
             {
-                TipoOperacao Objeto = await _UOW.TipoOperacao.InserirAsync(tabela);
+                Empresa Objeto = await _UOW.Empresa.InserirAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -67,7 +65,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<TipoOperacao>> Patch(int Id, TipoOperacao tabela)
+        public async Task<ActionResult<Empresa>> Patch(int Id, Empresa tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest("O para ID está diferente do ID do Modelo!");
@@ -76,7 +74,7 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.TipoOperacao.AtualizarAsync(tabela);
+                var Objeto = await _UOW.Empresa.AtualizarAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -90,7 +88,7 @@ namespace API.Controllers
         public async Task<ActionResult<int>> Delete(int Id)
         {
 
-            await _UOW.TipoOperacao.DeletarAsync(Id);
+            await _UOW.Empresa.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
             return Ok(_removidos);

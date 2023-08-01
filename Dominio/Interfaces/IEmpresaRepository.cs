@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Dominio.Interfaces
 {
-    public interface IBancoRepository : IGenericoRepository<Banco>
+    public interface IEmpresaRepository : IGenericoRepository<Empresa>
     {
 
-        Task<IEnumerable<Banco>> PesquisarPorCodigoAsync(int Codigo);
-        Task<IEnumerable<Banco>> PesquisarPorNomeAsync(string Descricao);
+        Task<IEnumerable<Empresa>> PesquisarPorCNPJ_CPFAsync(double CNPJ_CPF);
+        Task<IEnumerable<Empresa>> PesquisarPorNomeAsync(string Nome);
 
 
     }

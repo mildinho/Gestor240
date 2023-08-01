@@ -7,6 +7,7 @@
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }
         IUFRepository UF { get; }
+        IEmpresaRepository Empresa { get; }
 
 
         Task<int> SaveAsync();

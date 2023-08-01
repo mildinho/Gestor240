@@ -36,12 +36,11 @@ namespace Infra.Data.Repositories
 
         public virtual async Task<Tabela> AtualizarAsync(Tabela tabela)
         {
-            var _Id = _context.Entry<Tabela>(tabela).Property("Id").CurrentValue;
-            
+            var _Id = (int) _context.Entry<Tabela>(tabela).Property("Id").CurrentValue ;
             try
             {
                 
-                var obj = await PesquisarPorIdAsync((int) _Id);
+                var obj = await PesquisarPorIdAsync(_Id);
                 if (obj != null)
                 {
                     _context.Entry<Tabela>(tabela).Property("Data_Cadastro").CurrentValue =

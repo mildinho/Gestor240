@@ -15,7 +15,6 @@ namespace Infra.Data.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DBContexto _context;
-        private readonly IConfiguration _configuration;
         private TransactionScope transaction;
 
         public void StartTransaction()
@@ -32,23 +31,26 @@ namespace Infra.Data.Repositories
         public ITipoOperacaoRepository TipoOperacao { get; private set; }
         public ITipoServicoRepository TipoServico { get; private set; }
         public IUFRepository UF { get; private set; }
+        public IEmpresaRepository Empresa { get; private set; }
 
 
 
-        public UnitOfWork(DBContexto context, IConfiguration configuration)
+        public UnitOfWork(DBContexto context)
         {
             _context = context;
-            _configuration = configuration;
+
+            DBManipulaDados.Cadastrar(context);
 
             CriaInstancia();
         }
 
         private void CriaInstancia()
         {
-            Banco = new BancoRepository(_context, _configuration);
-            TipoOperacao = new TipoOperacaoRepository(_context, _configuration);
-            TipoServico = new TipoServicoRepository(_context, _configuration);
-            UF = new UFRepository(_context, _configuration);
+            Banco = new BancoRepository(_context);
+            TipoOperacao = new TipoOperacaoRepository(_context);
+            TipoServico = new TipoServicoRepository(_context);
+            UF = new UFRepository(_context);
+            Empresa = new EmpresaRepository(_context);
 
         }
 

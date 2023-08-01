@@ -14,17 +14,25 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
-        [HttpGet("{Sigla}")]
-        public async Task<ActionResult<UF>> Get(string Sigla)
+        [HttpGet("Sigla")]
+        public async Task<ActionResult<UF>> Sigla(string Sigla)
         {
             var Objeto = await _UOW.UF.PesquisarPorSiglaAsync(Sigla);
 
             return Ok(Objeto);
         }
 
+        [HttpGet("Descricao")]
+        public async Task<ActionResult<UF>> Descricao(string Descricao)
+        {
+            var Objeto = await _UOW.UF.PesquisarPorDescricaoAsync(Descricao);
+
+            return Ok(Objeto);
+        }
+
         [HttpGet]
         [Route("GetAll")]
-        public async Task<ActionResult<UF>> GetAll()
+        public ActionResult<UF> GetAll()
         {
             var Objeto = _UOW.UF.ListarTodos();
 

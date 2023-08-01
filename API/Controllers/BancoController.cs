@@ -14,7 +14,7 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
-        [HttpGet("{Codigo}")]
+        [HttpGet("Codigo")]
         public async Task<ActionResult<Banco>> Get(int Codigo)
         {
             var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
@@ -24,7 +24,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<ActionResult<Banco>> GetAll()
+        public ActionResult<Banco> GetAll()
         {
             var Objeto = _UOW.Banco.ListarTodos();
 

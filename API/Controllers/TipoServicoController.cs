@@ -14,17 +14,27 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
-        [HttpGet("{Codigo}")]
-        public async Task<ActionResult<TipoServico>> Get(string Codigo)
+        [HttpGet("Codigo")]
+        public async Task<ActionResult<TipoServico>> Codigo(string Codigo)
         {
             var Objeto = await _UOW.TipoServico.PesquisarPorCodigoAsync(Codigo);
 
             return Ok(Objeto);
         }
 
+        [HttpGet("Descricao")]
+        public async Task<ActionResult<TipoServico>> Descricao(string Descricao)
+        {
+            var Objeto = await _UOW.TipoServico.PesquisarPorDescricaoAsync(Descricao);
+
+            return Ok(Objeto);
+        }
+
+
+
         [HttpGet]
         [Route("GetAll")]
-        public async Task<ActionResult<TipoServico>> GetAll()
+        public ActionResult<TipoServico> GetAll()
         {
             var Objeto = _UOW.TipoServico.ListarTodos();
 

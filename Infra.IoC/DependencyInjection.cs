@@ -30,19 +30,16 @@ namespace Infra.IoC
             }
 
 
-
             services.AddDbContext<DBContexto>(options =>
             {
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,
                 builder => builder.MigrationsAssembly("API"));
 
-            }
-            );
+            });
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 
             return services;
         }
