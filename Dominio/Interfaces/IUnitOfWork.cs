@@ -7,9 +7,11 @@
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }
         IUFRepository UF { get; }
-        IEmpresaRepository Empresa { get; }
+        IBeneficiarioRepository Beneficiario { get; }
         IFormaLancamentoRepository FormaLancamento { get; }
         ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; }
+        IAgenciaRepository Agencia { get; }
+        IPagadorRepository Pagador { get; }
 
 
         Task<int> SaveAsync();

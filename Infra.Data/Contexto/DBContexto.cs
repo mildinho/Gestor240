@@ -9,17 +9,18 @@ namespace Infra.Data.Contexto
     {
         public DBContexto(DbContextOptions<DBContexto> options) : base(options)
         {
-
-            
         }
 
         public DbSet<Banco> Banco { get; set; }
         public DbSet<TipoOperacao> TipoOperacao { get; set; }
         public DbSet<TipoServico> TipoServico { get; set; }
         public DbSet<UF> UF { get; set; }
-        public DbSet<Empresa> Empresa { get; set; }
+        public DbSet<Beneficiario> Beneficiario { get; set; }
         public DbSet<FormaLancamento> FormaLancamento { get; set; }
         public DbSet<TipoInscricaoEmpresa> TipoInscricaoEmpresa { get; set; }
+        public DbSet<Agencia> Agencia { get; set; }
+        public DbSet<Pagador> Pagador { get; set; }
+        public DbSet<Boleto> Boleto { get; set; }
 
     }
 

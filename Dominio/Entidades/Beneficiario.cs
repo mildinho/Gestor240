@@ -6,7 +6,8 @@ namespace Dominio.Entidades
 {
 
     [Index(nameof(CNPJ_CPF))]
-    public class Empresa : ModelBase
+    [Index(nameof(Nome))]
+    public class Beneficiario : ModelBase
     {
 
         [Display(Name = "CNPJ / CPF")]
@@ -60,6 +61,16 @@ namespace Dominio.Entidades
         [ForeignKey("TipoInscricaoEmpresa")]
         public int TipoInscricaoEmpresaId { get; set; }
         public virtual TipoInscricaoEmpresa? TipoInscricaoEmpresa { get; set; }
+
+
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "Agencia / Conta")]
+        [ForeignKey("Agencia")]
+        public int AgenciaId { get; set; }
+
+
+
 
     }
 }

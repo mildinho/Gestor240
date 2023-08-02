@@ -7,35 +7,35 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    public class EmpresaController : Controller
+    public class BeneficiarioController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public EmpresaController(IUnitOfWork unitOfWork)
+        public BeneficiarioController(IUnitOfWork unitOfWork)
         {
             _UOW = unitOfWork;
         }
 
         [HttpGet("CNPJ_CPF")]
-        public async Task<ActionResult<Empresa>> CNPJ_CPFAsync(double CNPJ_CPF)
+        public async Task<ActionResult<Beneficiario>> CNPJ_CPFAsync(double CNPJ_CPF)
         {
-            var Objeto = await _UOW.Empresa.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
+            var Objeto = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
 
             return Ok(Objeto);
         }
 
         [HttpGet("Nome")]
-        public async Task<ActionResult<Empresa>> Nome(string Descricao)
+        public async Task<ActionResult<Beneficiario>> Nome(string Descricao)
         {
-            var Objeto = await _UOW.Empresa.PesquisarPorNomeAsync(Descricao);
+            var Objeto = await _UOW.Beneficiario.PesquisarPorNomeAsync(Descricao);
 
             return Ok(Objeto);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<Empresa> GetAll()
+        public ActionResult<Beneficiario> GetAll()
         {
-            var Objeto = _UOW.Empresa.ListarTodos();
+            var Objeto = _UOW.Beneficiario.ListarTodos();
 
             return Ok(Objeto);
         }
@@ -44,17 +44,24 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Empresa>> Post(Empresa tabela)
+        public async Task<ActionResult<Beneficiario>> Post(Beneficiario tabela)
         {
-            IEnumerable<Empresa> EmpresaLista = await _UOW.Empresa.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
-            if (EmpresaLista.Any())
+            IEnumerable<Beneficiario> ObjetoLista = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
+            if (ObjetoLista.Any())
             {
                 return BadRequest("já existe este CNPJ cadastrado!");
             }
 
+            UF objUF = await _UOW.UF.PesquisarPorIdAsync(tabela.UFId);
+            if (objUF == null)
+            {
+                return BadRequest("UF não Encontrado!");
+            }
+
+
             if (ModelState.IsValid)
             {
-                Empresa Objeto = await _UOW.Empresa.InserirAsync(tabela);
+                Beneficiario Objeto = await _UOW.Beneficiario.InserirAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -65,16 +72,23 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Empresa>> Patch(int Id, Empresa tabela)
+        public async Task<ActionResult<Beneficiario>> Patch(int Id, Beneficiario tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest("O para ID está diferente do ID do Modelo!");
 
 
+            UF objUF = await _UOW.UF.PesquisarPorIdAsync(tabela.UFId);
+            if (objUF == null)
+            {
+                return BadRequest("UF não Encontrado!");
+            }
+
+
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.Empresa.AtualizarAsync(tabela);
+                var Objeto = await _UOW.Beneficiario.AtualizarAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -88,7 +102,7 @@ namespace API.Controllers
         public async Task<ActionResult<int>> Delete(int Id)
         {
 
-            await _UOW.Empresa.DeletarAsync(Id);
+            await _UOW.Beneficiario.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
             return Ok(_removidos);

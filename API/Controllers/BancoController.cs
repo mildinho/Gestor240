@@ -37,8 +37,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Banco>> Post(Banco tabela)
         {
-            IEnumerable<Banco> BancoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
-            if (BancoLista.Any())
+            IEnumerable<Banco> ObjetoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
+            if (ObjetoLista.Any())
             {
                 return BadRequest("O código deste Banco já existe cadastrado!");
             }

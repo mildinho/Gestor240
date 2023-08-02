@@ -49,9 +49,6 @@ namespace Dominio.Entidades
         [StringLength(20)]
         public string NumeroConvenio { get; set; } = String.Empty;
 
-        private static string[] nameof(string numeroAgencia, string digitoAgencia)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

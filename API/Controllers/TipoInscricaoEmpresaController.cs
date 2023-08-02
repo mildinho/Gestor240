@@ -47,8 +47,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<TipoInscricaoEmpresa>> Post(TipoInscricaoEmpresa tabela)
         {
-            IEnumerable<TipoInscricaoEmpresa> TipoServicoLista = await _UOW.TipoInscricaoEmpresa.PesquisarPorCodigoAsync(tabela.Codigo);
-            if (TipoServicoLista.Any())
+            IEnumerable<TipoInscricaoEmpresa> ObjetoLista = await _UOW.TipoInscricaoEmpresa.PesquisarPorCodigoAsync(tabela.Codigo);
+            if (ObjetoLista.Any())
             {
                 return BadRequest("O código deste Tipo de Operacao já existe cadastrado!");
             }

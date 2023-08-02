@@ -16,6 +16,24 @@ namespace Infra.Data.Contexto
 
             dbContext.Database.EnsureCreated();
 
+
+            if (!dbContext.Banco.Any())
+            {
+                var registros = new Banco[]
+                {
+                    new Banco{Codigo = 1, Nome = "BANCO DO BRASIL", ISPB = "0"},
+                    new Banco{Codigo = 237, Nome = "BRADESCO", ISPB = "60746948"},
+                    new Banco{Codigo = 341, Nome = "ITAÚ", ISPB = "60701190"}
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Banco.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
             if (!dbContext.TipoInscricaoEmpresa.Any())
             {
                 var registros = new TipoInscricaoEmpresa[]

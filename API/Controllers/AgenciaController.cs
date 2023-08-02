@@ -1,40 +1,33 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    public class UFController : Controller
+    public class AgenciaController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public UFController(IUnitOfWork unitOfWork)
+        public AgenciaController(IUnitOfWork unitOfWork)
         {
             _UOW = unitOfWork;
         }
 
-        [HttpGet("Sigla")]
-        public async Task<ActionResult<UF>> Sigla(string Sigla)
+        [HttpGet("Codigo")]
+        public async Task<ActionResult<Agencia>> Get(int Banco, string Agencia, string Conta)
         {
-            var Objeto = await _UOW.UF.PesquisarPorSiglaAsync(Sigla);
-
-            return Ok(Objeto);
-        }
-
-        [HttpGet("Descricao")]
-        public async Task<ActionResult<UF>> Descricao(string Descricao)
-        {
-            var Objeto = await _UOW.UF.PesquisarPorDescricaoAsync(Descricao);
+            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaContaAsync(Banco, Agencia, Conta);
 
             return Ok(Objeto);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<UF> GetAll()
+        public ActionResult<Agencia> GetAll()
         {
-            var Objeto = _UOW.UF.ListarTodos();
+            var Objeto = _UOW.Agencia.ListarTodos();
 
             return Ok(Objeto);
         }
@@ -43,17 +36,18 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<UF>> Post(UF tabela)
+        public async Task<ActionResult<Agencia>> Post(Agencia tabela)
         {
-            IEnumerable<UF> ObjetoLista = await _UOW.UF.PesquisarPorSiglaAsync(tabela.Sigla);
+            IEnumerable<Agencia> ObjetoLista = await _UOW.Agencia.
+                PesquisarPorBancoAgenciaContaAsync(tabela.BancoId, tabela.NumeroAgencia, tabela.NumeroConta);
             if (ObjetoLista.Any())
             {
-                return BadRequest("O código deste UF já existe cadastrado!");
+                return BadRequest("O código desta Agencia/Banco/Conta já existe cadastrado!");
             }
 
             if (ModelState.IsValid)
             {
-                UF Objeto = await _UOW.UF.InserirAsync(tabela);
+                Agencia Objeto = await _UOW.Agencia.InserirAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -64,7 +58,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<UF>> Patch(int Id, UF tabela)
+        public async Task<ActionResult<Agencia>> Patch(int Id, Agencia tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest("O para ID está diferente do ID do Modelo!");
@@ -73,7 +67,7 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.UF.AtualizarAsync(tabela);
+                var Objeto = await _UOW.Agencia.AtualizarAsync(tabela);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -87,7 +81,7 @@ namespace API.Controllers
         public async Task<ActionResult<int>> Delete(int Id)
         {
 
-            await _UOW.UF.DeletarAsync(Id);
+            await _UOW.Agencia.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
             return Ok(_removidos);
