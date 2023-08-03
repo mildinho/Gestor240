@@ -19,6 +19,8 @@ namespace Infra.Data.Repositories
         public ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; private set; }
         public IAgenciaRepository Agencia { get; private set; }
         public IPagadorRepository Pagador { get; private set; }
+        public IFinancasRepository Financas { get; private set; }
+        public ITipoPixRepository TipoPix { get; private set; }
 
 
         public UnitOfWork(DBContexto context)
@@ -38,7 +40,8 @@ namespace Infra.Data.Repositories
             TipoInscricaoEmpresa = new TipoInscricaoEmpresaRepository(_context);
             Agencia = new AgenciaRepository(_context);
             Pagador = new PagadorRepository(_context);
-
+            Financas = new FinancasRepository(_context);
+            TipoPix = new TipoPixRepository(_context);
         }
 
 

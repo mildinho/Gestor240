@@ -1,10 +1,4 @@
 ﻿using Dominio.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.Data.Contexto
 {
@@ -16,6 +10,22 @@ namespace Infra.Data.Contexto
 
             dbContext.Database.EnsureCreated();
 
+            if (!dbContext.TipoPix.Any())
+            {
+                var registros = new TipoPix[]
+                {
+                    new TipoPix{Codigo = "01", Descricao = "Tipo Telefone"},
+                    new TipoPix{Codigo = "02", Descricao = "Tipo Email"},
+                    new TipoPix{Codigo = "03", Descricao = "Tipo CPF/CNPJ"},
+                    new TipoPix{Codigo = "04", Descricao = "Chave Aleatória"},
+                    new TipoPix{Codigo = "05", Descricao = "Dados Bancários"}
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.TipoPix.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
 
             if (!dbContext.Banco.Any())
             {
@@ -212,6 +222,127 @@ namespace Infra.Data.Contexto
 
                 dbContext.SaveChanges();
             }
+
+            if (!dbContext.Agencia.Any())
+            {
+                var registros = new Agencia[]
+                {
+                    new Agencia{BancoId = 1,
+                    NumeroAgencia = "3360",
+                    DigitoAgencia = "X",
+                    NumeroConta = "6300",
+                    DigitoConta = "2",
+                    NumeroConvenio = "2540338",
+                    },
+                    new Agencia{BancoId = 2,
+                    NumeroAgencia = "311",
+                    DigitoAgencia = "5",
+                    NumeroConta = "73552",
+                    DigitoConta = "3",
+                    NumeroConvenio = "0111406",
+                    },
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Agencia.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
+            if (!dbContext.Beneficiario.Any())
+            {
+                var registros = new Beneficiario[]
+                {
+                    new Beneficiario{
+                        CNPJ_CPF = 08897417000291,
+                        Nome = "FW DISTRIBUIDORA LTDA",
+                        Fantasia = "FURACAO - CAMPINAS",
+                        Endereco = "RUA ALTINO ARANTES",
+                        Numero = "1250",
+                        Bairro = "Jd. Lago II",
+                        Cidade = "Campinas",
+                        CEP = "13051110",
+                        UFId = 20,
+                        TipoInscricaoEmpresaId = 2
+                    },
+                    new Beneficiario{
+                        CNPJ_CPF = 08897417000534,
+                        Nome = "FW DISTRIBUIDORA LTDA",
+                        Fantasia = "FURACAO - RJ",
+                        Endereco = "Avenida Brasil",
+                        Numero = "15127",
+                        Bairro = "Viagario Geral",
+                        Cidade = "Rio de Janeiro",
+                        CEP = "21241051",
+                        UFId = 19,
+                        TipoInscricaoEmpresaId = 2
+                    },
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Beneficiario.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
+            if (!dbContext.Pagador.Any())
+            {
+                var registros = new Pagador[]
+                {
+                    new Pagador{
+                        CNPJ_CPF = 98514946668,
+                        Nome = "FERNANDO CASAGRANDE",
+                        Fantasia = "LIMPA FOSSA HI-TECH",
+                        Endereco = "RUA DAS DALIAS",
+                        Numero = "1227",
+                        Bairro = "JD. DAS BANDEIRAS",
+                        Cidade = "CAMPINAS",
+                        CEP = "13050088",
+                        UFId = 20,
+                        TipoInscricaoEmpresaId = 1
+                    }
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Pagador.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
+            if (!dbContext.Financas.Any())
+            {
+                var registros = new Financas[]
+                {
+                    new Financas{
+                        BeneficiarioID = 1,
+                        PagadorID = 1,
+                        BancoID = 1,
+                        Documento = "DOCUMENTO_69",
+                        Parcela = "A",
+                        Emissao = DateTime.Today,
+                        Vencimento = DateTime.Now.AddDays(30),
+                        ValorPrincipal = 1234567.89,
+                        Abatimento = 0.89,
+                        MoraDia = 1.69,
+
+                    },
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Financas.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
+
         }
     }
 }

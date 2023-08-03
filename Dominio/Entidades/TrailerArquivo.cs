@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
-    public class TrailerArquivo
+    public class TrailerArquivo : ModelBase
     {
 
         #region Controle

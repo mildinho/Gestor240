@@ -20,5 +20,9 @@ namespace Dominio.Entidades
         [StringLength(30)]
         public string Descricao { get; set; } = String.Empty;
 
+        public static implicit operator TipoInscricaoEmpresa(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

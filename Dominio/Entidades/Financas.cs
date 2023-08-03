@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Dominio.Entidades
 {
-    public class Boleto : ModelBase
+    public class Financas : ModelBase
     {
 
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
@@ -24,6 +24,19 @@ namespace Dominio.Entidades
         [ForeignKey("Pagador")]
         public int PagadorID { get; set; }
         public virtual Pagador? Pagador { get; set; }
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "FormaLancamento")]
+        [ForeignKey("FormaLancamento")]
+        public int FormaLancamentoID { get; set; }
+        public virtual FormaLancamento? FormaLancamento { get; set; }
+
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "TipoServico")]
+        [ForeignKey("TipoServico")]
+        public int TipoServicoID { get; set; }
+        public virtual TipoServico? TipoServico { get; set; }
 
 
 
@@ -40,7 +53,7 @@ namespace Dominio.Entidades
         public double MoraDia { get; set; }
 
         public string Carteira { get; set; } = String.Empty;
-
+        public string Barras { get; set; } = String.Empty;
 
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Display(Name = "Banco")]
@@ -49,5 +62,14 @@ namespace Dominio.Entidades
         public virtual Banco? Banco { get; set; }
 
         public int NumeroRemessa { get; set; }
+
+
+        public string Chave_Pix { get; set; } = String.Empty;
+        [Display(Name = "Tipo Pix")]
+        [ForeignKey("Tipo Pix")]
+        public int TipoPixID { get; set; }
+        public virtual TipoPix? TipoPix { get; set; }
+
+
     }
 }

@@ -20,7 +20,13 @@ namespace Infra.Data.Contexto
         public DbSet<TipoInscricaoEmpresa> TipoInscricaoEmpresa { get; set; }
         public DbSet<Agencia> Agencia { get; set; }
         public DbSet<Pagador> Pagador { get; set; }
-        public DbSet<Boleto> Boleto { get; set; }
+        public DbSet<Financas> Financas { get; set; }
+        public DbSet<HeaderArquivo> HeaderArquivo { get; set; }
+        public DbSet<HeaderLote> HeaderLote { get; set; }
+        public DbSet<TrailerArquivo> TrailerArquivo { get; set; }
+        public DbSet<TrailerLote> TrailerLote { get; set; }
+
+        public DbSet<TipoPix> TipoPix { get; set; }
 
     }
 

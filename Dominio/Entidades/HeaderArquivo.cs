@@ -30,7 +30,7 @@ namespace Dominio.Entidades
 
         #region Empresas
         [MaxLength(1)]
-        public string Tipo { get; set; } = String.Empty;
+        public string TipoInscricao { get; set; } = String.Empty;
 
         [MaxLength(14)]
         public string CNPJ { get; set; } = String.Empty;
@@ -56,6 +56,7 @@ namespace Dominio.Entidades
         [MaxLength(30)]
         public string NomeEmpresa { get; set; } = String.Empty;
         #endregion
+
 
         [MaxLength(30)]
         public string NomeBanco { get; set; } = String.Empty;
