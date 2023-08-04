@@ -68,7 +68,7 @@ namespace Dominio.Entidades
         [Display(Name = "Tipo Pix")]
         [ForeignKey("Tipo Pix")]
         public int TipoPixID { get; set; }
-        public virtual TipoPix? TipoPix { get; set; }
+        //public virtual TipoPix? TipoPix { get; set; }
 
 
     }

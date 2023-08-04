@@ -9,6 +9,7 @@ namespace Infra.Data.Contexto
     {
         public DBContexto(DbContextOptions<DBContexto> options) : base(options)
         {
+
         }
 
         public DbSet<Banco> Banco { get; set; }
@@ -25,7 +26,6 @@ namespace Infra.Data.Contexto
         public DbSet<HeaderLote> HeaderLote { get; set; }
         public DbSet<TrailerArquivo> TrailerArquivo { get; set; }
         public DbSet<TrailerLote> TrailerLote { get; set; }
-
         public DbSet<TipoPix> TipoPix { get; set; }
 
     }

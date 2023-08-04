@@ -11,7 +11,7 @@ namespace Dominio.Interfaces
     public interface IFinancasRepository : IGenericoRepository<Financas>
     {
 
-        Task<IEnumerable<Financas>> PesquisarPorBeneficiarioAsync(int Beneficiario);
+        Task<IEnumerable<Financas>> PesquisarPorVencimentoAsync(int Beneficiario, DateTime Inicio, DateTime Fim);
 
 
     }

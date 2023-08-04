@@ -12,7 +12,7 @@
         ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; }
         IAgenciaRepository Agencia { get; }
         IPagadorRepository Pagador { get; }
-
+        IFinancasRepository Financas { get; }
 
         Task<int> SaveAsync();
 

@@ -1,6 +1,7 @@
 ﻿using Dominio.Interfaces;
 using Infra.Data.Contexto;
 using Infra.Data.Repositories;
+using Infra.Data.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,9 @@ namespace Infra.IoC
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRemessa, Remessa>();
+            services.AddScoped<ILayout, Febraban240>();
+
 
             return services;
         }

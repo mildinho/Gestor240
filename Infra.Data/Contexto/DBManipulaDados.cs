@@ -317,23 +317,29 @@ namespace Infra.Data.Contexto
 
             if (!dbContext.Financas.Any())
             {
-                var registros = new Financas[]
+                List<Financas> registros = new();
+                for (int i = 0; i < 200; i++)
                 {
-                    new Financas{
-                        BeneficiarioID = 1,
-                        PagadorID = 1,
-                        BancoID = 1,
-                        Documento = "DOCUMENTO_69",
-                        Parcela = "A",
-                        Emissao = DateTime.Today,
-                        Vencimento = DateTime.Now.AddDays(30),
-                        ValorPrincipal = 1234567.89,
-                        Abatimento = 0.89,
-                        MoraDia = 1.69,
+                    registros.Add(
+                        new Financas
+                        {
+                            BeneficiarioID = 1,
+                            PagadorID = 1,
+                            BancoID = 1,
+                            FormaLancamentoID = 31,
+                            TipoServicoID = 2,
+                            Documento = "DOCUMENTO =>"+ i.ToString(),
+                            Parcela = "A",
+                            Emissao = DateTime.Today,
+                            Vencimento = DateTime.Now.AddDays(i),
+                            ValorPrincipal = i * Math.PI,
+                            Abatimento = i / 3,
+                            MoraDia = i
+                        }
 
-                    },
+                    );
 
-                };
+                }
 
                 foreach (var ObjetoRegistro in registros)
                     dbContext.Financas.Add(ObjetoRegistro);
