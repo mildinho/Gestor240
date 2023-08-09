@@ -20,17 +20,19 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Financas>> PesquisarPorVencimentoAsync(int Beneficiario, DateTime Inicio, DateTime Fim)
+        public async Task<IQueryable<Financas>> TitulosPorVencimentoSemPagamentoAsync(int Beneficiario, DateTime Inicio, DateTime Fim)
         {
-            return await _context.Financas.
-                Where(x => x.BeneficiarioID == Beneficiario && 
-                x.Vencimento >= Inicio && x.Vencimento <= Fim).
+            return  _context.Financas.
+                Where(x => x.BeneficiarioID == Beneficiario &&
+                x.Vencimento >= Inicio && x.Vencimento <= Fim && 
+                x.Pagamento == null).
                 Include(x => x.Beneficiario).
                 Include(x => x.Pagador).
                 Include(x => x.FormaLancamento).
                 Include(x => x.TipoServico).
-                Include(x => x.Banco)
-                .ToListAsync();
+                Include(x => x.Banco);
+                
         }
+
     }
 }

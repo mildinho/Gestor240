@@ -32,7 +32,7 @@ namespace Infra.Data.Contexto
                 var registros = new Banco[]
                 {
                     new Banco{Codigo = 1, Nome = "BANCO DO BRASIL", ISPB = "0"},
-                    new Banco{Codigo = 237, Nome = "BRADESCO", ISPB = "60746948"},
+                    new Banco{Codigo = 237, Nome = "BANCO BRADESCO S/A", ISPB = "60746948"},
                     new Banco{Codigo = 341, Nome = "ITAÚ", ISPB = "60701190"}
 
                 };
@@ -228,18 +228,12 @@ namespace Infra.Data.Contexto
                 var registros = new Agencia[]
                 {
                     new Agencia{BancoId = 1,
-                    NumeroAgencia = "3360",
+                    NumeroAgencia = 3360,
                     DigitoAgencia = "X",
-                    NumeroConta = "6300",
-                    DigitoConta = "2",
-                    NumeroConvenio = "2540338",
                     },
                     new Agencia{BancoId = 2,
-                    NumeroAgencia = "311",
+                    NumeroAgencia = 311,
                     DigitoAgencia = "5",
-                    NumeroConta = "73552",
-                    DigitoConta = "3",
-                    NumeroConvenio = "0111406",
                     },
 
                 };
@@ -256,7 +250,7 @@ namespace Infra.Data.Contexto
                 var registros = new Beneficiario[]
                 {
                     new Beneficiario{
-                        CNPJ_CPF = 08897417000291,
+                        CNPJ_CPF = "08897417000291",
                         Nome = "FW DISTRIBUIDORA LTDA",
                         Fantasia = "FURACAO - CAMPINAS",
                         Endereco = "RUA ALTINO ARANTES",
@@ -268,7 +262,7 @@ namespace Infra.Data.Contexto
                         TipoInscricaoEmpresaId = 2
                     },
                     new Beneficiario{
-                        CNPJ_CPF = 08897417000534,
+                        CNPJ_CPF = "08897417000534",
                         Nome = "FW DISTRIBUIDORA LTDA",
                         Fantasia = "FURACAO - RJ",
                         Endereco = "Avenida Brasil",
@@ -277,7 +271,7 @@ namespace Infra.Data.Contexto
                         Cidade = "Rio de Janeiro",
                         CEP = "21241051",
                         UFId = 19,
-                        TipoInscricaoEmpresaId = 2
+                        TipoInscricaoEmpresaId = 3
                     },
 
                 };
@@ -315,6 +309,36 @@ namespace Infra.Data.Contexto
             }
 
 
+            if (!dbContext.Conta.Any())
+            {
+                var registros = new Conta[]
+                {
+                    new Conta{
+                        AgenciaId = 1,
+                        NumeroConta = 73552,
+                        DigitoConta = "3",
+                        BeneficiarioID = 2,
+                        NumeroConvenio = "360593"
+                    },
+
+                new Conta
+                {
+                    AgenciaId = 2,
+                    NumeroConta = 21013021,
+                    DigitoConta = "0",
+                    BeneficiarioID = 1,
+                    NumeroConvenio = "360593"
+                }
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Conta.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
             if (!dbContext.Financas.Any())
             {
                 List<Financas> registros = new();
@@ -328,7 +352,7 @@ namespace Infra.Data.Contexto
                             BancoID = 1,
                             FormaLancamentoID = 31,
                             TipoServicoID = 2,
-                            Documento = "DOCUMENTO =>"+ i.ToString(),
+                            Documento = "DOCUMENTO =>" + i.ToString(),
                             Parcela = "A",
                             Emissao = DateTime.Today,
                             Vencimento = DateTime.Now.AddDays(i),

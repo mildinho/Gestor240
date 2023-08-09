@@ -20,6 +20,7 @@ namespace Infra.Data.Contexto
         public DbSet<FormaLancamento> FormaLancamento { get; set; }
         public DbSet<TipoInscricaoEmpresa> TipoInscricaoEmpresa { get; set; }
         public DbSet<Agencia> Agencia { get; set; }
+        public DbSet<Conta> Conta { get; set; }
         public DbSet<Pagador> Pagador { get; set; }
         public DbSet<Financas> Financas { get; set; }
         public DbSet<HeaderArquivo> HeaderArquivo { get; set; }

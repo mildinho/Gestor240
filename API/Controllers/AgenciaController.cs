@@ -16,9 +16,9 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<Agencia>> Get(int Banco, string Agencia, string Conta)
+        public async Task<ActionResult<Agencia>> Get(int Banco, int Agencia)
         {
-            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaContaAsync(Banco, Agencia, Conta);
+            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(Banco, Agencia);
 
             return Ok(Objeto);
         }
@@ -38,8 +38,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Agencia>> Post(Agencia tabela)
         {
-            IEnumerable<Agencia> ObjetoLista = await _UOW.Agencia.
-                PesquisarPorBancoAgenciaContaAsync(tabela.BancoId, tabela.NumeroAgencia, tabela.NumeroConta);
+            IEnumerable<Agencia> ObjetoLista = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(tabela.BancoId, tabela.NumeroAgencia);
             if (ObjetoLista.Any())
             {
                 return BadRequest("O código desta Agencia/Banco/Conta já existe cadastrado!");

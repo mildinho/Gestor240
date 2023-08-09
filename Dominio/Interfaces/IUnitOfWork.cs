@@ -4,13 +4,17 @@
     {
 
         IBancoRepository Banco { get; }
+        IAgenciaRepository Agencia { get; }
+        IContaRepository Conta { get; }
+        IUFRepository UF { get; }
+
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }
-        IUFRepository UF { get; }
-        IBeneficiarioRepository Beneficiario { get; }
+        
         IFormaLancamentoRepository FormaLancamento { get; }
         ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; }
-        IAgenciaRepository Agencia { get; }
+
+        IBeneficiarioRepository Beneficiario { get; }
         IPagadorRepository Pagador { get; }
         IFinancasRepository Financas { get; }
 

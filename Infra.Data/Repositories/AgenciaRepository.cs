@@ -20,11 +20,9 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaContaAsync(int Banco, string Agencia, string Conta)
+        public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAsync(int Banco, int Agencia)
         {
-            return await _context.Agencia.
-                Where(x => x.BancoId == Banco && x.NumeroAgencia == Agencia && x.NumeroConta == Conta)
-                .ToListAsync();
+            return await _context.Agencia.Where(x => x.BancoId == Banco && x.NumeroAgencia == Agencia).ToListAsync();
         }
 
     }

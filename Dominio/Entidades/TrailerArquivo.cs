@@ -11,13 +11,13 @@ namespace Dominio.Entidades
 
         #region Controle
         public string Banco { get; set; } = String.Empty;
-        public string Lote { get; set; } = String.Empty;
-        public string Registro { get; set; } = String.Empty;
+        public string Lote { get; set; } = "9999";
+        public string Registro { get; set; } = "9";
         #endregion
 
 
         #region CNAB
-        public string CNAB_01 { get; set; } = String.Empty;
+        public string CNAB_01 { get; set; } = new string(' ', 9);
         #endregion
 
         #region TOTAIS
@@ -28,7 +28,7 @@ namespace Dominio.Entidades
 
 
         #region CNAB
-        public string CNAB_02 { get; set; } = String.Empty;
+        public string CNAB_02 { get; set; } = new string(' ', 205);
         #endregion
 
     }

@@ -16,7 +16,7 @@ namespace API.Controllers
         }
 
         [HttpGet("CNPJ_CPF")]
-        public async Task<ActionResult<Beneficiario>> CNPJ_CPFAsync(double CNPJ_CPF)
+        public async Task<ActionResult<Beneficiario>> CNPJ_CPFAsync(string CNPJ_CPF)
         {
             var Objeto = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
 

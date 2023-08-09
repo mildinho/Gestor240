@@ -9,20 +9,16 @@ namespace Dominio.Entidades
     public class TipoInscricaoEmpresa : ModelBase
     {
 
-        [Display(Name = "Banco")]
+        [Display(Name = "Código")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Range(1, 9,ErrorMessage = "Valor Deve Entre 1 ~ 999")]
         public int Codigo { get; set; } 
 
 
-        [Display(Name = "Nome do Banco")]
+        [Display(Name = "Tipo de Inscrição")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(30)]
         public string Descricao { get; set; } = String.Empty;
 
-        public static implicit operator TipoInscricaoEmpresa(int v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

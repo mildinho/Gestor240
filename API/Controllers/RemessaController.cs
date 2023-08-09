@@ -21,9 +21,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GerarPagamento")]
-        public async Task<ActionResult<JsonResult>> Gerar(int IdBeneficiario, DateTime Inicio, DateTime Fim)
+        public async Task<ActionResult<JsonResult>> Gerar(int IdBeneficiario, int IDConta, DateTime Inicio, DateTime Fim)
         {
-            string file = await _remessa.Pagamento(IdBeneficiario, Inicio, Fim);
+            string file = await _remessa.Pagamento(IdBeneficiario, IDConta, Inicio, Fim);
 
             return File(Encoding.UTF8.GetBytes("Fsdfadsfa"),
                 "text/plain",

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Dominio.Interfaces
 {
-    public interface IFinancasRepository : IGenericoRepository<Financas>
+    public interface IContaRepository : IGenericoRepository<Conta>
     {
 
-        Task<IQueryable<Financas>> TitulosPorVencimentoSemPagamentoAsync(int Beneficiario, DateTime Inicio, DateTime Fim);
+        Task<IEnumerable<Conta>> PesquisarPorContaAsync(int Conta);
 
 
     }

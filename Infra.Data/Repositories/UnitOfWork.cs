@@ -18,6 +18,8 @@ namespace Infra.Data.Repositories
         public IFormaLancamentoRepository FormaLancamento { get; private set; }
         public ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; private set; }
         public IAgenciaRepository Agencia { get; private set; }
+
+        public IContaRepository Conta { get; private set; }
         public IPagadorRepository Pagador { get; private set; }
         public IFinancasRepository Financas { get; private set; }
         public ITipoPixRepository TipoPix { get; private set; }
@@ -39,6 +41,7 @@ namespace Infra.Data.Repositories
             FormaLancamento = new FormaLancamentoRepository(_context);
             TipoInscricaoEmpresa = new TipoInscricaoEmpresaRepository(_context);
             Agencia = new AgenciaRepository(_context);
+            Conta = new ContaRepository(_context);
             Pagador = new PagadorRepository(_context);
             Financas = new FinancasRepository(_context);
             TipoPix = new TipoPixRepository(_context);

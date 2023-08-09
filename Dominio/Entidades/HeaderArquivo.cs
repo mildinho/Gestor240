@@ -33,7 +33,7 @@ namespace Dominio.Entidades
         public string TipoInscricao { get; set; } = String.Empty;
 
         [MaxLength(14)]
-        public string CNPJ { get; set; } = String.Empty;
+        public string CNPJ_CPF { get; set; } = String.Empty;
 
         [MaxLength(20)]
         public string Convenio { get; set; } = String.Empty;
@@ -51,8 +51,8 @@ namespace Dominio.Entidades
         public string ContaDigito { get; set; } = String.Empty;
 
         [MaxLength(1)]
-        public string AgenciaContaDigito { get; set; } = String.Empty;
-        
+        public string AgenciaContaDigito { get; set; } = new string(' ', 1);
+
         [MaxLength(30)]
         public string NomeEmpresa { get; set; } = String.Empty;
         #endregion
@@ -70,22 +70,22 @@ namespace Dominio.Entidades
 
         #region ARQUIVO
         [MaxLength(1)]
-        public string Remessa_Retorno { get; set; } = String.Empty;
+        public string Remessa_Retorno { get; set; } = "1";
         
         [MaxLength(8)]
-        public string DataGeraco { get; set; } = String.Empty;
+        public string DataGeracao { get; set; } = DateTime.Now.ToString("ddMMyyyy");
 
         [MaxLength(6)]
-        public string HoraGeracao { get; set; } = String.Empty;
+        public string HoraGeracao { get; set; } = DateTime.Now.ToString("HHmmss");
 
         [MaxLength(6)]
         public string Sequencia { get; set; } = String.Empty;
 
         [MaxLength(3)]
-        public string Layout { get; set; } = String.Empty;
+        public string Layout { get; set; } = "103";
 
         [MaxLength(5)]
-        public string Densidade { get; set; } = String.Empty;
+        public string Densidade { get; set; } = "01600";
         public string Reserva_Banco { get; set; } = new string(' ', 20);
         public string Reserva_Empresa { get; set; } = new string(' ', 20);
         #endregion

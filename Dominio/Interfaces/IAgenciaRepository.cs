@@ -11,7 +11,7 @@ namespace Dominio.Interfaces
     public interface IAgenciaRepository : IGenericoRepository<Agencia>
     {
 
-        Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaContaAsync(int Banco, string Agencia, string Conta );
+        Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAsync(int Banco, int Agencia);
 
 
     }

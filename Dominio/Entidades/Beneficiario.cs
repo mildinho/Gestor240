@@ -12,7 +12,7 @@ namespace Dominio.Entidades
 
         [Display(Name = "CNPJ / CPF")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public double CNPJ_CPF { get; set; }
+        public string CNPJ_CPF { get; set; }
 
 
         [Display(Name = "Nome")]
@@ -64,10 +64,6 @@ namespace Dominio.Entidades
 
 
 
-        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [Display(Name = "Agencia / Conta")]
-        [ForeignKey("Agencia")]
-        public int AgenciaId { get; set; }
 
 
 
