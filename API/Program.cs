@@ -49,4 +49,6 @@ app.Run();
  * TODO: ENTENDER QUAL A DIFERENCA DO G100 x G103
  * 
  * --- fontes/remessa.prg --> layout
+ * https://themewagon.com/themes/free-bootstrap-4-html-5-admin-dashboard-website-template-ruang/
+ * https://themewagon.github.io/ruang-admin/datatables.html
  */

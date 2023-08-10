@@ -45,8 +45,8 @@ namespace Dominio.Entidades
         public string Parcela { get; set; } = String.Empty;
         public DateTime Emissao { get; set; }
         public DateTime Vencimento { get; set; }
-        public DateTime Pagamento { get; set; }
-        public DateTime RegistroBanco { get; set; }
+        public DateTime? Pagamento { get; set; }
+        public DateTime? RegistroBanco { get; set; }
         public double ValorPrincipal { get; set; }
         public double Abatimento { get; set; }
         public double Acrescimo { get; set; }

@@ -24,7 +24,7 @@ namespace Infra.Data.Repositories
             return await _context.Pagador.Include(a => a.UF).Where(x => x.Nome.ToLower() == Nome.ToLower()).ToListAsync();
         }
 
-        public override IQueryable<Pagador> ListarTodos()
+        public IQueryable<Pagador> ListarTodosAgregados()
         {
             return _context.Pagador.Include( a => a.UF);
         }

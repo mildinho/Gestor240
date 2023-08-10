@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Dominio.Entidades
 {
     public class HeaderLote : ModelBase
     {
-
         #region Controle
 
         [MaxLength(3)]
@@ -51,7 +45,7 @@ namespace Dominio.Entidades
         public string TipoInscricao { get; set; } = String.Empty;
 
         [MaxLength(14)]
-        public string CNPJ { get; set; } = String.Empty;
+        public string CNPJ_CPF { get; set; } = String.Empty;
 
         [MaxLength(20)]
         public string Convenio { get; set; } = String.Empty;
@@ -69,15 +63,17 @@ namespace Dominio.Entidades
         public string ContaDigito { get; set; } = String.Empty;
 
         [MaxLength(1)]
-        public string AgenciaContaDigito { get; set; } = String.Empty;
+        public string AgenciaContaDigito { get; set; } = new string(' ', 1);
 
         [MaxLength(30)]
-        public string NomeEmpresa { get; set; } = String.Empty;
+        public string NomeEmpresa { get; set; } = new string(' ', 30);
+
         #endregion
 
 
         [MaxLength(40)]
-        public string Mensagem { get; set; } = String.Empty;
+        public string Mensagem { get; set; } = new string(' ', 40);
+
 
 
         #region Endereco_Empresa
@@ -102,7 +98,7 @@ namespace Dominio.Entidades
         #endregion
 
         [MaxLength(02)]
-        public string FormaPagamento { get; set; } = String.Empty;
+        public string FormaPagamento { get; set; } = "01";
 
 
         #region CNAB
@@ -112,7 +108,7 @@ namespace Dominio.Entidades
 
 
         [MaxLength(10)]
-        public string Ocorrencias { get; set; } = String.Empty;
+        public string Ocorrencias { get; set; } = new string(' ', 10);
 
     }
 }

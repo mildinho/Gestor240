@@ -31,13 +31,13 @@ namespace Infra.Data.Repositories
                 Where(x => x.Nome.ToLower() == Nome.ToLower()).ToListAsync();
         }
 
-        public override IQueryable<Beneficiario> ListarTodos()
+        public IQueryable<Beneficiario> ListarTodosAgregados()
         {
             return _context.Beneficiario.Include(a => a.UF).Include(b => b.TipoInscricaoEmpresa);
         }
 
 
-        public override async Task<Beneficiario> PesquisarPorIdAsync(int Id)
+        public async Task<Beneficiario> PesquisarPorIdAgregadoAsync(int Id)
         {
             return await _context.Beneficiario.
                 Include(a => a.UF).

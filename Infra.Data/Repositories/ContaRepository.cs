@@ -15,7 +15,7 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public override async Task<Conta> PesquisarPorIdAsync(int Id)
+        public async Task<Conta> PesquisarPorIdAgregadoAsync(int Id)
         {
             return await _context.Conta.Where(x => x.Id == Id).
                 Include(x => x.Agencia).

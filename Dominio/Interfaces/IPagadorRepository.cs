@@ -7,7 +7,7 @@ namespace Dominio.Interfaces
 
         Task<IEnumerable<Pagador>> PesquisarPorCNPJ_CPFAsync(double CNPJ_CPF);
         Task<IEnumerable<Pagador>> PesquisarPorNomeAsync(string Nome);
-
+        IQueryable<Pagador> ListarTodosAgregados();
 
     }
 }

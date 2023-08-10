@@ -22,16 +22,16 @@ namespace Infra.Data.Repositories
 
         public async Task<IQueryable<Financas>> TitulosPorVencimentoSemPagamentoAsync(int Beneficiario, DateTime Inicio, DateTime Fim)
         {
-            return  _context.Financas.
+            return _context.Financas.
                 Where(x => x.BeneficiarioID == Beneficiario &&
-                x.Vencimento >= Inicio && x.Vencimento <= Fim && 
+                x.Vencimento >= Inicio && x.Vencimento <= Fim &&
                 x.Pagamento == null).
                 Include(x => x.Beneficiario).
                 Include(x => x.Pagador).
                 Include(x => x.FormaLancamento).
                 Include(x => x.TipoServico).
-                Include(x => x.Banco);
-                
+                Include(x => x.Banco).OrderBy(x => x.TipoServicoID).ThenBy(x => x.FormaLancamentoID);
+
         }
 
     }

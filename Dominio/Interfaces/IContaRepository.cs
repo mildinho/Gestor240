@@ -1,10 +1,4 @@
 ﻿using Dominio.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio.Interfaces
 {
@@ -12,7 +6,7 @@ namespace Dominio.Interfaces
     {
 
         Task<IEnumerable<Conta>> PesquisarPorContaAsync(int Conta);
-
+        Task<Conta> PesquisarPorIdAgregadoAsync(int Id);
 
     }
 }

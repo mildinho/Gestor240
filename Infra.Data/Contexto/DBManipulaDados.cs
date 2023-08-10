@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using System;
 
 namespace Infra.Data.Contexto
 {
@@ -341,27 +342,67 @@ namespace Infra.Data.Contexto
 
             if (!dbContext.Financas.Any())
             {
-                List<Financas> registros = new();
-                for (int i = 0; i < 200; i++)
-                {
-                    registros.Add(
-                        new Financas
-                        {
-                            BeneficiarioID = 1,
-                            PagadorID = 1,
-                            BancoID = 1,
-                            FormaLancamentoID = 31,
-                            TipoServicoID = 2,
-                            Documento = "DOCUMENTO =>" + i.ToString(),
-                            Parcela = "A",
-                            Emissao = DateTime.Today,
-                            Vencimento = DateTime.Now.AddDays(i),
-                            ValorPrincipal = i * Math.PI,
-                            Abatimento = i / 3,
-                            MoraDia = i
-                        }
+                Random diasPagamento = new Random();
+                Random formaLancamento = new Random();
+                Random tipoServico = new Random();
 
-                    );
+                List<Financas> registros = new();
+                for (int i = 0; i < 500; i++)
+                {
+                    DateTime? dataPagamento = null;
+                    DateTime dataVencimento = DateTime.Now.AddDays(i);
+                    DateTime dataAuxiliar = dataVencimento;
+                    
+                    
+
+                    if ((i % 5) == 0)
+                    {
+                        dataPagamento = dataVencimento.AddDays(diasPagamento.Next(-10, 10));
+                    }
+
+
+                    if (dataPagamento == null)
+                    {
+                        registros.Add(
+                            new Financas
+                            {
+                                BeneficiarioID = 1,
+                                PagadorID = 1,
+                                BancoID = 1,
+                                FormaLancamentoID = formaLancamento.Next(1,34),
+                                TipoServicoID = tipoServico.Next(1, 33),
+                                Documento = "DOCUMENTO =>" + i.ToString(),
+                                Parcela = "A",
+                                Emissao = DateTime.Today,
+                                Vencimento = dataVencimento,
+                                ValorPrincipal = i * Math.PI,
+                                Abatimento = i / 3,
+                                MoraDia = i
+                            }
+                        );
+
+                    }
+                    else
+                    {
+                        registros.Add(
+                            new Financas
+                            {
+                                BeneficiarioID = 1,
+                                PagadorID = 1,
+                                BancoID = 1,
+                                FormaLancamentoID = 31,
+                                TipoServicoID = 2,
+                                Documento = "DOCUMENTO =>" + i.ToString(),
+                                Parcela = "A",
+                                Emissao = DateTime.Today,
+                                Vencimento = dataVencimento,
+                                Pagamento = (DateTime)dataPagamento,
+                                ValorPrincipal = i * Math.PI,
+                                Abatimento = i / 3,
+                                MoraDia = i
+                            }
+                        );
+                    }
 
                 }
 
