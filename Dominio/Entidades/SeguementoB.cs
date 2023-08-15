@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
-    internal class SeguementoB : ModelBase
+    public class SeguementoB : ModelBase
     {
+        #region Controle
+        public string Banco { get; set; } = String.Empty;
+        public string Lote { get; set; } = String.Empty;
+        public string Registro { get; set; } = "3";
+        #endregion
+
+
     }
 }

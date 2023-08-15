@@ -29,5 +29,28 @@ namespace Dominio.Entidades
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(200)]
         public string Descricao { get; set; } = String.Empty;
+
+        public bool Remessa_A { get; set; } = false;
+        public bool Remessa_B { get; set; } = false;
+        public bool Remessa_C { get; set; } = false;
+        public bool Remessa_D { get; set; } = false;
+        public bool Remessa_H { get; set; } = false;
+        public bool Remessa_I { get; set; } = false;
+        public bool Remessa_J { get; set; } = false;
+        public bool Remessa_J52 { get; set; } = false;
+        public bool Remessa_J52Pix { get; set; } = false;
+        public bool Remessa_K { get; set; } = false;
+        public bool Remessa_L { get; set; } = false;
+        public bool Remessa_O { get; set; } = false;
+        public bool Remessa_P { get; set; } = false;
+        public bool Remessa_Q { get; set; } = false;
+        public bool Remessa_R { get; set; } = false;
+        public bool Remessa_S { get; set; } = false;
+        public bool Remessa_W { get; set; } = false;
+        public bool Remessa_Y { get; set; } = false;
+        public bool Remessa_Z { get; set; } = false;
+
+
+
     }
 }

@@ -117,39 +117,52 @@ namespace Infra.Data.Contexto
 
                 var registros = new TipoServico[]
                 {
-                    new TipoServico{Codigo = "01", Descricao = "Cobrança"},
+                    new TipoServico{Codigo = "01", Descricao = "Cobrança", Remessa_P = true, Remessa_Q = true},
+                    new TipoServico{Codigo = "05", Descricao = "Débitos", Remessa_A = true},
+                    new TipoServico{Codigo = "06", Descricao = "Custódia de Cheques", Remessa_D = true},
+                    new TipoServico{Codigo = "08", Descricao = "Consulta / Informação Margem", Remessa_H = true},
+                    new TipoServico{Codigo = "09", Descricao = "Averbação da Consignação / Retenção", Remessa_H = true},
+                    new TipoServico{Codigo = "10", Descricao = "Pagamento de Dividendos", Remessa_A = true},
+                    new TipoServico{Codigo = "11", Descricao = "Manutenção da Consignação", Remessa_H = true},
+                    new TipoServico{Codigo = "12", Descricao = "Consignação de Parcelas", Remessa_H = true},
+                    new TipoServico{Codigo = "13", Descricao = "Glosa de Consignação (INSS)", Remessa_H = true},
+                    new TipoServico{Codigo = "20", Descricao = "Pagamento Fornecedor", Remessa_A = true},
+                    /*
+                     * Quando for Pagamento de Contas, Tributos e Impostos:
+                     *  -Gerar W COM Código de Barras
+                     *  -Gerar B SEM Código de Barras
+                     */
+                    new TipoServico{Codigo = "22", Descricao = "Pagamento de Contas, Tributos e Impostos", Remessa_W = true},
+                    new TipoServico{Codigo = "23", Descricao = "Interoperabilidade entre Contas de Instituições de Pagamentos", Remessa_A = true},
+                    new TipoServico{Codigo = "25", Descricao = "Compror", Remessa_A = true, Remessa_I = true},
+                    new TipoServico{Codigo = "26", Descricao = "Compror Rotativo", Remessa_A = true, Remessa_I = true},
+                    new TipoServico{Codigo = "29", Descricao = "Alegação do Pagador", Remessa_Y = true},
+                    new TipoServico{Codigo = "30", Descricao = "Pagamento de Salários", Remessa_A = true},
+                    new TipoServico{Codigo = "32", Descricao = "Pagamento de Honorários", Remessa_A = true},
+                    new TipoServico{Codigo = "33", Descricao = "Pagamento de Bolsa Auxílio", Remessa_A = true},
+                    new TipoServico{Codigo = "34", Descricao = "Pagamento de Prebenda", Remessa_A = true},
+                    new TipoServico{Codigo = "40", Descricao = "Vendor", Remessa_K = true, Remessa_L = true},
+                    new TipoServico{Codigo = "41", Descricao = "Vendor a Termo", Remessa_K = true, Remessa_L = true},
+                    new TipoServico{Codigo = "50", Descricao = "Pagamento Sinistros Segurados",Remessa_A = true},
+                    new TipoServico{Codigo = "60", Descricao = "Pagamento Despesas Viajante em Trânsito",Remessa_A = true},
+                    new TipoServico{Codigo = "70", Descricao = "Pagamento Autorizado",Remessa_A = true},
+                    new TipoServico{Codigo = "75", Descricao = "Pagamento Credenciados",Remessa_A = true},
+                    new TipoServico{Codigo = "77", Descricao = "Pagamento de Remuneração", Remessa_A = true},
+                    new TipoServico{Codigo = "80", Descricao = "Pagamento de Representantes / Vendedores Autorizados", Remessa_A = true},
+                    new TipoServico{Codigo = "90", Descricao = "Pagamento Benefícios", Remessa_A = true},
+                    new TipoServico{Codigo = "98", Descricao = "Pagamento Diversos", Remessa_A = true},
+
+
+                    /*
+                     * Boleto de Pagamento Eletrônico
+                     * Conciliação Bancária nao tem Remessa
+                     * Gestão de Caixa nao tem Remessa
+                     * Consulta de Tributos a Pagar
+                     */
                     new TipoServico{Codigo = "03", Descricao = "Boleto de Pagamento Eletrônico"},
                     new TipoServico{Codigo = "04", Descricao = "Conciliação Bancária"},
-                    new TipoServico{Codigo = "05", Descricao = "Débitos"},
-                    new TipoServico{Codigo = "06", Descricao = "Custódia de Cheques"},
                     new TipoServico{Codigo = "07", Descricao = "Gestão de Caixa"},
-                    new TipoServico{Codigo = "08", Descricao = "Consulta / Informação Margem"},
-                    new TipoServico{Codigo = "09", Descricao = "Averbação da Consignação / Retenção"},
-                    new TipoServico{Codigo = "10", Descricao = "Pagamento de Dividendos"},
-                    new TipoServico{Codigo = "11", Descricao = "Manutenção da Consignação"},
-                    new TipoServico{Codigo = "12", Descricao = "Consignação de Parcelas"},
-                    new TipoServico{Codigo = "13", Descricao = "Glosa de Consignação (INSS)"},
                     new TipoServico{Codigo = "14", Descricao = "Consulta de Tributos a Pagar"},
-                    new TipoServico{Codigo = "20", Descricao = "Pagamento Fornecedor"},
-                    new TipoServico{Codigo = "22", Descricao = "Pagamento de Contas, Tributos e Impostos"},
-                    new TipoServico{Codigo = "23", Descricao = "Interoperabilidade entre Contas de Instituições de Pagamentos"},
-                    new TipoServico{Codigo = "25", Descricao = "Compror"},
-                    new TipoServico{Codigo = "26", Descricao = "Compror Rotativo"},
-                    new TipoServico{Codigo = "29", Descricao = "Alegação do Pagador"},
-                    new TipoServico{Codigo = "30", Descricao = "Pagamento de Salários"},
-                    new TipoServico{Codigo = "32", Descricao = "Pagamento de Honorários"},
-                    new TipoServico{Codigo = "33", Descricao = "Pagamento de Bolsa Auxílio"},
-                    new TipoServico{Codigo = "34", Descricao = "Pagamento de Prebenda"},
-                    new TipoServico{Codigo = "40", Descricao = "Vendor"},
-                    new TipoServico{Codigo = "41", Descricao = "Vendor a Termo"},
-                    new TipoServico{Codigo = "50", Descricao = "Pagamento Sinistros Segurados"},
-                    new TipoServico{Codigo = "60", Descricao = "Pagamento Despesas Viajante em Trânsito"},
-                    new TipoServico{Codigo = "70", Descricao = "Pagamento Autorizado"},
-                    new TipoServico{Codigo = "75", Descricao = "Pagamento Credenciados"},
-                    new TipoServico{Codigo = "77", Descricao = "Pagamento de Remuneração"},
-                    new TipoServico{Codigo = "80", Descricao = "Pagamento de Representantes / Vendedores Autorizados"},
-                    new TipoServico{Codigo = "90", Descricao = "Pagamento Benefícios"},
-                    new TipoServico{Codigo = "98", Descricao = "Pagamento Diversos"}
                 };
 
                 foreach (var ObjetoRegistro in registros)
@@ -352,8 +365,8 @@ namespace Infra.Data.Contexto
                     DateTime? dataPagamento = null;
                     DateTime dataVencimento = DateTime.Now.AddDays(i);
                     DateTime dataAuxiliar = dataVencimento;
-                    
-                    
+
+
 
                     if ((i % 5) == 0)
                     {
@@ -369,7 +382,7 @@ namespace Infra.Data.Contexto
                                 BeneficiarioID = 1,
                                 PagadorID = 1,
                                 BancoID = 1,
-                                FormaLancamentoID = formaLancamento.Next(1,34),
+                                FormaLancamentoID = formaLancamento.Next(1, 34),
                                 TipoServicoID = tipoServico.Next(1, 33),
                                 Documento = "DOCUMENTO =>" + i.ToString(),
                                 Parcela = "A",

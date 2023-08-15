@@ -50,49 +50,14 @@ namespace Infra.Data.Services
 
             IQueryable<Financas> ObjFinancas = await _UOW.Financas.TitulosPorVencimentoSemPagamentoAsync(IdBeneficiario, Inicio, Fim);
 
-            HeaderArquivo headerArquivo = new HeaderArquivo
+            if (ObjFinancas.Count() <= 0)
             {
-                Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
-                TipoInscricao = beneficiario.TipoInscricaoEmpresa.Codigo.ToString("D1"),
-                CNPJ_CPF = beneficiario.CNPJ_CPF.PadRight(14, ' '),
-                Convenio = conta.NumeroConvenio.PadRight(20, ' '),
-                Agencia = conta.Agencia.NumeroAgencia.ToString("D5"),
-                AgenciaDigito = conta.Agencia.DigitoAgencia.PadRight(1, ' '),
-                Conta = conta.NumeroConta.ToString("D12"),
-                ContaDigito = conta.DigitoConta.PadRight(1, ' '),
-                NomeEmpresa = beneficiario.Nome.PadRight(30, ' '),
-                NomeBanco = conta.Agencia.Banco.Nome.PadRight(30, ' '),
-                Sequencia = conta.Sequencia_NSA.ToString("D6")
-            };
+                return "Não Registro de Finanças para os Parametros Informado";
+            }
 
 
-            HeaderLote headerLote = new HeaderLote
-            {
-                Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
-                TipoInscricao = beneficiario.TipoInscricaoEmpresa.Codigo.ToString("D1"),
-                CNPJ_CPF = beneficiario.CNPJ_CPF.PadRight(14, ' '),
-                Convenio = conta.NumeroConvenio.PadRight(20, ' '),
-                Agencia = conta.Agencia.NumeroAgencia.ToString("D5"),
-                AgenciaDigito = conta.Agencia.DigitoAgencia.PadRight(1, ' '),
-                Conta = conta.NumeroConta.ToString("D12"),
-                ContaDigito = conta.DigitoConta.PadRight(1, ' '),
-                NomeEmpresa = beneficiario.Nome.PadRight(30, ' '),
-                Logradouro = beneficiario.Endereco.PadRight(30, ' '),
-                Numero = beneficiario.Numero.PadRight(5, ' '),
-                Complemento = beneficiario.Complemento.PadRight(15, ' '),
-                Cidade = beneficiario.Cidade.PadRight(20, ' '),
-                CEP = beneficiario.CEP.PadRight(8, ' '),
-                UF = beneficiario.UF.Sigla.PadRight(2, ' '),
 
-            };
-            TrailerLote trailerLote = new();
-
-            TrailerArquivo trailerArquivo = new TrailerArquivo {
-                Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
-            };
-
-
-            string nomeArquivo = await _layout.Remessa_Padrao240(ObjFinancas, conta, headerArquivo, headerLote, trailerLote, trailerArquivo);
+            string nomeArquivo = await _layout.Remessa_Padrao240(ObjFinancas, conta, beneficiario);
 
             return nomeArquivo;
 

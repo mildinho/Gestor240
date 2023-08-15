@@ -10,9 +10,8 @@ namespace Dominio.Interfaces
 {
     public interface ILayout
     {
-        Task<string> Remessa_Padrao240(IEnumerable<Financas> financas, Conta conta, HeaderArquivo headerArquivo, 
-            HeaderLote headerLote, TrailerLote trailerLote, TrailerArquivo trailerArquivo);
+        Task<string> Remessa_Padrao240(IEnumerable<Financas> financas, Conta conta, Beneficiario beneficiario);
 
-        Task Retorno_Padrao240();
+        Task Retorno_Padrao240(string Arquivo);
     }
 }

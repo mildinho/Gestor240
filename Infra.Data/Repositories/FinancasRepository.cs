@@ -30,7 +30,7 @@ namespace Infra.Data.Repositories
                 Include(x => x.Pagador).
                 Include(x => x.FormaLancamento).
                 Include(x => x.TipoServico).
-                Include(x => x.Banco).OrderBy(x => x.TipoServicoID).ThenBy(x => x.FormaLancamentoID);
+                Include(x => x.Banco).OrderBy(x => x.TipoServicoID);
 
         }
 

@@ -1,11 +1,18 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.Text;
 
 namespace Infra.Data.Services
 {
     public class Febraban240 : ILayout
     {
+        private int SequenciaDeLote { get; set; } = 0;
+        private int QtdRegistroLote { get; set; } = 0;
+        private double SomatoriaLote { get; set; } = 0.0;
+        private bool GerarLote { get; set; } = false;
+        private int SequenciaDentroDoLote { get; set; } = 0;
 
         public Febraban240()
         {
@@ -13,28 +20,149 @@ namespace Infra.Data.Services
         }
 
 
-        public Task Retorno_Padrao240()
+        public Task Retorno_Padrao240(string Arquivo)
         {
             throw new NotImplementedException();
         }
 
 
-        public async Task<string> Remessa_Padrao240(IEnumerable<Financas> financas, Conta conta, HeaderArquivo? headerArquivo,
-            HeaderLote? headerLote, TrailerLote? trailerLote, TrailerArquivo? trailerArquivo)
+        public async Task<string> Remessa_Padrao240(IEnumerable<Financas> financas, Conta conta, Beneficiario beneficiario)
         {
-            StringBuilder sb = new();
 
+
+            StringBuilder sb = new();
             string pathFile = Path.Combine(Directory.GetCurrentDirectory(), "arquivos\\remessa\\");
             Directory.CreateDirectory(pathFile);
 
             string fileName = DateTime.Now.ToString("yyyyMMdd_HHmm") + ".rem";
+
+            StreamWriter sw = new StreamWriter(pathFile + fileName, true, Encoding.ASCII);
+
             try
             {
-                StreamWriter sw = new StreamWriter(pathFile + fileName, true, Encoding.ASCII);
+
+                HeaderArquivo headerArquivo = new HeaderArquivo
+                {
+                    Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
+                    TipoInscricao = beneficiario.TipoInscricaoEmpresa.Codigo.ToString("D1"),
+                    CNPJ_CPF = beneficiario.CNPJ_CPF.PadRight(14, ' '),
+                    Convenio = conta.NumeroConvenio.PadRight(20, ' '),
+                    Agencia = conta.Agencia.NumeroAgencia.ToString("D5"),
+                    AgenciaDigito = conta.Agencia.DigitoAgencia.PadRight(1, ' '),
+                    Conta = conta.NumeroConta.ToString("D12"),
+                    ContaDigito = conta.DigitoConta.PadRight(1, ' '),
+                    NomeEmpresa = beneficiario.Nome.PadRight(30, ' '),
+                    NomeBanco = conta.Agencia.Banco.Nome.PadRight(30, ' '),
+                    Sequencia = conta.Sequencia_NSA.ToString("D6")
+                };
 
                 Escreve_HeaderArquivo(sw, headerArquivo);
-                Escreve_HeaderLote(sw, headerLote);
-                Escreve_TrailerLote(sw, trailerLote);
+
+
+
+                this.QtdRegistroLote = 0;
+
+                var ListaServicoID = financas.GroupBy(x => x.TipoServicoID).Select(x => x.Key);
+                foreach (var item in ListaServicoID)
+                {
+                    int tipoServicoId = item;
+                    this.GerarLote = true;
+
+                    foreach (var financa in financas.Where(x => x.TipoServicoID == tipoServicoId))
+                    {
+
+                        if (this.GerarLote)
+                        {
+                            this.QtdRegistroLote++;
+                            this.SequenciaDeLote++;
+                            this.GerarLote = false;
+
+                            HeaderLote headerLote = new HeaderLote
+                            {
+                                Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
+                                Lote = SequenciaDeLote.ToString("D4"),
+                                TipoInscricao = beneficiario.TipoInscricaoEmpresa.Codigo.ToString("D1"),
+                                CNPJ_CPF = beneficiario.CNPJ_CPF.PadRight(14, ' '),
+                                Convenio = conta.NumeroConvenio.PadRight(20, ' '),
+                                Agencia = conta.Agencia.NumeroAgencia.ToString("D5"),
+                                AgenciaDigito = conta.Agencia.DigitoAgencia.PadRight(1, ' '),
+                                Conta = conta.NumeroConta.ToString("D12"),
+                                ContaDigito = conta.DigitoConta.PadRight(1, ' '),
+                                NomeEmpresa = beneficiario.Nome.PadRight(30, ' '),
+                                Logradouro = beneficiario.Endereco.PadRight(30, ' '),
+                                Numero = beneficiario.Numero.PadRight(5, ' '),
+                                Complemento = beneficiario.Complemento.PadRight(15, ' '),
+                                Cidade = beneficiario.Cidade.PadRight(20, ' '),
+                                CEP = beneficiario.CEP.PadRight(8, ' '),
+                                UF = beneficiario.UF.Sigla.PadRight(2, ' '),
+
+                            };
+
+                            Escreve_HeaderLote(sw, headerLote);
+
+
+
+                        }
+
+
+
+                        if (financa.TipoServico.Remessa_A)
+                        {
+                            this.SequenciaDentroDoLote++;
+                            SeguementoA seguementoA = new SeguementoA
+                            {
+                                Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
+                                Lote = SequenciaDeLote.ToString("D4"),
+                                Sequencial_Registro_Lote = SequenciaDentroDoLote.ToString("D5"),
+                            };
+
+                            Escreve_SegmentoA(sw, seguementoA);
+                        }
+
+
+
+
+                        if (financa.TipoServico.Remessa_B)
+                        {
+                            this.SequenciaDentroDoLote++;
+                            SeguementoB seguementoB = new SeguementoB
+                            {
+                                Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
+                                Lote = SequenciaDeLote.ToString("D4"),
+                                
+
+                            };
+
+                            Escreve_SegmentoB(sw, seguementoB);
+                        }
+
+
+
+
+                    }
+                    this.QtdRegistroLote++;
+                    TrailerLote trailerLote = new TrailerLote
+                    {
+                        Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
+                        Lote = SequenciaDeLote.ToString("D4"),
+                        Qtd_Lote = QtdRegistroLote.ToString("D6"),
+                        Somatoria_Valor = SomatoriaLote.ToString().PadLeft(18, '0')
+
+                    };
+                    Escreve_TrailerLote(sw, trailerLote);
+
+
+
+
+                }
+
+
+
+
+                TrailerArquivo trailerArquivo = new TrailerArquivo
+                {
+                    Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
+                };
                 Escreve_TrailerArquivo(sw, trailerArquivo);
 
                 sw.Close();
@@ -126,9 +254,11 @@ namespace Infra.Data.Services
                 sb.Append(headerLote.CNAB_02);
                 sb.Append(headerLote.Ocorrencias);
                 sb.Append('\n');
+
+                await sw.WriteAsync(sb);
+                await sw.FlushAsync();
+
             }
-            await sw.WriteAsync(sb);
-            await sw.FlushAsync();
 
 
         }
@@ -153,10 +283,11 @@ namespace Infra.Data.Services
                 sb.Append(trailerLote.CNAB_02);
                 sb.Append(trailerLote.Ocorrencias);
                 sb.Append('\n');
+
+                await sw.WriteAsync(sb);
+                await sw.FlushAsync();
             }
 
-            await sw.WriteAsync(sb);
-            await sw.FlushAsync();
 
 
         }
@@ -179,12 +310,56 @@ namespace Infra.Data.Services
 
                 sb.Append(trailerArquivo.CNAB_02);
                 sb.Append('\n');
+
+
+                await sw.WriteAsync(sb);
+                await sw.FlushAsync();
             }
 
-            await sw.WriteAsync(sb);
-            await sw.FlushAsync();
         }
 
+
+
+
+        private async void Escreve_SegmentoA(StreamWriter sw, SeguementoA? seguementoA)
+        {
+            StringBuilder sb = new();
+
+            if (seguementoA != null)
+            {
+                sb.Append(seguementoA.Banco);
+                sb.Append(seguementoA.Lote);
+                sb.Append(seguementoA.Registro);
+                sb.Append(seguementoA.CNAB_01);
+
+                sb.Append('\n');
+
+
+                await sw.WriteAsync(sb);
+                await sw.FlushAsync();
+            }
+
+        }
+
+
+
+        private async void Escreve_SegmentoB(StreamWriter sw, SeguementoB? seguementoB)
+        {
+            StringBuilder sb = new();
+
+            if (seguementoB != null)
+            {
+                sb.Append(seguementoB.Banco);
+                sb.Append(seguementoB.Lote);
+                sb.Append(seguementoB.Registro);
+                sb.Append('\n');
+
+
+                await sw.WriteAsync(sb);
+                await sw.FlushAsync();
+            }
+
+        }
 
     }
 

@@ -23,19 +23,18 @@ namespace Dominio.Entidades
 
 
         #region TOTAIS
-        public string Qtd_Lote { get; set; } = String.Empty;
-        public string Somatoria_Valor { get; set; } = String.Empty;
-        public string Qtd_Moeda { get; set; } = String.Empty;
+        public string Qtd_Lote { get; set; } = new string('0', 6);
+        public string Somatoria_Valor { get; set; } = new string('0', 18);
+        public string Qtd_Moeda { get; set; } = new string('0', 18);
         #endregion
 
-        public string Numero_Aviso_Debito { get; set; } = String.Empty;
+        public string Numero_Aviso_Debito { get; set; } = new string('0', 6);
 
         #region CNAB
         public string CNAB_02 { get; set; } = new string(' ', 165);
         #endregion
 
-        [MaxLength(10)]
-        public string Ocorrencias { get; set; } = String.Empty;
+        public string Ocorrencias { get; set; } = new string(' ', 10);
 
 
     }
