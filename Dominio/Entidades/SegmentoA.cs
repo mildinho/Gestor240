@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
-    public class SeguementoA : ModelBase
+    public class SegmentoA : ModelBase
     {
         #region Controle
-        public string Banco { get; set; } = String.Empty;
-        public string Lote { get; set; } = String.Empty;
+        public string Banco { get; set; } = new string('0', 3);
+        public string Lote { get; set; } = new string('0', 4);
         public string Registro { get; set; } = "3";
         #endregion
 

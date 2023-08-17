@@ -109,7 +109,7 @@ namespace Infra.Data.Services
                         if (financa.TipoServico.Remessa_A)
                         {
                             this.SequenciaDentroDoLote++;
-                            SeguementoA seguementoA = new SeguementoA
+                            SegmentoA seguementoA = new SegmentoA
                             {
                                 Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
                                 Lote = SequenciaDeLote.ToString("D4"),
@@ -125,7 +125,7 @@ namespace Infra.Data.Services
                         if (financa.TipoServico.Remessa_B)
                         {
                             this.SequenciaDentroDoLote++;
-                            SeguementoB seguementoB = new SeguementoB
+                            SegmentoB seguementoB = new SegmentoB
                             {
                                 Banco = conta.Agencia.Banco.Codigo.ToString("D3"),
                                 Lote = SequenciaDeLote.ToString("D4"),
@@ -321,7 +321,7 @@ namespace Infra.Data.Services
 
 
 
-        private async void Escreve_SegmentoA(StreamWriter sw, SeguementoA? seguementoA)
+        private async void Escreve_SegmentoA(StreamWriter sw, SegmentoA? seguementoA)
         {
             StringBuilder sb = new();
 
@@ -343,7 +343,7 @@ namespace Infra.Data.Services
 
 
 
-        private async void Escreve_SegmentoB(StreamWriter sw, SeguementoB? seguementoB)
+        private async void Escreve_SegmentoB(StreamWriter sw, SegmentoB? seguementoB)
         {
             StringBuilder sb = new();
 
