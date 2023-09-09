@@ -12,7 +12,7 @@ namespace Dominio.Entidades
 
         [Display(Name = "CNPJ / CPF")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public string CNPJ_CPF { get; set; }
+        public string CNPJ_CPF { get; set; } = String.Empty;
 
 
         [Display(Name = "Nome")]

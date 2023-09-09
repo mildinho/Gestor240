@@ -2,12 +2,6 @@
 using Dominio.Interfaces;
 using Infra.Data.Contexto;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.Data.Repositories
 {
@@ -20,9 +14,9 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAsync(int Banco, int Agencia)
+        public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAsync(int IdBanco, int Agencia)
         {
-            return await _context.Agencia.Where(x => x.BancoId == Banco && x.NumeroAgencia == Agencia).ToListAsync();
+            return await _context.Agencia.Where(x => x.BancoId == IdBanco && x.NumeroAgencia == Agencia).ToListAsync();
         }
 
     }

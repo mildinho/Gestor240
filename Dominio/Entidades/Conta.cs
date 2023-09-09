@@ -20,7 +20,6 @@ namespace Dominio.Entidades
 
         [Display(Name = "Número da Conta Corrente")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [StringLength(12)]
         public int NumeroConta { get; set; } = 0;
 
         [Display(Name = "Dígito da Conta Corrente")]

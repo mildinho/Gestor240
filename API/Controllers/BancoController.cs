@@ -40,7 +40,7 @@ namespace API.Controllers
             IEnumerable<Banco> ObjetoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
             if (ObjetoLista.Any())
             {
-                return BadRequest("O código deste Banco já existe cadastrado!");
+                return BadRequest(Mensagens.MSG_E003);
             }
 
             if (ModelState.IsValid)
@@ -59,7 +59,20 @@ namespace API.Controllers
         public async Task<ActionResult<Banco>> Patch(int Id, Banco tabela)
         {
             if (Id != tabela.Id)
-                return BadRequest("O para ID está diferente do ID do Modelo!");
+                return BadRequest(Mensagens.MSG_E001);
+
+
+            Banco ObjetoPesquisa = await _UOW.Banco.PesquisarPorIdAsync(tabela.Id);
+            if (ObjetoPesquisa == null)
+            {
+                return BadRequest(Mensagens.MSG_E002);
+            }
+            
+            IEnumerable<Banco> ObjetoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
 
 
             if (ModelState.IsValid)

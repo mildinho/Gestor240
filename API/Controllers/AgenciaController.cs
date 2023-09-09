@@ -16,9 +16,9 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<Agencia>> Get(int Banco, int Agencia)
+        public async Task<ActionResult<Agencia>> Get(int IdBanco, int Agencia)
         {
-            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(Banco, Agencia);
+            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(IdBanco, Agencia);
 
             return Ok(Objeto);
         }
@@ -41,7 +41,7 @@ namespace API.Controllers
             IEnumerable<Agencia> ObjetoLista = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(tabela.BancoId, tabela.NumeroAgencia);
             if (ObjetoLista.Any())
             {
-                return BadRequest("O código desta Agencia/Banco/Conta já existe cadastrado!");
+                return BadRequest(Mensagens.MSG_E003);
             }
 
             if (ModelState.IsValid)
@@ -60,7 +60,7 @@ namespace API.Controllers
         public async Task<ActionResult<Agencia>> Patch(int Id, Agencia tabela)
         {
             if (Id != tabela.Id)
-                return BadRequest("O para ID está diferente do ID do Modelo!");
+                return BadRequest(Mensagens.MSG_E001);
 
 
             if (ModelState.IsValid)

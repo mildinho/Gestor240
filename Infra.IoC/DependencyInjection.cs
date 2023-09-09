@@ -19,7 +19,7 @@ namespace Infra.IoC
         public static IServiceCollection AddInfraStructure(this IServiceCollection services, IConfiguration configuration)
         {
 
-            bool Casa = false;
+            bool Casa = true;
             ServerVersion serverVersion;
             if (Casa)
             {

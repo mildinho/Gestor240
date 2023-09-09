@@ -2,7 +2,6 @@
 using Dominio.Interfaces;
 using Infra.Data.Contexto;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace Infra.Data.Repositories
 {
@@ -22,9 +21,9 @@ namespace Infra.Data.Repositories
                 ThenInclude(x => x.Banco).
                 FirstOrDefaultAsync();
         }
-        public async Task<IEnumerable<Conta>> PesquisarPorContaAsync(int Conta)
+        public async Task<IEnumerable<Conta>> PesquisarPorAgenciaContaAsync(int IdAgencia, int Conta)
         {
-            return await _context.Conta.Where(x => x.NumeroConta == Conta ).
+            return await _context.Conta.Where(x => x.AgenciaId == IdAgencia && x.NumeroConta == Conta ).
                 ToListAsync();
         }
 

@@ -10,7 +10,8 @@
 
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }
-        
+        ITipoPixRepository TipoPix { get; }
+
         IFormaLancamentoRepository FormaLancamento { get; }
         ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; }
 

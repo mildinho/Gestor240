@@ -69,8 +69,14 @@ namespace API.Controllers
         public async Task<ActionResult<FormaLancamento>> Patch(int Id, FormaLancamento tabela)
         {
             if (Id != tabela.Id)
-                return BadRequest("O para ID está diferente do ID do Modelo!");
+                return BadRequest(Mensagens.MSG_E001);
 
+
+            FormaLancamento ObjetoPesquisa = await _UOW.FormaLancamento.PesquisarPorIdAsync(tabela.Id);
+            if (ObjetoPesquisa == null)
+            {
+                return BadRequest(Mensagens.MSG_E002);
+            }
 
             if (ModelState.IsValid)
             {

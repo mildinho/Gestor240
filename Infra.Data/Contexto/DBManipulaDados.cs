@@ -302,7 +302,7 @@ namespace Infra.Data.Contexto
                 var registros = new Pagador[]
                 {
                     new Pagador{
-                        CNPJ_CPF = 98514946668,
+                        CNPJ_CPF = "98514946668",
                         Nome = "FERNANDO CASAGRANDE",
                         Fantasia = "LIMPA FOSSA HI-TECH",
                         Endereco = "RUA DAS DALIAS",

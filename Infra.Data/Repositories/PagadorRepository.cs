@@ -14,7 +14,7 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Pagador>> PesquisarPorCNPJ_CPFAsync(double CNPJ_CPF)
+        public async Task<IEnumerable<Pagador>> PesquisarPorCNPJ_CPFAsync(string CNPJ_CPF)
         {
             return await _context.Pagador.Include(a => a.UF).Where(x => x.CNPJ_CPF == CNPJ_CPF).ToListAsync();
         }
