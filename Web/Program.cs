@@ -1,8 +1,17 @@
+using Microsoft.Extensions.DependencyInjection;
+using Web.Interface;
+using Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+
+
+builder.Services.Add_DI(builder.Configuration);
+
 
 var app = builder.Build();
 

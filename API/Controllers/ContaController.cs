@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,20 +16,23 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<Conta>> Get(int IdAgencia, int Conta)
+        public async Task<ActionResult<ContaDTO>> Get(int IdAgencia, int Conta)
         {
             var Objeto = await _UOW.Conta.PesquisarPorAgenciaContaAsync(IdAgencia, Conta);
 
-            return Ok(Objeto);
+            var ObjetoDTO = ContaDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<Conta> GetAll()
+        public ActionResult<ContaDTO> GetAll()
         {
             var Objeto = _UOW.Conta.ListarTodos();
+            var ObjetoDTO = ContaDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 

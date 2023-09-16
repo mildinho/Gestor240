@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,27 +16,29 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<Banco>> Get(int Codigo)
+        public async Task<ActionResult<BancoDTO>> Get(int Codigo)
         {
             var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
+            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<Banco> GetAll()
+        public ActionResult<BancoDTO> GetAll()
         {
             var Objeto = _UOW.Banco.ListarTodos();
+            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<Banco>> Post(Banco tabela)
+        public async Task<ActionResult<BancoDTO>> Post(BancoDTO tabela)
         {
             IEnumerable<Banco> ObjetoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
             if (ObjetoLista.Any())
@@ -45,10 +48,14 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                Banco Objeto = await _UOW.Banco.InserirAsync(tabela);
+                var ObjetoEntitade = BancoDTO.ToEntidade(tabela);
+                Banco Objeto = await _UOW.Banco.InserirAsync(ObjetoEntitade);
 
+                var ObjetoDTO = BancoDTO.ToDTO(Objeto);
+                
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
@@ -56,7 +63,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Banco>> Patch(int Id, Banco tabela)
+        public async Task<ActionResult<BancoDTO>> Patch(int Id, BancoDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -78,10 +85,15 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.Banco.AtualizarAsync(tabela);
+                var ObjetoEntitade = BancoDTO.ToEntidade(tabela);
+                var Objeto = await _UOW.Banco.AtualizarAsync(ObjetoEntitade);
+
+                var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+
+
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();

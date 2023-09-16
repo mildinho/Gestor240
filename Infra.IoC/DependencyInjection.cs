@@ -5,8 +5,6 @@ using Infra.Data.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System.Runtime.CompilerServices;
 
 /*
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
@@ -43,7 +41,6 @@ namespace Infra.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRemessa, Remessa>();
             services.AddScoped<ILayout, Febraban240>();
-
 
             return services;
         }

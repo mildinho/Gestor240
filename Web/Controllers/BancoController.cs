@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Web.Services;
 
 namespace Web.Controllers
@@ -8,20 +7,19 @@ namespace Web.Controllers
     public class BancoController : Controller
     {
 
-        private readonly IConfiguration _configuration;
+        private readonly IntegracaoApi _integracaoApi;
 
-        public BancoController(IConfiguration configuration)
+        public BancoController(IntegracaoApi integracaoApi)
         {
-            _configuration = configuration;
+            _integracaoApi = integracaoApi;
         }
 
         public async Task<IActionResult> Index()
         {
-            IntegracaoApi ret = new(_configuration);
-            List<string> param = new();
+            var retornoApi = await _integracaoApi.GetAPI("Banco/GetAll");
+            var obj =  JsonConvert.DeserializeObject<List<Object>>(retornoApi.data);
 
-            var retornoApi = await ret.GetAPI("Banco/GetAll");
-            return View();
+            return View(retornoApi);
         }
     }
 }

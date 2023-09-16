@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
@@ -16,27 +17,29 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<Agencia>> Get(int IdBanco, int Agencia)
+        public async Task<ActionResult<AgenciaDTO>> Get(int IdBanco, int Agencia)
         {
             var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(IdBanco, Agencia);
-
-            return Ok(Objeto);
+            var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
+            return Ok(ObjetoDTO);
         }
+
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<Agencia> GetAll()
+        public ActionResult<AgenciaDTO> GetAll()
         {
             var Objeto = _UOW.Agencia.ListarTodos();
+            var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<Agencia>> Post(Agencia tabela)
+        public async Task<ActionResult<AgenciaDTO>> Post(AgenciaDTO tabela)
         {
             IEnumerable<Agencia> ObjetoLista = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(tabela.BancoId, tabela.NumeroAgencia);
             if (ObjetoLista.Any())
@@ -46,10 +49,12 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                Agencia Objeto = await _UOW.Agencia.InserirAsync(tabela);
+                var ObjetoEntitade = AgenciaDTO.ToEntidade(tabela);
+                Agencia Objeto = await _UOW.Agencia.InserirAsync(ObjetoEntitade);
+                var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
@@ -57,7 +62,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Agencia>> Patch(int Id, Agencia tabela)
+        public async Task<ActionResult<AgenciaDTO>> Patch(int Id, AgenciaDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -65,11 +70,12 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var Objeto = await _UOW.Agencia.AtualizarAsync(tabela);
+                var ObjetoEntitade = AgenciaDTO.ToEntidade(tabela);
+                var Objeto = await _UOW.Agencia.AtualizarAsync(ObjetoEntitade);
+                var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();

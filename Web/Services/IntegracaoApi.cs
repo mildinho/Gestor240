@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
 using Web.Interface;
@@ -9,6 +11,12 @@ namespace Web.Services
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
+
+
+        public string TokenBearer { get; set; } = string.Empty;
+        public List<string> ParametrosAPI { get; set; } = new List<string>();
+
+
 
         public IntegracaoApi(IConfiguration configuration)
         {
@@ -21,157 +29,102 @@ namespace Web.Services
 
         }
 
-        public async Task<API_Retorno> GetAPI(string nameApi, string token = "")
+
+        public async Task<API_Retorno> GetAPI(string nameApi)
         {
-            if (! String.IsNullOrEmpty(token))
+            foreach (var item in ParametrosAPI)
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                nameApi = string.Concat(nameApi, "/" + item);
+            }
+
+            if (!String.IsNullOrEmpty(TokenBearer))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
             }
 
             var response = await _httpClient.GetAsync(nameApi);
-            var resposta = await Verifica_Acesso(response);
+            var resposta = await Configura_Retorno(response);
 
             return resposta;
         }
 
-        public async Task<API_Retorno> GetAPI(string nameApi, List<string> paramapi, string token = "")
+
+
+        public async Task<API_Retorno> PostAPI<T>(string nameApi, T body)
         {
-            foreach (var item in paramapi)
+            foreach (var item in ParametrosAPI)
             {
                 nameApi = string.Concat(nameApi, "/" + item);
             }
 
-            if (!String.IsNullOrEmpty(token))
+            if (!String.IsNullOrEmpty(TokenBearer))
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            }
-
-            var response = await _httpClient.GetAsync(nameApi);
-            var resposta = await Verifica_Acesso(response);
-
-            return resposta;
-        }
-
-        public async Task<API_Retorno> PostAPI<T>(string nameApi, T body, string token = "")
-        {
-            if (!String.IsNullOrEmpty(token))
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
             }
 
             var response = await _httpClient.PostAsJsonAsync(nameApi, body);
-            var resposta = await Verifica_Acesso(response);
+            var resposta = await Configura_Retorno(response);
 
             return resposta;
         }
 
-        public async Task<API_Retorno> PostAPI<T>(string nameApi, List<string> paramapi, T body, string token = "")
+
+
+        public async Task<API_Retorno> PutAPI<T>(string nameApi, T body)
         {
-            foreach (var item in paramapi)
+            foreach (var item in ParametrosAPI)
             {
                 nameApi = string.Concat(nameApi, "/" + item);
             }
 
-            if (!String.IsNullOrEmpty(token))
+            if (!String.IsNullOrEmpty(TokenBearer))
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            }
-
-            var response = await _httpClient.PostAsJsonAsync(nameApi, body);
-            var resposta = await Verifica_Acesso(response);
-
-            return resposta;
-        }
-
-        public async Task<API_Retorno> PutAPI<T>(string nameApi, T body, string token = "")
-        {
-            if (!String.IsNullOrEmpty(token))
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
             }
 
             var response = await _httpClient.PutAsJsonAsync(nameApi, body);
-            var resposta = await Verifica_Acesso(response);
+            var resposta = await Configura_Retorno(response);
 
             return resposta;
         }
 
-        public async Task<API_Retorno> PutAPI<T>(string nameApi, List<string> paramapi, T body, string token = "")
+
+
+        public async Task<API_Retorno> DeleteAPI(string nameApi)
         {
-            foreach (var item in paramapi)
+            foreach (var item in ParametrosAPI)
             {
                 nameApi = string.Concat(nameApi, "/" + item);
             }
-
-            if (!String.IsNullOrEmpty(token))
+            if (!String.IsNullOrEmpty(TokenBearer))
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            }
-
-            var response = await _httpClient.PutAsJsonAsync(nameApi, body);
-            var resposta = await Verifica_Acesso(response);
-
-            return resposta;
-        }
-
-        public async Task<API_Retorno> DeleteAPI(string nameApi, string token = "")
-        {
-            if (!String.IsNullOrEmpty(token))
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
             }
 
             var response = await _httpClient.DeleteAsync(nameApi);
-            var resposta = await Verifica_Acesso(response);
+            var resposta = await Configura_Retorno(response);
 
             return resposta;
         }
 
-        public async Task<API_Retorno> DeleteAPI(string nameApi, List<string> paramapi, string token = "")
+
+
+        private async Task<API_Retorno> Configura_Retorno(HttpResponseMessage response)
         {
-            foreach (var item in paramapi)
-            {
-                nameApi = string.Concat(nameApi, "/" + item);
-            }
-
-            if (!String.IsNullOrEmpty(token))
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            }
-
-            var response = await _httpClient.DeleteAsync(nameApi);
-            var resposta = await Verifica_Acesso(response);
-
-            return resposta;
-        }
-
-        public async Task<API_Retorno> Verifica_Acesso2(HttpResponseMessage response)
-        {
-            API_Retorno resposta = await response.Content.ReadAsAsync<API_Retorno>();
-        
-            if ((int)response.StatusCode == 401)
-            {
-                resposta.statuscode = 401;
-                resposta.success = false;
-                resposta.mensage = "Acesso Negado";
-            }
-            return resposta;
-        }
-
-        public async Task<API_Retorno> Verifica_Acesso(HttpResponseMessage response)
-        {
-            //API_Retorno resposta = await response.Content.ReadAsAsync<API_Retorno>();
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            List<API_Retorno> resposta = JsonConvert.DeserializeObject<List<API_Retorno>>(jsonString);
+            //API_Retorno resposta = JsonConvert.DeserializeObject<API_Retorno>(jsonString);
 
-            if ((int)response.StatusCode == 401)
+
+            API_Retorno resposta = new API_Retorno
             {
-                resposta[0].statuscode = 401;
-                resposta[0].success = false;
-                resposta[0].mensage = "Acesso Negado";
-            }
-            return resposta[0];
+                data = jsonString,
+                statuscode = (int)response.StatusCode,
+                success = response.IsSuccessStatusCode,
+                message = (int)response.StatusCode == 401 ? "Acesso Negado" : response.StatusCode.ToString()
+            };
+
+            return resposta;
         }
     }
 }
