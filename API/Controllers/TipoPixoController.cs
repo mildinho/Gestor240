@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,19 +16,21 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<TipoPix>> Codigo(string Codigo)
+        public async Task<ActionResult<TipoPixDTO>> Codigo(string Codigo)
         {
             var Objeto = await _UOW.TipoPix.PesquisarPorCodigoAsync(Codigo);
+            var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet("Descricao")]
         public async Task<ActionResult<TipoPix>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.TipoPix.PesquisarPorDescricaoAsync(Descricao);
+            var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
@@ -37,15 +40,16 @@ namespace API.Controllers
         public ActionResult<TipoPix> GetAll()
         {
             var Objeto = _UOW.TipoPix.ListarTodos();
+            var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<TipoPix>> Post(TipoPix tabela)
+        public async Task<ActionResult<TipoPixDTO>> Post(TipoPixDTO tabela)
         {
             IEnumerable<TipoPix> ObjetoLista = await _UOW.TipoPix.PesquisarPorCodigoAsync(tabela.Codigo);
             if (ObjetoLista.Any())
@@ -55,10 +59,14 @@ namespace API.Controllers
 
            if (ModelState.IsValid)
             {
-                TipoPix Objeto = await _UOW.TipoPix.InserirAsync(tabela);
+               
+                var ObjetoEntitade = TipoPixDTO.ToEntidade(tabela);
+                TipoPix Objeto = await _UOW.TipoPix.InserirAsync(ObjetoEntitade);
 
+                var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
@@ -66,7 +74,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<TipoPix>> Patch(int Id, TipoPix tabela)
+        public async Task<ActionResult<TipoPixDTO>> Patch(int Id, TipoPixDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -82,10 +90,13 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.TipoPix.AtualizarAsync(tabela);
+                var ObjetoEntitade = TipoPixDTO.ToEntidade(tabela);
+                TipoPix Objeto = await _UOW.TipoPix.InserirAsync(ObjetoEntitade);
 
+                var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();

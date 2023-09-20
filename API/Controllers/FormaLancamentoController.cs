@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,37 +16,40 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<FormaLancamento>> Codigo(string Codigo)
+        public async Task<ActionResult<FormaLancamentoDTO>> Codigo(string Codigo)
         {
             var Objeto = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(Codigo);
+            var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet("Descricao")]
-        public async Task<ActionResult<FormaLancamento>> Descricao(string Descricao)
+        public async Task<ActionResult<FormaLancamentoDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.FormaLancamento.PesquisarPorDescricaoAsync(Descricao);
+            var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<FormaLancamento> GetAll()
+        public ActionResult<FormaLancamentoDTO> GetAll()
         {
             var Objeto = _UOW.FormaLancamento.ListarTodos();
+            var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<FormaLancamento>> Post(FormaLancamento tabela)
+        public async Task<ActionResult<FormaLancamentoDTO>> Post(FormaLancamentoDTO tabela)
         {
             IEnumerable<FormaLancamento> ObjetoLista = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(tabela.Codigo);
             if (ObjetoLista.Any())
@@ -55,8 +59,11 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                FormaLancamento Objeto = await _UOW.FormaLancamento.InserirAsync(tabela);
+                
+                var ObjetoEntitade = FormaLancamentoDTO.ToEntidade(tabela);
+                FormaLancamento Objeto = await _UOW.FormaLancamento.InserirAsync(ObjetoEntitade);
 
+                var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
 
@@ -66,7 +73,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<FormaLancamento>> Patch(int Id, FormaLancamento tabela)
+        public async Task<ActionResult<FormaLancamentoDTO>> Patch(int Id, FormaLancamentoDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -81,8 +88,11 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.FormaLancamento.AtualizarAsync(tabela);
+                
+                var ObjetoEntitade = FormaLancamentoDTO.ToEntidade(tabela);
+                var Objeto = await _UOW.FormaLancamento.AtualizarAsync(ObjetoEntitade);
 
+                var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
 

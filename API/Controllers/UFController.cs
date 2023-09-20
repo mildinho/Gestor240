@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,35 +16,38 @@ namespace API.Controllers
         }
 
         [HttpGet("Sigla")]
-        public async Task<ActionResult<UF>> Sigla(string Sigla)
+        public async Task<ActionResult<UFDTO>> Sigla(string Sigla)
         {
             var Objeto = await _UOW.UF.PesquisarPorSiglaAsync(Sigla);
+            var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet("Descricao")]
-        public async Task<ActionResult<UF>> Descricao(string Descricao)
+        public async Task<ActionResult<UFDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.UF.PesquisarPorDescricaoAsync(Descricao);
+            var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<UF> GetAll()
+        public ActionResult<UFDTO> GetAll()
         {
             var Objeto = _UOW.UF.ListarTodos();
+            var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<UF>> Post(UF tabela)
+        public async Task<ActionResult<UFDTO>> Post(UFDTO tabela)
         {
             IEnumerable<UF> ObjetoLista = await _UOW.UF.PesquisarPorSiglaAsync(tabela.Sigla);
             if (ObjetoLista.Any())
@@ -53,10 +57,14 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                UF Objeto = await _UOW.UF.InserirAsync(tabela);
+                var ObjetoEntitade = UFDTO.ToEntidade(tabela);
+                UF Objeto = await _UOW.UF.InserirAsync(ObjetoEntitade);
+
+                var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
@@ -64,7 +72,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<UF>> Patch(int Id, UF tabela)
+        public async Task<ActionResult<UFDTO>> Patch(int Id, UFDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest("O para ID está diferente do ID do Modelo!");
@@ -73,10 +81,14 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.UF.AtualizarAsync(tabela);
+                var ObjetoEntitade = UFDTO.ToEntidade(tabela);
+                UF Objeto = await _UOW.UF.InserirAsync(ObjetoEntitade);
+
+                var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();

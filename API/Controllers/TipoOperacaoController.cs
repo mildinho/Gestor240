@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,20 +16,22 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<TipoOperacao>> Codigo(string Codigo)
+        public async Task<ActionResult<TipoOperacaoDTO>> Codigo(string Codigo)
         {
             var Objeto = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(Codigo);
+            var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
         [HttpGet("Descricao")]
-        public async Task<ActionResult<TipoOperacao>> Descricao(string Descricao)
+        public async Task<ActionResult<TipoOperacaoDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.TipoOperacao.PesquisarPorDescricaoAsync(Descricao);
+            var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
+            return Ok(ObjetoDTO);
 
-            return Ok(Objeto);
         }
 
 
@@ -38,8 +41,8 @@ namespace API.Controllers
         public ActionResult<TipoOperacao> GetAll()
         {
             var Objeto =  _UOW.TipoOperacao.ListarTodos();
-
-            return Ok(Objeto);
+            var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 

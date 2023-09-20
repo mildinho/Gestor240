@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,37 +16,40 @@ namespace API.Controllers
         }
 
         [HttpGet("Codigo")]
-        public async Task<ActionResult<TipoInscricaoEmpresa>> Codigo(int Codigo)
+        public async Task<ActionResult<TipoInscricaoEmpresaDTO>> Codigo(int Codigo)
         {
             var Objeto = await _UOW.TipoInscricaoEmpresa.PesquisarPorCodigoAsync(Codigo);
+            var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet("Descricao")]
-        public async Task<ActionResult<TipoInscricaoEmpresa>> Descricao(string Descricao)
+        public async Task<ActionResult<TipoInscricaoEmpresaDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.TipoInscricaoEmpresa.PesquisarPorDescricaoAsync(Descricao);
+            var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<TipoInscricaoEmpresa> GetAll()
+        public ActionResult<TipoInscricaoEmpresaDTO> GetAll()
         {
             var Objeto = _UOW.TipoInscricaoEmpresa.ListarTodos();
+            var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<TipoInscricaoEmpresa>> Post(TipoInscricaoEmpresa tabela)
+        public async Task<ActionResult<TipoInscricaoEmpresaDTO>> Post(TipoInscricaoEmpresaDTO tabela)
         {
             IEnumerable<TipoInscricaoEmpresa> ObjetoLista = await _UOW.TipoInscricaoEmpresa.PesquisarPorCodigoAsync(tabela.Codigo);
             if (ObjetoLista.Any())
@@ -55,7 +59,9 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                TipoInscricaoEmpresa Objeto = await _UOW.TipoInscricaoEmpresa.InserirAsync(tabela);
+                var ObjetoEntitade = TipoInscricaoEmpresaDTO.ToEntidade(tabela);
+                TipoInscricaoEmpresa Objeto = await _UOW.TipoInscricaoEmpresa.InserirAsync(ObjetoEntitade);
+                var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);
@@ -66,7 +72,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<TipoInscricaoEmpresa>> Patch(int Id, TipoInscricaoEmpresa tabela)
+        public async Task<ActionResult<TipoInscricaoEmpresaDTO>> Patch(int Id, TipoInscricaoEmpresaDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -81,7 +87,9 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                var Objeto = await _UOW.TipoInscricaoEmpresa.AtualizarAsync(tabela);
+                var ObjetoEntitade = TipoInscricaoEmpresaDTO.ToEntidade(tabela);
+                TipoInscricaoEmpresa Objeto = await _UOW.TipoInscricaoEmpresa.InserirAsync(ObjetoEntitade);
+                var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
                 return Ok(Objeto);

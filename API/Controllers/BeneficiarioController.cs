@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,35 +17,38 @@ namespace API.Controllers
         }
 
         [HttpGet("CNPJ_CPF")]
-        public async Task<ActionResult<Beneficiario>> CNPJ_CPFAsync(string CNPJ_CPF)
+        public async Task<ActionResult<BeneficiarioDTO>> CNPJ_CPFAsync(string CNPJ_CPF)
         {
             var Objeto = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
+            var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet("Nome")]
-        public async Task<ActionResult<Beneficiario>> Nome(string Nome)
+        public async Task<ActionResult<BeneficiarioDTO>> Nome(string Nome)
         {
             var Objeto = await _UOW.Beneficiario.PesquisarPorNomeAsync(Nome);
+            var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<Beneficiario> GetAll()
+        public ActionResult<BeneficiarioDTO> GetAll()
         {
             var Objeto = _UOW.Beneficiario.ListarTodos();
+            var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<Beneficiario>> Post(Beneficiario tabela)
+        public async Task<ActionResult<Beneficiario>> Post(BeneficiarioDTO tabela)
         {
             IEnumerable<Beneficiario> ObjetoLista = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
             if (ObjetoLista.Any())
@@ -61,10 +65,13 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                Beneficiario Objeto = await _UOW.Beneficiario.InserirAsync(tabela);
+                var ObjetoEntitade = BeneficiarioDTO.ToEntidade(tabela);
+
+                Beneficiario Objeto = await _UOW.Beneficiario.InserirAsync(ObjetoEntitade);
+                var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
@@ -72,7 +79,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Beneficiario>> Patch(int Id, Beneficiario tabela)
+        public async Task<ActionResult<BeneficiarioDTO>> Patch(int Id, BeneficiarioDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -87,11 +94,12 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var Objeto = await _UOW.Beneficiario.AtualizarAsync(tabela);
+                var ObjetoEntitade = BeneficiarioDTO.ToEntidade(tabela);
+                var Objeto = await _UOW.Beneficiario.AtualizarAsync(ObjetoEntitade);
+                var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();

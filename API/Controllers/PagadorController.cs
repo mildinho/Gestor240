@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,35 +17,38 @@ namespace API.Controllers
         }
 
         [HttpGet("CNPJ_CPF")]
-        public async Task<ActionResult<Pagador>> CNPJ_CPFAsync(string CNPJ_CPF)
+        public async Task<ActionResult<PagadorDTO>> CNPJ_CPFAsync(string CNPJ_CPF)
         {
             var Objeto = await _UOW.Pagador.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
+            var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet("Nome")]
-        public async Task<ActionResult<Pagador>> Nome(string Nome)
+        public async Task<ActionResult<PagadorDTO>> Nome(string Nome)
         {
             var Objeto = await _UOW.Pagador.PesquisarPorNomeAsync(Nome);
+            var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<Pagador> GetAll()
+        public ActionResult<PagadorDTO> GetAll()
         {
             var Objeto = _UOW.Pagador.ListarTodos();
+            var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
-            return Ok(Objeto);
+            return Ok(ObjetoDTO);
         }
 
 
 
 
         [HttpPost]
-        public async Task<ActionResult<Pagador>> Post(Pagador tabela)
+        public async Task<ActionResult<Pagador>> Post(PagadorDTO tabela)
         {
             IEnumerable<Pagador> ObjetoLista = await _UOW.Pagador.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
             if (ObjetoLista.Any())
@@ -61,10 +65,13 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                Pagador Objeto = await _UOW.Pagador.InserirAsync(tabela);
+                var ObjetoEntitade = PagadorDTO.ToEntidade(tabela);
+
+                Pagador Objeto = await _UOW.Pagador.InserirAsync(ObjetoEntitade);
+                var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
@@ -72,7 +79,7 @@ namespace API.Controllers
         }
 
         [HttpPatch]
-        public async Task<ActionResult<Pagador>> Patch(int Id, Pagador tabela)
+        public async Task<ActionResult<PagadorDTO>> Patch(int Id, PagadorDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
@@ -87,11 +94,12 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var Objeto = await _UOW.Pagador.AtualizarAsync(tabela);
+                var ObjetoEntitade = PagadorDTO.ToEntidade(tabela);
+                var Objeto = await _UOW.Pagador.AtualizarAsync(ObjetoEntitade);
+                var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
+                return Ok(ObjetoDTO);
 
             }
             return BadRequest();
