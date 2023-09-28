@@ -7,6 +7,7 @@
         IAgenciaRepository Agencia { get; }
         IContaRepository Conta { get; }
         IUFRepository UF { get; }
+        IMunicipioRepository Municipio { get; }
 
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }

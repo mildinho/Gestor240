@@ -14,6 +14,8 @@ namespace Infra.Data.Repositories
         public ITipoOperacaoRepository TipoOperacao { get; private set; }
         public ITipoServicoRepository TipoServico { get; private set; }
         public IUFRepository UF { get; private set; }
+        public IMunicipioRepository Municipio { get; private set; }
+
         public IBeneficiarioRepository Beneficiario { get; private set; }
         public IFormaLancamentoRepository FormaLancamento { get; private set; }
         public ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; private set; }
@@ -37,6 +39,7 @@ namespace Infra.Data.Repositories
             TipoOperacao = new TipoOperacaoRepository(_context);
             TipoServico = new TipoServicoRepository(_context);
             UF = new UFRepository(_context);
+            Municipio = new MunicipioRepository(_context);
             Beneficiario = new BeneficiarioRepository(_context);
             FormaLancamento = new FormaLancamentoRepository(_context);
             TipoInscricaoEmpresa = new TipoInscricaoEmpresaRepository(_context);

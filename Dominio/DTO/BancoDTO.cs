@@ -8,10 +8,10 @@ namespace Dominio.DTO
 
         [Key]
         [Required]
-        [Display(Name = "Código")]
+        [Display(Name = "Id")]
         public int Id { get; set; }
 
-        [Display(Name = "Banco")]
+        [Display(Name = "Código")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Range(1, 999, ErrorMessage = "Valor Deve Entre 1 ~ 999")]
         public int Codigo { get; set; }

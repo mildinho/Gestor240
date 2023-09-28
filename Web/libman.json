@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "material-design-icons@4.0.0",
+      "destination": "wwwroot/lib/material-design-icons/"
+    }
+  ]
+}

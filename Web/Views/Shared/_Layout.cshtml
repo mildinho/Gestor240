@@ -12,6 +12,7 @@
 	<link href="~/thema/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="~/thema/css/ruang-admin.min.css" rel="stylesheet">
 	<link href="~/thema/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -349,7 +350,13 @@
 				<script src="~/thema/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 				@await RenderSectionAsync("Scripts", required: false)
-
+				
+				<script>
+					$(document).ready(function () {
+						$('[data-toggle="tooltip"]').tooltip();
+					});
+				</script>
+				
 				<!-- Page level custom scripts -->
 				<script>
 					$(document).ready(function () {

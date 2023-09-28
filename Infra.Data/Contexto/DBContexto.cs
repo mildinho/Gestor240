@@ -16,6 +16,7 @@ namespace Infra.Data.Contexto
         public DbSet<TipoOperacao> TipoOperacao { get; set; }
         public DbSet<TipoServico> TipoServico { get; set; }
         public DbSet<UF> UF { get; set; }
+        public DbSet<Municipio> Municipio { get; set; }
         public DbSet<Beneficiario> Beneficiario { get; set; }
         public DbSet<FormaLancamento> FormaLancamento { get; set; }
         public DbSet<TipoInscricaoEmpresa> TipoInscricaoEmpresa { get; set; }
