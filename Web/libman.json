@@ -2,10 +2,14 @@
   "version": "1.0",
   "defaultProvider": "cdnjs",
   "libraries": [
+   
     {
-      "provider": "cdnjs",
-      "library": "material-design-icons@4.0.0",
-      "destination": "wwwroot/lib/material-design-icons/"
+      "library": "jquery.mask@1.14.16",
+      "destination": "wwwroot/lib/jquery.mask/"
+    },
+    {
+      "library": "limonte-sweetalert2@11.7.31",
+      "destination": "wwwroot/lib/limonte-sweetalert2/"
     }
   ]
 }

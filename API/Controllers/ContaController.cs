@@ -19,7 +19,10 @@ namespace API.Controllers
         public async Task<ActionResult<ContaDTO>> Get(int IdAgencia, int Conta)
         {
             var Objeto = await _UOW.Conta.PesquisarPorAgenciaContaAsync(IdAgencia, Conta);
-
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = ContaDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

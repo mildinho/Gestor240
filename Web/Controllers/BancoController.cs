@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web.Biblioteca.CRUD;
+using Web.Biblioteca.msgDefault;
+using Web.Biblioteca.Notification;
 using Web.Services;
 
 namespace Web.Controllers
@@ -19,7 +21,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
             var retornoApi = await _integracaoApi.GetAPI("Banco/GetAll");
-            var objRetorno =  JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
+            var objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
 
             return View(objRetorno);
         }
@@ -31,6 +33,139 @@ namespace Web.Controllers
 
             return View("Manutencao");
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Editar(int Id)
+        {
+            List<string> parametros = new();
+            parametros.Add(Id.ToString());
+
+
+            ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
+            _integracaoApi.ParametrosAPI = parametros;
+
+            var retornoApi = await _integracaoApi.GetAPI("Banco/GetbyId");
+            var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
+
+
+
+            return View("Manutencao", objRetorno);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Consultar(int Id)
+        {
+            List<string> parametros = new();
+            parametros.Add(Id.ToString());
+
+
+            ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
+            _integracaoApi.ParametrosAPI = parametros;
+
+            var retornoApi = await _integracaoApi.GetAPI("Banco/GetbyId");
+            if (retornoApi.success)
+            {
+                var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
+                return View("Manutencao", objRetorno);
+            }
+            else
+            {
+                AlertNotification.Error(retornoApi.data);
+                return RedirectToAction(nameof(Index));
+
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Deletar(int Id)
+        {
+            List<string> parametros = new();
+            parametros.Add(Id.ToString());
+
+
+            ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
+            _integracaoApi.ParametrosAPI = parametros;
+
+            var retornoApi = await _integracaoApi.GetAPI("Banco/GetbyId");
+            if (retornoApi.success)
+            {
+                var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
+                return View("Manutencao", objRetorno);
+            }
+            else
+            {
+                AlertNotification.Error(retornoApi.data);
+                return RedirectToAction(nameof(Index));
+
+            }
+            
+
+          
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Manutencao([FromForm] BancoDTO banco, Opcoes operacao)
+        {
+
+
+
+            if (Opcoes.Delete == (Opcoes)operacao)
+            {
+
+                AlertNotification.Warning("dd");
+
+
+                return RedirectToAction(nameof(Index));
+            }
+            else if (ModelState.IsValid)
+            {
+                if (Opcoes.Create == (Opcoes)operacao)
+                {
+                    var retornoApi = await _integracaoApi.PostAPI("Banco", banco);
+                 
+
+                    if (retornoApi.success)
+                    {
+                        AlertNotification.Success(mensagens.MSG_S001);
+                    }
+                    else
+                    {
+                        AlertNotification.Error(retornoApi.data);
+                    }
+                }
+                else if (Opcoes.Update == (Opcoes)operacao)
+                {
+                    var retornoApi = await _integracaoApi.PutAPI("Banco", banco);
+                    if (retornoApi.success)
+                    {
+                        AlertNotification.Success(mensagens.MSG_S002);
+                    }
+                    else
+                    {
+                        AlertNotification.Error(retornoApi.data);
+                    }
+
+
+                }
+
+                return RedirectToAction(nameof(Index));
+
+            }
+
+
+            ViewBag.CRUD = ConfiguraMensagem((Opcoes)operacao);
+
+            return View();
+
+        }
+
 
 
         private CRUD ConfiguraMensagem(Opcoes opcoes)
@@ -75,6 +210,14 @@ namespace Web.Controllers
             }
 
             return objCRUD;
+        }
+
+
+
+        [Route("/PageNotFound")]
+        public IActionResult PageNotFound()
+        {
+            return View();
         }
     }
 }

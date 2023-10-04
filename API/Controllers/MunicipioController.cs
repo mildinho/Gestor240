@@ -20,6 +20,10 @@ namespace API.Controllers
         public async Task<ActionResult<MunicipioDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.Municipio.PesquisarPorDescricaoAsync(Descricao);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

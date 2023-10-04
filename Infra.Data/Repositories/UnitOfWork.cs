@@ -32,7 +32,7 @@ namespace Infra.Data.Repositories
             _context = context;
 
 
-            DBManipulaDados.Cadastrar(context);
+            //DBManipulaDados.Cadastrar(context);
 
 
             Banco = new BancoRepository(_context);

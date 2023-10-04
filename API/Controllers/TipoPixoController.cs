@@ -19,6 +19,10 @@ namespace API.Controllers
         public async Task<ActionResult<TipoPixDTO>> Codigo(string Codigo)
         {
             var Objeto = await _UOW.TipoPix.PesquisarPorCodigoAsync(Codigo);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -28,6 +32,10 @@ namespace API.Controllers
         public async Task<ActionResult<TipoPix>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.TipoPix.PesquisarPorDescricaoAsync(Descricao);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

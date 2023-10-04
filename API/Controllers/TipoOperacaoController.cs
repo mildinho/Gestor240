@@ -19,6 +19,10 @@ namespace API.Controllers
         public async Task<ActionResult<TipoOperacaoDTO>> Codigo(string Codigo)
         {
             var Objeto = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(Codigo);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -29,6 +33,10 @@ namespace API.Controllers
         public async Task<ActionResult<TipoOperacaoDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.TipoOperacao.PesquisarPorDescricaoAsync(Descricao);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
             return Ok(ObjetoDTO);
 

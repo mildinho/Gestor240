@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using Web.Biblioteca.Middleware;
+using Web.Biblioteca.Notification;
 using Web.Interface;
 using Web.Services;
 
@@ -8,12 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-
-
 builder.Services.Add_DI(builder.Configuration);
 
-
 var app = builder.Build();
+
+
+
+
+AlertHandler.SetHttpContextAccessor(new HttpContextAccessor());
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -23,15 +28,34 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/PageNotFound";
+        await next();
+    }
+});
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+//app.UseMiddleware<ValidateAntiForgeryTokenMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+

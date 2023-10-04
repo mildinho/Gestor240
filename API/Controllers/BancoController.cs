@@ -19,9 +19,31 @@ namespace API.Controllers
         public async Task<ActionResult<BancoDTO>> Get(int Codigo)
         {
             var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
+
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+
             var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
+        }
+
+
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<BancoDTO>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.Banco.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+
+            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+
         }
 
         [HttpGet]
@@ -29,6 +51,7 @@ namespace API.Controllers
         public ActionResult<BancoDTO> GetAll()
         {
             var Objeto = _UOW.Banco.ListarTodos();
+           
             var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -52,7 +75,7 @@ namespace API.Controllers
                 Banco Objeto = await _UOW.Banco.InserirAsync(ObjetoEntitade);
 
                 var ObjetoDTO = BancoDTO.ToDTO(Objeto);
-                
+
                 await _UOW.SaveAsync();
 
                 return Ok(ObjetoDTO);
@@ -74,7 +97,7 @@ namespace API.Controllers
             {
                 return BadRequest(Mensagens.MSG_E002);
             }
-            
+
             IEnumerable<Banco> ObjetoLista = await _UOW.Banco.PesquisarPorCodigoAsync(tabela.Codigo);
             if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
             {

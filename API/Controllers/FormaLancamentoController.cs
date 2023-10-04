@@ -18,7 +18,11 @@ namespace API.Controllers
         [HttpGet("Codigo")]
         public async Task<ActionResult<FormaLancamentoDTO>> Codigo(string Codigo)
         {
-            var Objeto = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(Codigo);
+            var Objeto = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(Codigo); 
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -28,6 +32,10 @@ namespace API.Controllers
         public async Task<ActionResult<FormaLancamentoDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.FormaLancamento.PesquisarPorDescricaoAsync(Descricao);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

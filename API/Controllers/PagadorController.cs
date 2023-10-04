@@ -20,6 +20,10 @@ namespace API.Controllers
         public async Task<ActionResult<PagadorDTO>> CNPJ_CPFAsync(string CNPJ_CPF)
         {
             var Objeto = await _UOW.Pagador.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -29,6 +33,10 @@ namespace API.Controllers
         public async Task<ActionResult<PagadorDTO>> Nome(string Nome)
         {
             var Objeto = await _UOW.Pagador.PesquisarPorNomeAsync(Nome);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

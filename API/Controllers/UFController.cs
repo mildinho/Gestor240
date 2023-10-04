@@ -19,6 +19,10 @@ namespace API.Controllers
         public async Task<ActionResult<UFDTO>> Sigla(string Sigla)
         {
             var Objeto = await _UOW.UF.PesquisarPorSiglaAsync(Sigla);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -28,6 +32,10 @@ namespace API.Controllers
         public async Task<ActionResult<UFDTO>> Descricao(string Descricao)
         {
             var Objeto = await _UOW.UF.PesquisarPorDescricaoAsync(Descricao);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
             var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

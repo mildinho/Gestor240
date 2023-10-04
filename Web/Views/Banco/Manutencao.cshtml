@@ -18,38 +18,55 @@
         <input type="hidden" asp-for="Id" />
     }
 
-   
-    <div class="form-group">
-        <label asp-for="Codigo"></label>
+    <div class="row">
 
-        @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
-        {
-            <input asp-for="Codigo" class="form-control" placeholder="Digite o Código do Banco" disabled="disabled">
-        }
-        else
-        {
-            <input asp-for="Codigo" class="form-control" placeholder="Digite o Código do Banco">
-        }
+        <div class="form-group col-2">
+            <label asp-for="Codigo"></label>
 
-        <span asp-validation-for="Codigo" class="text-danger"></span>
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Codigo" class="form-control" placeholder="Digite o Código do Banco" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Codigo" class="form-control" placeholder="Digite o Código do Banco">
+            }
+
+            <span asp-validation-for="Codigo" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-8">
+            <label asp-for="Nome"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Banco" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Nome" class="form-control " placeholder="Digite o Nome do Banco">
+            }
+
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-2">
+            <label asp-for="ISPB"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="ISPB" class="form-control" placeholder="Digite o ISPB do Banco" disabled="disabled">
+            }
+            else
+            {
+            <input asp-for="ISPB" class="form-control " placeholder="Digite o ISPB do Banco">
+            }
+
+            <span asp-validation-for="ISPB" class="text-danger"></span>
+        </div>
     </div>
-
-
-    <div class="form-group">
-        <label asp-for="Nome"></label>
-
-        @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
-        {
-            <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Banco" disabled="disabled">
-        }
-        else
-        {
-            <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Banco">
-        }
-
-        <span asp-validation-for="Nome" class="text-danger"></span>
-    </div>
-
 
     @await Component.InvokeAsync("CRUD_Acao")
 

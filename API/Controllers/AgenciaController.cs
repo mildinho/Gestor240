@@ -20,6 +20,11 @@ namespace API.Controllers
         public async Task<ActionResult<AgenciaDTO>> Get(int IdBanco, int Agencia)
         {
             var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(IdBanco, Agencia);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+
             var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
             return Ok(ObjetoDTO);
         }
