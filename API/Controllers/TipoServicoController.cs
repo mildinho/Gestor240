@@ -14,6 +14,18 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<TipoServico>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.TipoServico.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+            return Ok(Objeto);
+        }
+
+
         [HttpGet("Codigo")]
         public async Task<ActionResult<TipoServico>> Codigo(string Codigo)
         {

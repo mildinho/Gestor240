@@ -2,7 +2,6 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
 
 namespace API.Controllers
 {
@@ -15,6 +14,22 @@ namespace API.Controllers
         {
             _UOW = unitOfWork;
         }
+
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<AgenciaDTO>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.Agencia.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+
+            var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+
+        }
+
 
         [HttpGet("Codigo")]
         public async Task<ActionResult<AgenciaDTO>> Get(int IdBanco, int Agencia)

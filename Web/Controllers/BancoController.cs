@@ -113,6 +113,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] BancoDTO banco, Opcoes operacao)
         {
+            List<string> parametros = new();
 
 
 
@@ -142,6 +143,8 @@ namespace Web.Controllers
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
+                    parametros.Add(banco.Id.ToString());
+
                     var retornoApi = await _integracaoApi.PutAPI("Banco", banco);
                     if (retornoApi.success)
                     {

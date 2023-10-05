@@ -15,21 +15,6 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
-        [HttpGet("Codigo")]
-        public async Task<ActionResult<BancoDTO>> Get(int Codigo)
-        {
-            var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
-
-            if (Objeto == null)
-            {
-                return NotFound("Registro Não Encontrado!");
-            }
-
-            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
-
-            return Ok(ObjetoDTO);
-        }
-
 
         [HttpGet("GetbyId/{Id}")]
         public async Task<ActionResult<BancoDTO>> GetbyId(int Id)
@@ -45,6 +30,23 @@ namespace API.Controllers
             return Ok(ObjetoDTO);
 
         }
+
+
+        [HttpGet("Codigo")]
+        public async Task<ActionResult<BancoDTO>> Get(int Codigo)
+        {
+            var Objeto = await _UOW.Banco.PesquisarPorCodigoAsync(Codigo);
+
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+
+            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+        }
+
 
         [HttpGet]
         [Route("GetAll")]
@@ -85,8 +87,8 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
-        public async Task<ActionResult<BancoDTO>> Patch(int Id, BancoDTO tabela)
+        [HttpPut]
+        public async Task<ActionResult<BancoDTO>> Put(int Id, BancoDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);

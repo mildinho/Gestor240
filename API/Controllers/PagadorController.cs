@@ -16,6 +16,21 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
+
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<PagadorDTO>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.Pagador.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+            var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+        }
+
+
         [HttpGet("CNPJ_CPF")]
         public async Task<ActionResult<PagadorDTO>> CNPJ_CPFAsync(string CNPJ_CPF)
         {

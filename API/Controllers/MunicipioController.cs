@@ -15,7 +15,22 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
-       
+
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<MunicipioDTO>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.Municipio.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+            var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+        }
+
+
+
         [HttpGet("Descricao")]
         public async Task<ActionResult<MunicipioDTO>> Descricao(string Descricao)
         {

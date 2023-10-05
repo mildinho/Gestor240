@@ -89,7 +89,6 @@ namespace Web.Services
         }
 
 
-
         public async Task<API_Retorno> DeleteAPI(string nameApi)
         {
             foreach (var item in ParametrosAPI)

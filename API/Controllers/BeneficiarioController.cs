@@ -16,6 +16,20 @@ namespace API.Controllers
             _UOW = unitOfWork;
         }
 
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<AgenciaDTO>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.Beneficiario.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound("Registro Não Encontrado!");
+            }
+            var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+
+        }
+
         [HttpGet("CNPJ_CPF")]
         public async Task<ActionResult<BeneficiarioDTO>> CNPJ_CPFAsync(string CNPJ_CPF)
         {
@@ -28,6 +42,7 @@ namespace API.Controllers
 
             return Ok(ObjetoDTO);
         }
+
 
         [HttpGet("Nome")]
         public async Task<ActionResult<BeneficiarioDTO>> Nome(string Nome)
