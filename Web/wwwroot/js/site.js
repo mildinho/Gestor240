@@ -147,3 +147,13 @@ function alertsw(mensagem, type) {
     //    timer: 1500
     //});
 }
+
+function alertswinformativo(mensagem, type) {
+    Swal.fire({
+        position: 'top-end',
+        icon: type,
+        title: mensagem,
+        showConfirmButton: false,
+        timer: 1500
+    });
+}

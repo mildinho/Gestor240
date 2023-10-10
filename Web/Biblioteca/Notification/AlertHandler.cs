@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Web.Biblioteca.Notification.AlertNotification;
 
 
 /*
@@ -51,11 +52,23 @@ namespace Web.Biblioteca.Notification
 
             if (obj.Message != null)
             {
-                ret = "<script>\n" +
-                                "$(document).ready(function () {\n" +
-                                String.Join("", "alertsw('" + obj.Message + "','" + obj.Type.ToString().ToLower() + "');") +
-                                "});\n" +
+                if (obj.Type == NotificationType.Success)
+                {
+                    ret = "<script>\n" +
+                            "$(document).ready(function () {\n" +
+                            String.Join("", "alertswinformativo('" + obj.Message + "','" + obj.Type.ToString().ToLower() + "');") +
+                             "});\n" +
                             "</script>";
+
+                }
+                else
+                {
+                    ret = "<script>\n" +
+                                    "$(document).ready(function () {\n" +
+                                    String.Join("", "alertsw('" + obj.Message + "','" + obj.Type.ToString().ToLower() + "');") +
+                                    "});\n" +
+                                "</script>";
+                }
 
             }
             _sessao.HttpContext.Session.Remove(_key);
