@@ -16,6 +16,7 @@ namespace Web.Controllers
         public BancoController(IntegracaoApi integracaoApi)
         {
             _integracaoApi = integracaoApi;
+
         }
 
         public async Task<IActionResult> Index()
@@ -102,9 +103,9 @@ namespace Web.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            
 
-          
+
+
         }
 
 
@@ -120,7 +121,18 @@ namespace Web.Controllers
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-                AlertNotification.Warning("dd");
+                parametros.Add(banco.Id.ToString());
+                _integracaoApi.ParametrosAPI = parametros;
+
+                var retornoApi = await _integracaoApi.DeleteAPI("Banco");
+                if (retornoApi.success)
+                {
+                    AlertNotification.Success(mensagens.MSG_S002);
+                }
+                else
+                {
+                    AlertNotification.Error(retornoApi.data);
+                }
 
 
                 return RedirectToAction(nameof(Index));
@@ -130,7 +142,7 @@ namespace Web.Controllers
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
                     var retornoApi = await _integracaoApi.PostAPI("Banco", banco);
-                 
+
 
                     if (retornoApi.success)
                     {
@@ -144,6 +156,7 @@ namespace Web.Controllers
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
                     parametros.Add(banco.Id.ToString());
+                    _integracaoApi.ParametrosAPI = parametros;
 
                     var retornoApi = await _integracaoApi.PutAPI("Banco", banco);
                     if (retornoApi.success)

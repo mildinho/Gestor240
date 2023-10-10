@@ -87,7 +87,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<BancoDTO>> Put(int Id, BancoDTO tabela)
         {
             if (Id != tabela.Id)

@@ -50,7 +50,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-//app.UseMiddleware<ValidateAntiForgeryTokenMiddleware>();
+app.UseMiddleware<ValidateAntiForgeryTokenMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

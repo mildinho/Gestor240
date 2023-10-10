@@ -66,7 +66,7 @@ namespace Web.Biblioteca.Notification
 
     public class AlertNotification
     {
-        public string Message { get; set; }
+        public string? Message { get; set; }
         public NotificationType Type { get; set; }
 
         public enum NotificationType
@@ -115,6 +115,14 @@ namespace Web.Biblioteca.Notification
             var alertObj = new AlertNotification();
             alertObj.Type = NotificationType.Question;
             alertObj.Message = message;
+            AlertHandler.Add(alertObj);
+        }
+
+        public static void Clear()
+        {
+            var alertObj = new AlertNotification();
+            alertObj.Type = NotificationType.Question;
+            alertObj.Message = null;
             AlertHandler.Add(alertObj);
         }
 

@@ -13,6 +13,9 @@ $(document).ready(function () {
 
     frm_manutencao_delete();
 
+    $('[data-toggle="tooltip"]').tooltip();
+
+
 
     $("#frm_manutencao_update").submit(function (event) {
         document.getElementById('PrecoVenda').value = AjustaPreco('PrecoVenda');
@@ -20,7 +23,18 @@ $(document).ready(function () {
         document.getElementById('PrecoCusto').value = AjustaPreco('PrecoCusto');
     });
 
-   
+    $('#dataTable').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json',
+        },
+    }); // ID From dataTable
+    $('#dataTableHover').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json',
+        },
+    }); // ID From dataTable with Hover
+
+
 });
 
 function AjustaPreco(campo) {
@@ -85,7 +99,7 @@ function buscar_cep() {
 }
 
 function frm_manutencao_delete() {
-    $(".gestor-btn-excluir").click(function (e) {
+    $(".gestor240-btn-excluir").click(function (e) {
 
         e.preventDefault();
 
@@ -115,12 +129,21 @@ function frm_manutencao_delete() {
 };
 
 
-function alertsw(mensagem,type) {
+function alertsw(mensagem, type) {
     Swal.fire(
         {
-            title: '## ATENÇÂO ##',
+            title: ' ATENÇÃO ',
             text: mensagem,
             icon: type
         }
     );
+
+
+    //Swal.fire({
+    //    position: 'top-end',
+    //    icon: type,
+    //    title: mensagem,
+    //    showConfirmButton: false,
+    //    timer: 1500
+    //});
 }
