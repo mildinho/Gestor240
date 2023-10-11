@@ -74,7 +74,7 @@ namespace API.Controllers
             IEnumerable<UF> ObjetoLista = await _UOW.UF.PesquisarPorSiglaAsync(tabela.Sigla);
             if (ObjetoLista.Any())
             {
-                return BadRequest("O código deste UF já existe cadastrado!");
+                return BadRequest(Mensagens.MSG_E003);
             }
 
             if (ModelState.IsValid)
@@ -93,11 +93,23 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
-        public async Task<ActionResult<UFDTO>> Patch(int Id, UFDTO tabela)
+        [HttpPut("{Id}")]
+        public async Task<ActionResult<UFDTO>> Put(int Id, UFDTO tabela)
         {
             if (Id != tabela.Id)
-                return BadRequest("O para ID está diferente do ID do Modelo!");
+                return BadRequest(Mensagens.MSG_E001);
+
+            UF ObjetoPesquisa = await _UOW.UF.PesquisarPorIdAsync(tabela.Id);
+            if (ObjetoPesquisa == null)
+            {
+                return BadRequest(Mensagens.MSG_E002);
+            }
+
+            IEnumerable<UF> ObjetoLista = await _UOW.UF.PesquisarPorSiglaAsync(tabela.Sigla);
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
 
 
             if (ModelState.IsValid)

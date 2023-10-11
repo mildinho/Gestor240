@@ -27,6 +27,7 @@ namespace Dominio.DTO
 
         [Display(Name = "Código Fiscal")]
         [StringLength(02)]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public string CodigoFiscal { get; set; } = String.Empty;
 
 
