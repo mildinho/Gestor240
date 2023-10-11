@@ -23,9 +23,9 @@
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="~/thema/index.html">
                 <div class="sidebar-brand-icon">
-                    <img src="img/logo/logo2.png">
+                    <img src="~/imagens/logo2.png">
                 </div>
-                <div class="sidebar-brand-text mx-3">RuangAdmin</div>
+                <div class="sidebar-brand-text mx-3">GA - 240</div>
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
@@ -355,7 +355,7 @@
                 <script src="~/js/site.js" asp-append-version="true"></script>
                 @await RenderSectionAsync("Scripts", required: false)
 
-                @Html.Raw(AlertHandler.RenderNotifications());
+                @Html.Raw(AlertHandler.RenderNotifications())
 
 
 </body>

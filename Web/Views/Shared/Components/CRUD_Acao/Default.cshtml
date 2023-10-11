@@ -1,11 +1,15 @@
 ﻿@if (ViewBag.Crud.Operacao == Opcoes.Create || ViewBag.Crud.Operacao == Opcoes.Update)
 {
-    <button type="submit" class="btn btn-outline-primary"><i class="fas fa-save"></i> Salvar</button>
+    <button accesskey="s" type="submit" class="btn btn-outline-primary">
+        <i class="fas fa-save"></i> <strong>S</strong>alvar
+    </button>
 }
 
 @if (ViewBag.Crud.Operacao == Opcoes.Delete)
 {
-    <button type="submit" class="btn btn-outline-danger gestor240-btn-excluir"><i class="fas fa-trash-alt" onclick="ChamaExcluir"></i> Excluir</button>
+    <button accesskey="e" type="submit" class="btn btn-outline-danger gestor240-btn-excluir">
+        <i class="fas fa-trash-alt" onclick="ChamaExcluir"></i><strong>E</strong>xcluir
+    </button>
 }
 
-<a asp-action="Index" class="btn btn-outline-info"><i class="fas fa-step-backward"></i> Voltar</a>
+<a asp-action="Index" accesskey="v" class="btn btn-outline-info"><i class="fas fa-step-backward"></i> <strong>V</strong>oltar</a>

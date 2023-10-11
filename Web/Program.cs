@@ -8,7 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+//builder.Services.AddRazorPages()
+builder.Services.AddRazorPages()
+    .AddMvcOptions(options =>
+    {
+        options.MaxModelValidationErrors = 50;
+        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+            _ => "Este Campo é Obrigatório.");
+    }).AddRazorRuntimeCompilation(); ;
 
 builder.Services.Add_DI(builder.Configuration);
 

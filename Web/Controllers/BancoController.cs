@@ -127,7 +127,7 @@ namespace Web.Controllers
                 var retornoApi = await _integracaoApi.DeleteAPI("Banco");
                 if (retornoApi.success)
                 {
-                    AlertNotification.Success(mensagens.MSG_S002);
+                    AlertNotification.Success(mensagens.MSG_S003);
                 }
                 else
                 {
@@ -150,7 +150,12 @@ namespace Web.Controllers
                     }
                     else
                     {
+                        ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
+                      
+                   
                         AlertNotification.Error(retornoApi.data);
+
+                        return View("Manutencao", banco);
                     }
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
@@ -165,7 +170,12 @@ namespace Web.Controllers
                     }
                     else
                     {
+                        ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
+
+
                         AlertNotification.Error(retornoApi.data);
+
+                        return View("Manutencao", banco);
                     }
 
 

@@ -13,7 +13,7 @@ namespace Dominio.DTO
 
         [Display(Name = "Código")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [Range(1, 999, ErrorMessage = "Valor Deve Entre 1 ~ 999")]
+        [Range(1, 999, ErrorMessage = "Valor Deve Ser Entre 1 ~ 999")]
         public int Codigo { get; set; }
 
 
