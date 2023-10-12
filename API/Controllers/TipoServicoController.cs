@@ -20,7 +20,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoServico.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             return Ok(Objeto);
         }
@@ -32,7 +32,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoServico.PesquisarPorCodigoAsync(Codigo);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             return Ok(Objeto);
         }
@@ -43,7 +43,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoServico.PesquisarPorDescricaoAsync(Descricao);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             return Ok(Objeto);
         }
@@ -83,7 +83,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<TipoServico>> Patch(int Id, TipoServico tabela)
         {
             if (Id != tabela.Id)

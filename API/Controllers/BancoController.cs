@@ -22,7 +22,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Banco.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
 
             var ObjetoDTO = BancoDTO.ToDTO(Objeto);
@@ -39,7 +39,7 @@ namespace API.Controllers
 
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
 
             var ObjetoDTO = BancoDTO.ToDTO(Objeto);

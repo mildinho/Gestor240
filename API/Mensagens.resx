@@ -121,7 +121,7 @@
     <value>O ID está diferente do ID do Modelo!</value>
   </data>
   <data name="MSG_E002" xml:space="preserve">
-    <value>Registro Inexistente!</value>
+    <value>Registro Não Encontrado!</value>
   </data>
   <data name="MSG_E003" xml:space="preserve">
     <value>Este código já existe cadastrado!</value>

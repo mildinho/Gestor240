@@ -21,7 +21,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Agencia.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
 
             var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
@@ -37,7 +37,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(IdBanco, Agencia);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
 
             var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
@@ -81,7 +81,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<AgenciaDTO>> Patch(int Id, AgenciaDTO tabela)
         {
             if (Id != tabela.Id)

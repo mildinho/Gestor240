@@ -21,7 +21,7 @@ namespace API.Controllers
             var Objeto = await _UOW.UF.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
@@ -35,7 +35,7 @@ namespace API.Controllers
             var Objeto = await _UOW.UF.PesquisarPorSiglaAsync(Sigla);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
@@ -48,7 +48,7 @@ namespace API.Controllers
             var Objeto = await _UOW.UF.PesquisarPorDescricaoAsync(Descricao);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = UFDTO.ToDTO(Objeto);
 

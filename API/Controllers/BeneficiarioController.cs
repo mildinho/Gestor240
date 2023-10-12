@@ -22,7 +22,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Beneficiario.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
@@ -36,7 +36,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
@@ -50,7 +50,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Beneficiario.PesquisarPorNomeAsync(Nome);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
@@ -82,7 +82,7 @@ namespace API.Controllers
             UF objUF = await _UOW.UF.PesquisarPorIdAsync(tabela.UFId);
             if (objUF == null)
             {
-                return BadRequest("UF não Encontrado!");
+                return BadRequest(Mensagens.MSG_E002);
             }
 
 
@@ -101,7 +101,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<BeneficiarioDTO>> Patch(int Id, BeneficiarioDTO tabela)
         {
             if (Id != tabela.Id)
@@ -111,7 +111,7 @@ namespace API.Controllers
             UF objUF = await _UOW.UF.PesquisarPorIdAsync(tabela.UFId);
             if (objUF == null)
             {
-                return BadRequest("UF não Encontrado!");
+                return BadRequest(Mensagens.MSG_E002);
             }
 
 

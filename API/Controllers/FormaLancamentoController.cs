@@ -21,7 +21,7 @@ namespace API.Controllers
             var Objeto = await _UOW.FormaLancamento.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
@@ -36,7 +36,7 @@ namespace API.Controllers
             var Objeto = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(Codigo); 
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
@@ -49,7 +49,7 @@ namespace API.Controllers
             var Objeto = await _UOW.FormaLancamento.PesquisarPorDescricaoAsync(Descricao);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
 
@@ -95,7 +95,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<FormaLancamentoDTO>> Patch(int Id, FormaLancamentoDTO tabela)
         {
             if (Id != tabela.Id)

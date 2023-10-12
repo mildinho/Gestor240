@@ -7,10 +7,10 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    public class TipoPixoController : Controller
+    public class TipoPixController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public TipoPixoController(IUnitOfWork unitOfWork)
+        public TipoPixController(IUnitOfWork unitOfWork)
         {
             _UOW = unitOfWork;
         }
@@ -21,7 +21,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoPix.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
@@ -35,7 +35,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoPix.PesquisarPorCodigoAsync(Codigo);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
@@ -48,7 +48,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoPix.PesquisarPorDescricaoAsync(Descricao);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
@@ -95,7 +95,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<TipoPixDTO>> Patch(int Id, TipoPixDTO tabela)
         {
             if (Id != tabela.Id)
@@ -113,7 +113,7 @@ namespace API.Controllers
             {
 
                 var ObjetoEntitade = TipoPixDTO.ToEntidade(tabela);
-                TipoPix Objeto = await _UOW.TipoPix.InserirAsync(ObjetoEntitade);
+                TipoPix Objeto = await _UOW.TipoPix.AtualizarAsync(ObjetoEntitade);
 
                 var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();

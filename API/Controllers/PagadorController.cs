@@ -23,7 +23,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Pagador.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
@@ -37,7 +37,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Pagador.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
@@ -50,7 +50,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Pagador.PesquisarPorNomeAsync(Nome);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = PagadorDTO.ToDTO(Objeto);
 
@@ -101,7 +101,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<PagadorDTO>> Patch(int Id, PagadorDTO tabela)
         {
             if (Id != tabela.Id)

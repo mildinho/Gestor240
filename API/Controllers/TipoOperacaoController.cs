@@ -21,7 +21,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoOperacao.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
 
@@ -35,7 +35,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(Codigo);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
 
@@ -49,7 +49,7 @@ namespace API.Controllers
             var Objeto = await _UOW.TipoOperacao.PesquisarPorDescricaoAsync(Descricao);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
             return Ok(ObjetoDTO);
@@ -91,7 +91,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<TipoOperacao>> Patch(int Id, TipoOperacao tabela)
         {
             if (Id != tabela.Id)

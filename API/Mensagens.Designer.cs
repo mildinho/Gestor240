@@ -70,7 +70,7 @@ namespace API {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Registro Inexistente!.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Registro Não Encontrado!.
         /// </summary>
         public static string MSG_E002 {
             get {

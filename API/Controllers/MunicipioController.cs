@@ -22,7 +22,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Municipio.PesquisarPorIdAsync(Id);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
@@ -37,7 +37,7 @@ namespace API.Controllers
             var Objeto = await _UOW.Municipio.PesquisarPorDescricaoAsync(Descricao);
             if (Objeto == null)
             {
-                return NotFound("Registro Não Encontrado!");
+                return NotFound(Mensagens.MSG_E002);
             }
             var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
@@ -82,7 +82,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPut("{Id}")]
         public async Task<ActionResult<MunicipioDTO>> Patch(int Id, MunicipioDTO tabela)
         {
             if (Id != tabela.Id)
