@@ -28,7 +28,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Cadastrar()
+        public IActionResult Cadastrar()
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
 

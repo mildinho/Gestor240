@@ -107,7 +107,12 @@ namespace API.Controllers
             {
                 return BadRequest(Mensagens.MSG_E002);
             }
-
+            IEnumerable<TipoPix> ObjetoLista = await _UOW.TipoPix.PesquisarPorCodigoAsync(tabela.Codigo);
+            
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
 
             if (ModelState.IsValid)
             {

@@ -104,6 +104,13 @@ namespace API.Controllers
                 return BadRequest(Mensagens.MSG_E002);
             }
 
+            IEnumerable<TipoOperacao> ObjetoLista = await _UOW.TipoOperacao.PesquisarPorCodigoAsync(tabela.Codigo);
+
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
+
             if (ModelState.IsValid)
             {
 

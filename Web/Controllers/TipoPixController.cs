@@ -28,7 +28,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Cadastrar()
+        public IActionResult Cadastrar()
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
 
@@ -200,7 +200,7 @@ namespace Web.Controllers
 
             if (opcoes == Opcoes.Information)
             {
-                objCRUD.Titulo = "Unidade Federativa";
+                objCRUD.Titulo = "Tipo Pix";
                 objCRUD.Descricao = "Aqui você poderá configurar o Tipo de Pix";
                 objCRUD.SubTitulo = "Dados para Controlar os Estados";
                 objCRUD.Operacao = Opcoes.Information;
@@ -208,7 +208,7 @@ namespace Web.Controllers
             }
             else if (opcoes == Opcoes.Create)
             {
-                objCRUD.Titulo = "Incluir Unidade Federativa";
+                objCRUD.Titulo = "Incluir Tipo Pix";
                 objCRUD.Descricao = "Aqui você poderá configurar o Tipo de Pix";
                 objCRUD.SubTitulo = "Inserir Novo Tipo de Pix";
                 objCRUD.Operacao = Opcoes.Create;

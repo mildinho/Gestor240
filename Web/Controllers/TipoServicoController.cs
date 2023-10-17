@@ -8,12 +8,12 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class UFController : Controller
+    public class TipoServicoController : Controller
     {
 
         private readonly IntegracaoApi _integracaoApi;
 
-        public UFController(IntegracaoApi integracaoApi)
+        public TipoServicoController(IntegracaoApi integracaoApi)
         {
             _integracaoApi = integracaoApi;
 
@@ -21,8 +21,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<UFDTO>>(retornoApi.data);
+            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetAll");
+            var objRetorno = JsonConvert.DeserializeObject<List<TipoServicoDTO>>(retornoApi.data);
 
             return View(objRetorno);
         }
@@ -47,8 +47,8 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             _integracaoApi.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
+            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetbyId");
+            var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
 
 
 
@@ -66,10 +66,10 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
             _integracaoApi.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetbyId");
+            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetbyId");
             if (retornoApi.success)
             {
-                var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
+                var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
                 return View("Manutencao", objRetorno);
             }
             else
@@ -91,10 +91,10 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
             _integracaoApi.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetbyId");
+            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetbyId");
             if (retornoApi.success)
             {
-                var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
+                var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
                 return View("Manutencao", objRetorno);
             }
             else
@@ -112,7 +112,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Manutencao([FromForm] UFDTO uf, Opcoes operacao)
+        public async Task<IActionResult> Manutencao([FromForm] TipoServicoDTO tipoOperacao, Opcoes operacao)
         {
             List<string> parametros = new();
 
@@ -121,10 +121,10 @@ namespace Web.Controllers
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-                parametros.Add(uf.Id.ToString());
+                parametros.Add(tipoOperacao.Id.ToString());
                 _integracaoApi.ParametrosAPI = parametros;
 
-                var retornoApi = await _integracaoApi.DeleteAPI("UF");
+                var retornoApi = await _integracaoApi.DeleteAPI("TipoServico");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -141,7 +141,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await _integracaoApi.PostAPI("UF", uf);
+                    var retornoApi = await _integracaoApi.PostAPI("TipoServico", tipoOperacao);
 
 
                     if (retornoApi.success)
@@ -155,15 +155,15 @@ namespace Web.Controllers
                    
                         AlertNotification.Error(retornoApi.data);
 
-                        return View("Manutencao", uf);
+                        return View("Manutencao", tipoOperacao);
                     }
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
-                    parametros.Add(uf.Id.ToString());
+                    parametros.Add(tipoOperacao.Id.ToString());
                     _integracaoApi.ParametrosAPI = parametros;
 
-                    var retornoApi = await _integracaoApi.PutAPI("UF", uf);
+                    var retornoApi = await _integracaoApi.PutAPI("TipoServico", tipoOperacao);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -175,7 +175,7 @@ namespace Web.Controllers
 
                         AlertNotification.Error(retornoApi.data);
 
-                        return View("Manutencao", uf);
+                        return View("Manutencao", tipoOperacao);
                     }
 
 
@@ -200,38 +200,38 @@ namespace Web.Controllers
 
             if (opcoes == Opcoes.Information)
             {
-                objCRUD.Titulo = "Unidade Federativa";
-                objCRUD.Descricao = "Aqui você poderá configurar o Estado (UF)";
+                objCRUD.Titulo = "Tipo de Serviço";
+                objCRUD.Descricao = "Aqui você poderá configurar o Tipo de Serviço";
                 objCRUD.SubTitulo = "Dados para Controlar os Estados";
                 objCRUD.Operacao = Opcoes.Information;
 
             }
             else if (opcoes == Opcoes.Create)
             {
-                objCRUD.Titulo = "Incluir Unidade Federativa";
-                objCRUD.Descricao = "Aqui você poderá configurar sua UF";
-                objCRUD.SubTitulo = "Inserir Nova UF";
+                objCRUD.Titulo = "Incluir Tipo de Serviço";
+                objCRUD.Descricao = "Aqui você poderá configurar o Tipo de Serviço";
+                objCRUD.SubTitulo = "Inserir Novo Tipo de Serviço";
                 objCRUD.Operacao = Opcoes.Create;
             }
             else if (opcoes == Opcoes.Update)
             {
-                objCRUD.Titulo = "Alterar UF";
-                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de UF";
-                objCRUD.SubTitulo = "Alterar UF";
+                objCRUD.Titulo = "Alterar Tipo de Serviço";
+                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Tipo de Operaçao";
+                objCRUD.SubTitulo = "Alterar Tipo de Serviço";
                 objCRUD.Operacao = Opcoes.Update;
             }
             else if (opcoes == Opcoes.Delete)
             {
-                objCRUD.Titulo = "Excluir UF";
-                objCRUD.Descricao = "CUIDADO ao Excluir uma UF, Este processo é irreversivel";
-                objCRUD.SubTitulo = "Excluir UF";
+                objCRUD.Titulo = "Excluir Tipo de Serviço";
+                objCRUD.Descricao = "CUIDADO ao Excluir um Tipo de Serviço, Este processo é irreversivel";
+                objCRUD.SubTitulo = "Excluir Tipo de Serviço";
                 objCRUD.Operacao = Opcoes.Delete;
             }
             else if (opcoes == Opcoes.Read)
             {
-                objCRUD.Titulo = "Consultar UF";
-                objCRUD.Descricao = "Aqui você poderá consultar seu Cadastro de UF";
-                objCRUD.SubTitulo = "Consultar UF";
+                objCRUD.Titulo = "Consultar Tipo de Serviço";
+                objCRUD.Descricao = "Aqui você poderá consultar seu Cadastro de Tipo de Serviço";
+                objCRUD.SubTitulo = "Consultar Tipo de Serviço";
                 objCRUD.Operacao = Opcoes.Read;
             }
 
