@@ -8,20 +8,17 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class UFController : Controller
+    public class UFController : _BaseController<UFController>
     {
 
-        private readonly IntegracaoApi _integracaoApi;
-
-        public UFController(IntegracaoApi integracaoApi)
+        public UFController()
         {
-            _integracaoApi = integracaoApi;
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetAll");
+            var retornoApi = await ExecutaAPI.GetAPI("UF/GetAll");
             var objRetorno = JsonConvert.DeserializeObject<List<UFDTO>>(retornoApi.data);
 
             return View(objRetorno);
@@ -45,9 +42,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("UF/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
 
 
@@ -64,9 +61,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI  .ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("UF/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
@@ -89,9 +86,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("UF/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("UF/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
@@ -122,9 +119,9 @@ namespace Web.Controllers
             {
 
                 parametros.Add(uf.Id.ToString());
-                _integracaoApi.ParametrosAPI = parametros;
+                ExecutaAPI.ParametrosAPI = parametros;
 
-                var retornoApi = await _integracaoApi.DeleteAPI("UF");
+                var retornoApi = await ExecutaAPI.DeleteAPI("UF");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -141,7 +138,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await _integracaoApi.PostAPI("UF", uf);
+                    var retornoApi = await ExecutaAPI.PostAPI("UF", uf);
 
 
                     if (retornoApi.success)
@@ -161,9 +158,9 @@ namespace Web.Controllers
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
                     parametros.Add(uf.Id.ToString());
-                    _integracaoApi.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI = parametros;
 
-                    var retornoApi = await _integracaoApi.PutAPI("UF", uf);
+                    var retornoApi = await ExecutaAPI.PutAPI("UF", uf);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -240,10 +237,6 @@ namespace Web.Controllers
 
 
 
-        [Route("/PageNotFound")]
-        public IActionResult PageNotFound()
-        {
-            return View();
-        }
+      
     }
 }

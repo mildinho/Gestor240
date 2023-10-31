@@ -8,20 +8,17 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class BancoController : Controller
+    public class BancoController : _BaseController<BancoController>
     {
 
-        private readonly IntegracaoApi _integracaoApi;
-
-        public BancoController(IntegracaoApi integracaoApi)
+        public BancoController()
         {
-            _integracaoApi = integracaoApi;
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await _integracaoApi.GetAPI("Banco/GetAll");
+            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetAll");
             var objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
 
             return View(objRetorno);
@@ -45,9 +42,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("Banco/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
 
 
@@ -64,9 +61,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("Banco/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
@@ -89,9 +86,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("Banco/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
@@ -122,9 +119,9 @@ namespace Web.Controllers
             {
 
                 parametros.Add(banco.Id.ToString());
-                _integracaoApi.ParametrosAPI = parametros;
+                ExecutaAPI.ParametrosAPI = parametros;
 
-                var retornoApi = await _integracaoApi.DeleteAPI("Banco");
+                var retornoApi = await ExecutaAPI.DeleteAPI("Banco");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -141,7 +138,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await _integracaoApi.PostAPI("Banco", banco);
+                    var retornoApi = await ExecutaAPI.PostAPI("Banco", banco);
 
 
                     if (retornoApi.success)
@@ -151,8 +148,8 @@ namespace Web.Controllers
                     else
                     {
                         ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
-                      
-                   
+
+
                         AlertNotification.Error(retornoApi.data);
 
                         return View("Manutencao", banco);
@@ -161,9 +158,9 @@ namespace Web.Controllers
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
                     parametros.Add(banco.Id.ToString());
-                    _integracaoApi.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI = parametros;
 
-                    var retornoApi = await _integracaoApi.PutAPI("Banco", banco);
+                    var retornoApi = await ExecutaAPI.PutAPI("Banco", banco);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -239,11 +236,5 @@ namespace Web.Controllers
         }
 
 
-
-        [Route("/PageNotFound")]
-        public IActionResult PageNotFound()
-        {
-            return View();
-        }
     }
 }

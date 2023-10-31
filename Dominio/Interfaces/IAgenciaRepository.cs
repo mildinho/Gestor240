@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using System.Reflection.Emit;
 
 namespace Dominio.Interfaces
 {
@@ -6,7 +7,8 @@ namespace Dominio.Interfaces
     {
 
         Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAsync(int IdBanco, int Agencia);
-
+        Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAgregadoAsync(int IdBanco, int Agencia);
+        Task<Agencia> PesquisarPorIdAgregadoAsync(int Id);
 
     }
 }

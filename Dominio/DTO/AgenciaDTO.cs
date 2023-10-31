@@ -16,7 +16,18 @@ namespace Dominio.DTO
         [Display(Name = "Banco")]
         [ForeignKey("Banco")]
         public int BancoId { get; set; }
-        
+
+        [Display(Name = "Código Banco")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Range(1, 999, ErrorMessage = "Valor Deve Ser Entre 1 ~ 999")]
+        public int CodigoBanco { get; set; }
+
+
+        [Display(Name = "Nome do Banco")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [StringLength(30)]
+        public string NomeBanco { get; set; } = String.Empty;
+
 
 
         [Display(Name = "Número da Agência")]
@@ -64,7 +75,10 @@ namespace Dominio.DTO
                     BancoId = item.BancoId,
                     NumeroAgencia = item.NumeroAgencia,
                     DigitoAgencia = item.DigitoAgencia,
-                    Nome = item.Nome
+                    Nome = item.Nome,
+                    CodigoBanco = 237,
+                    NomeBanco = "Bradesco"
+
                 });
             }
             return agenciaDTO;

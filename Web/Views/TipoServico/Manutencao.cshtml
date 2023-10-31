@@ -62,25 +62,255 @@
                 <div class="card-body">
                     <p>Escolhas os Registros a Serem Enviados.</p>
                     <hr />
-                    <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
 
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Enviar Remessa A</label>
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_A" type="checkbox" class="custom-control-input" id="Remessa_A" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_A" type="checkbox" class="custom-control-input" id="Remessa_A">
+                                    }
+                                    <label asp-for="Remessa_A" class="custom-control-label" for="Remessa_A"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_B" type="checkbox" class="custom-control-input" id="Remessa_B" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_B" type="checkbox" class="custom-control-input" id="Remessa_B">
+                                    }
+                                    <label asp-for="Remessa_B" class="custom-control-label" for="Remessa_B"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+
+                                        <input asp-for="Remessa_C" type="checkbox" class="custom-control-input" id="Remessa_C" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_C" type="checkbox" class="custom-control-input" id="Remessa_C">
+                                    }
+                                    <label asp-for="Remessa_C" class="custom-control-label" for="Remessa_C"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_D" type="checkbox" class="custom-control-input" id="Remessa_D" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_D" type="checkbox" class="custom-control-input" id="Remessa_D">
+                                    }
+                                    <label asp-for="Remessa_D" class="custom-control-label" for="Remessa_D"></label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_H" type="checkbox" class="custom-control-input" id="Remessa_H" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_H" type="checkbox" class="custom-control-input" id="Remessa_H">
+                                    }
+                                    <label asp-for="Remessa_H" class="custom-control-label" for="Remessa_H"></label>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-group">
 
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Enviar Remessa B</label>
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_I" type="checkbox" class="custom-control-input" id="Remessa_I" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_I" type="checkbox" class="custom-control-input" id="Remessa_I">
+                                    }
+                                    <label asp-for="Remessa_I" class="custom-control-label" for="Remessa_I"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_J" type="checkbox" class="custom-control-input" id="Remessa_J" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_J" type="checkbox" class="custom-control-input" id="Remessa_J">
+                                    }
+                                    <label asp-for="Remessa_J" class="custom-control-label" for="Remessa_J"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_J" type="checkbox" class="custom-control-input" id="Remessa_J" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_J" type="checkbox" class="custom-control-input" id="Remessa_J">
+                                    }
+                                    <label asp-for="Remessa_J52" class="custom-control-label" for="Remessa_J52"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_J52Pix" type="checkbox" class="custom-control-input" id="Remessa_J52Pix" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_J52Pix" type="checkbox" class="custom-control-input" id="Remessa_J52Pix">
+                                    }
+                                    <label asp-for="Remessa_J52Pix" class="custom-control-label" for="Remessa_J52Pix"></label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_K" type="checkbox" class="custom-control-input" id="Remessa_K" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_K" type="checkbox" class="custom-control-input" id="Remessa_K">
+                                    }
+                                    <label asp-for="Remessa_K" class="custom-control-label" for="Remessa_K"></label>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-group">
 
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Enviar Remessa C</label>
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_L" type="checkbox" class="custom-control-input" id="Remessa_L" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_L" type="checkbox" class="custom-control-input" id="Remessa_L">
+                                    }
+                                    <label asp-for="Remessa_L" class="custom-control-label" for="Remessa_L"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_O" type="checkbox" class="custom-control-input" id="Remessa_O" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_O" type="checkbox" class="custom-control-input" id="Remessa_O">
+                                    }
+                                    <label asp-for="Remessa_O" class="custom-control-label" for="Remessa_O"></label>
+                                </div>
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_P" type="checkbox" class="custom-control-input" id="Remessa_P" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_P" type="checkbox" class="custom-control-input" id="Remessa_P">
+                                    }
+                                    <label asp-for="Remessa_P" class="custom-control-label" for="Remessa_P"></label>
+                                </div>
+
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_Q" type="checkbox" class="custom-control-input" id="Remessa_Q" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_Q" type="checkbox" class="custom-control-input" id="Remessa_Q">
+                                    }
+                                    <label asp-for="Remessa_Q" class="custom-control-label" for="Remessa_Q"></label>
+                                </div>
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_R" type="checkbox" class="custom-control-input" id="Remessa_R" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_R" type="checkbox" class="custom-control-input" id="Remessa_R">
+                                    }
+                                    <label asp-for="Remessa_R" class="custom-control-label" for="Remessa_R"></label>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-group">
 
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_S" type="checkbox" class="custom-control-input" id="Remessa_S" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_S" type="checkbox" class="custom-control-input" id="Remessa_S">
+                                    }
+                                    <label asp-for="Remessa_S" class="custom-control-label" for="Remessa_S"></label>
+                                </div>
+
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_W" type="checkbox" class="custom-control-input" id="Remessa_W" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_W" type="checkbox" class="custom-control-input" id="Remessa_W">
+                                    }
+                                    <label asp-for="Remessa_W" class="custom-control-label" for="Remessa_W"></label>
+                                </div>
+
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_Y" type="checkbox" class="custom-control-input" id="Remessa_Y" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_Y" type="checkbox" class="custom-control-input" id="Remessa_Y">
+                                    }
+                                    <label asp-for="Remessa_Y" class="custom-control-label" for="Remessa_Y"></label>
+                                </div>
+
+
+
+                                <div class="custom-control custom-switch">
+                                    @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+                                    {
+                                        <input asp-for="Remessa_Z" type="checkbox" class="custom-control-input" id="Remessa_Z" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Remessa_Z" type="checkbox" class="custom-control-input" id="Remessa_Z">
+                                    }
+                                    <label asp-for="Remessa_Z" class="custom-control-label" for="Remessa_Z"></label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -24,6 +24,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Agencia\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Agencia\Manutencao.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Biblioteca\msgDefault\mensagens.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>mensagens.Designer.cs</LastGenOutput>

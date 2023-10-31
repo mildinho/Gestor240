@@ -8,20 +8,17 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class TipoPixController : Controller
+    public class TipoPixController : _BaseController<TipoPixController>
     {
 
-        private readonly IntegracaoApi _integracaoApi;
-
-        public TipoPixController(IntegracaoApi integracaoApi)
+        public TipoPixController()
         {
-            _integracaoApi = integracaoApi;
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await _integracaoApi.GetAPI("TipoPix/GetAll");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetAll");
             var objRetorno = JsonConvert.DeserializeObject<List<TipoPixDTO>>(retornoApi.data);
 
             return View(objRetorno);
@@ -45,9 +42,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoPix/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<TipoPixDTO>(retornoApi.data);
 
 
@@ -64,9 +61,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoPix/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<TipoPixDTO>(retornoApi.data);
@@ -89,9 +86,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoPix/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<TipoPixDTO>(retornoApi.data);
@@ -122,9 +119,9 @@ namespace Web.Controllers
             {
 
                 parametros.Add(tipoPix.Id.ToString());
-                _integracaoApi.ParametrosAPI = parametros;
+                ExecutaAPI.ParametrosAPI = parametros;
 
-                var retornoApi = await _integracaoApi.DeleteAPI("TipoPix");
+                var retornoApi = await ExecutaAPI.DeleteAPI("TipoPix");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -141,7 +138,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await _integracaoApi.PostAPI("TipoPix", tipoPix);
+                    var retornoApi = await ExecutaAPI.PostAPI("TipoPix", tipoPix);
 
 
                     if (retornoApi.success)
@@ -161,9 +158,9 @@ namespace Web.Controllers
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
                     parametros.Add(tipoPix.Id.ToString());
-                    _integracaoApi.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI = parametros;
 
-                    var retornoApi = await _integracaoApi.PutAPI("TipoPix", tipoPix);
+                    var retornoApi = await ExecutaAPI.PutAPI("TipoPix", tipoPix);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -240,10 +237,5 @@ namespace Web.Controllers
 
 
 
-        [Route("/PageNotFound")]
-        public IActionResult PageNotFound()
-        {
-            return View();
-        }
     }
 }

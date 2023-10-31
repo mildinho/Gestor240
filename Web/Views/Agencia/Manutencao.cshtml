@@ -1,0 +1,106 @@
+﻿@model AgenciaDTO;
+
+@{
+
+    ViewData["Title"] = ViewBag.Crud.Titulo;
+}
+
+@await Component.InvokeAsync("CRUD")
+
+<form method="post" id="@String.Concat("frm_manutencao_",ViewBag.Crud.Operacao).ToLower()" asp-action="Manutencao">
+
+    <input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
+
+
+
+    @if (ViewBag.Crud.Operacao != Opcoes.Create)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="row">
+        <div class="form-group col-5">
+
+            <label asp-for="BancoId"></label>
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <select asp-for="BancoId" class="select2-single form-control" asp-items="@ViewBag.Bancos" disabled="disabled">
+                    <option value="">Selecione o Banco</option>
+                </select>
+
+            }
+            else
+            {
+                <div class="form-group">
+
+                    <select class="select2-single form-control form-control-lg" name="state" id="select2Single">
+                        <option value="">Escolha o Banco</option>
+                        <option value="Aceh">Aceh</option>
+                        <option value="Sumatra Utara">Sumatra Utara</option>
+                        <option value="Sumatra Barat">Sumatra Barat</option>
+                        <option value="Riau">Riau</option>
+                        <option value="Kepulauan Riau">Kepulauan Riau</option>
+                        <option value="Jambi">Jambi</option>
+                        <option value="Bengkulu">Bengkulu</option>
+                        <option value="Sumatra Selatan">Sumatra Selatan</option>
+                    </select>
+                </div>
+
+            }
+            <span asp-validation-for="BancoId" class="text-danger"></span>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-2">
+            <label asp-for="NumeroAgencia"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="NumeroAgencia" class="form-control" placeholder="Digite o Código da Agência" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="NumeroAgencia" class="form-control" placeholder="Digite o Código da Agência">
+            }
+
+            <span asp-validation-for="NumeroAgencia" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-2">
+            <label asp-for="DigitoAgencia"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="DigitoAgencia" class="form-control" placeholder="Digite o Dígito da Agência" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="DigitoAgencia" class="form-control " placeholder="Digite o Dígito da Agência">
+            }
+
+            <span asp-validation-for="DigitoAgencia" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-8">
+            <label asp-for="Nome"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Nome" class="form-control" placeholder="Digite o Nome da Agência" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Nome" class="form-control " placeholder="Digite o Nome da Agência">
+            }
+
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+    @await Component.InvokeAsync("CRUD_Acao")
+
+</form>

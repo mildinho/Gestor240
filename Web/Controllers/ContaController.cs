@@ -2,7 +2,7 @@
 
 namespace Web.Controllers
 {
-    public class ContaController : Controller
+    public class ContaController : _BaseController<ContaController>
     {
         public IActionResult Index()
         {

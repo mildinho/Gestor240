@@ -8,20 +8,17 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class TipoServicoController : Controller
+    public class TipoServicoController : _BaseController<TipoServicoController>
     {
 
-        private readonly IntegracaoApi _integracaoApi;
-
-        public TipoServicoController(IntegracaoApi integracaoApi)
+        public TipoServicoController()
         {
-            _integracaoApi = integracaoApi;
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetAll");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetAll");
             var objRetorno = JsonConvert.DeserializeObject<List<TipoServicoDTO>>(retornoApi.data);
 
             return View(objRetorno);
@@ -45,9 +42,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
 
 
@@ -64,9 +61,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
@@ -89,9 +86,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoServico/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
@@ -122,9 +119,9 @@ namespace Web.Controllers
             {
 
                 parametros.Add(tipoOperacao.Id.ToString());
-                _integracaoApi.ParametrosAPI = parametros;
+                ExecutaAPI.ParametrosAPI = parametros;
 
-                var retornoApi = await _integracaoApi.DeleteAPI("TipoServico");
+                var retornoApi = await ExecutaAPI.DeleteAPI("TipoServico");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -141,7 +138,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await _integracaoApi.PostAPI("TipoServico", tipoOperacao);
+                    var retornoApi = await ExecutaAPI.PostAPI("TipoServico", tipoOperacao);
 
 
                     if (retornoApi.success)
@@ -161,9 +158,9 @@ namespace Web.Controllers
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
                     parametros.Add(tipoOperacao.Id.ToString());
-                    _integracaoApi.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI = parametros;
 
-                    var retornoApi = await _integracaoApi.PutAPI("TipoServico", tipoOperacao);
+                    var retornoApi = await ExecutaAPI.PutAPI("TipoServico", tipoOperacao);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -239,11 +236,5 @@ namespace Web.Controllers
         }
 
 
-
-        [Route("/PageNotFound")]
-        public IActionResult PageNotFound()
-        {
-            return View();
-        }
     }
 }

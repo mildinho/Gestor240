@@ -8,20 +8,17 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class TipoOperacaoController : Controller
+    public class TipoOperacaoController : _BaseController<TipoOperacaoController>
     {
 
-        private readonly IntegracaoApi _integracaoApi;
-
-        public TipoOperacaoController(IntegracaoApi integracaoApi)
+        public TipoOperacaoController()
         {
-            _integracaoApi = integracaoApi;
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await _integracaoApi.GetAPI("TipoOperacao/GetAll");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetAll");
             var objRetorno = JsonConvert.DeserializeObject<List<TipoOperacaoDTO>>(retornoApi.data);
 
             return View(objRetorno);
@@ -45,9 +42,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoOperacao/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<TipoOperacaoDTO>(retornoApi.data);
 
 
@@ -64,9 +61,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoOperacao/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<TipoOperacaoDTO>(retornoApi.data);
@@ -89,9 +86,9 @@ namespace Web.Controllers
 
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            _integracaoApi.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI = parametros;
 
-            var retornoApi = await _integracaoApi.GetAPI("TipoOperacao/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<TipoOperacaoDTO>(retornoApi.data);
@@ -122,9 +119,9 @@ namespace Web.Controllers
             {
 
                 parametros.Add(tipoOperacao.Id.ToString());
-                _integracaoApi.ParametrosAPI = parametros;
+                ExecutaAPI.ParametrosAPI = parametros;
 
-                var retornoApi = await _integracaoApi.DeleteAPI("TipoOperacao");
+                var retornoApi = await ExecutaAPI.DeleteAPI("TipoOperacao");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -141,7 +138,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await _integracaoApi.PostAPI("TipoOperacao", tipoOperacao);
+                    var retornoApi = await ExecutaAPI.PostAPI("TipoOperacao", tipoOperacao);
 
 
                     if (retornoApi.success)
@@ -161,9 +158,9 @@ namespace Web.Controllers
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
                     parametros.Add(tipoOperacao.Id.ToString());
-                    _integracaoApi.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI = parametros;
 
-                    var retornoApi = await _integracaoApi.PutAPI("TipoOperacao", tipoOperacao);
+                    var retornoApi = await ExecutaAPI.PutAPI("TipoOperacao", tipoOperacao);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -240,10 +237,5 @@ namespace Web.Controllers
 
 
 
-        [Route("/PageNotFound")]
-        public IActionResult PageNotFound()
-        {
-            return View();
-        }
     }
 }

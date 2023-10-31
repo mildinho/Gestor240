@@ -15,6 +15,7 @@ $(document).ready(function () {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    $('.select2-single').select2();
 
 
     $("#frm_manutencao_update").submit(function (event) {

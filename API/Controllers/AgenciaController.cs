@@ -34,7 +34,7 @@ namespace API.Controllers
         [HttpGet("Codigo")]
         public async Task<ActionResult<AgenciaDTO>> Get(int IdBanco, int Agencia)
         {
-            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(IdBanco, Agencia);
+            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgenciaAgregadoAsync(IdBanco, Agencia);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);

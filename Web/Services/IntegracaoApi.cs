@@ -29,6 +29,9 @@ namespace Web.Services
 
         }
 
+        public IntegracaoApi()
+        {
+        }
 
         public async Task<API_Retorno> GetAPI(string nameApi)
         {
