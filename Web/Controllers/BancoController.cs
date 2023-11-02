@@ -37,12 +37,9 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-            List<string> parametros = new();
-            parametros.Add(Id.ToString());
-
-
+           
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            ExecutaAPI.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
@@ -56,12 +53,8 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Consultar(int Id)
         {
-            List<string> parametros = new();
-            parametros.Add(Id.ToString());
-
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            ExecutaAPI.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
             if (retornoApi.success)
@@ -81,12 +74,8 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Deletar(int Id)
         {
-            List<string> parametros = new();
-            parametros.Add(Id.ToString());
-
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            ExecutaAPI.ParametrosAPI = parametros;
+            ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
             if (retornoApi.success)
@@ -111,15 +100,10 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] BancoDTO banco, Opcoes operacao)
         {
-            List<string> parametros = new();
-
-
-
-            if (Opcoes.Delete == (Opcoes)operacao)
+               if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-                parametros.Add(banco.Id.ToString());
-                ExecutaAPI.ParametrosAPI = parametros;
+                  ExecutaAPI.ParametrosAPI.Add(banco.Id.ToString());
 
                 var retornoApi = await ExecutaAPI.DeleteAPI("Banco");
                 if (retornoApi.success)
@@ -157,8 +141,7 @@ namespace Web.Controllers
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
-                    parametros.Add(banco.Id.ToString());
-                    ExecutaAPI.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI.Add(banco.Id.ToString());
 
                     var retornoApi = await ExecutaAPI.PutAPI("Banco", banco);
                     if (retornoApi.success)

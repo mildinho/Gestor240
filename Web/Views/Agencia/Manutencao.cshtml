@@ -33,16 +33,8 @@
             {
                 <div class="form-group">
 
-                    <select class="select2-single form-control form-control-lg" name="state" id="select2Single">
+                    <select asp-for="BancoId" class="select2-single form-control form-control-lg" name="state" id="select2Single" asp-items="@ViewBag.Bancos">
                         <option value="">Escolha o Banco</option>
-                        <option value="Aceh">Aceh</option>
-                        <option value="Sumatra Utara">Sumatra Utara</option>
-                        <option value="Sumatra Barat">Sumatra Barat</option>
-                        <option value="Riau">Riau</option>
-                        <option value="Kepulauan Riau">Kepulauan Riau</option>
-                        <option value="Jambi">Jambi</option>
-                        <option value="Bengkulu">Bengkulu</option>
-                        <option value="Sumatra Selatan">Sumatra Selatan</option>
                     </select>
                 </div>
 

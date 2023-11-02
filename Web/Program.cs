@@ -6,6 +6,8 @@ using Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseKestrel();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //builder.Services.AddRazorPages()

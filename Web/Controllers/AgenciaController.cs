@@ -30,12 +30,8 @@ namespace Web.Controllers
         public async Task<IActionResult> Cadastrar()
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
-            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetAll");
-            List<BancoDTO> objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
+            ViewBag.Bancos = await ListaBancos();
 
-            ViewBag.Bancos = objRetorno.Select(a => new SelectListItem(a.Codigo.ToString() + " - " + a.Nome, a.Id.ToString()));
-
-            
             return View("Manutencao");
         }
 
@@ -44,17 +40,15 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-            List<string> parametros = new();
-            parametros.Add(Id.ToString());
-
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            ExecutaAPI.ParametrosAPI = parametros;
+            ViewBag.Bancos = await ListaBancos();
+
+
+            ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<AgenciaDTO>(retornoApi.data);
-
-
 
             return View("Manutencao", objRetorno);
         }
@@ -63,17 +57,16 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Consultar(int Id)
         {
-            List<string> parametros = new();
-            parametros.Add(Id.ToString());
-
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            ExecutaAPI.ParametrosAPI = parametros;
+            ViewBag.Bancos = await ListaBancos();
+
+            ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<AgenciaDTO>(retornoApi.data);
+
                 return View("Manutencao", objRetorno);
             }
             else
@@ -88,17 +81,16 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Deletar(int Id)
         {
-            List<string> parametros = new();
-            parametros.Add(Id.ToString());
-
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            ExecutaAPI.ParametrosAPI = parametros;
+            ViewBag.Bancos = await ListaBancos();
+
+            ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetbyId");
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<AgenciaDTO>(retornoApi.data);
+
                 return View("Manutencao", objRetorno);
             }
             else
@@ -108,8 +100,6 @@ namespace Web.Controllers
 
             }
 
-
-
         }
 
 
@@ -118,15 +108,11 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] AgenciaDTO agencia, Opcoes operacao)
         {
-            List<string> parametros = new();
-
-
-
+            ViewBag.Bancos = await ListaBancos();
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-                parametros.Add(agencia.Id.ToString());
-                ExecutaAPI.ParametrosAPI = parametros;
+                ExecutaAPI.ParametrosAPI.Add(agencia.Id.ToString());
 
                 var retornoApi = await ExecutaAPI.DeleteAPI("Agencia");
                 if (retornoApi.success)
@@ -158,14 +144,13 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-
+              
                         return View("Manutencao", agencia);
                     }
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
-                    parametros.Add(agencia.Id.ToString());
-                    ExecutaAPI.ParametrosAPI = parametros;
+                    ExecutaAPI.ParametrosAPI.Add(agencia.Id.ToString());
 
                     var retornoApi = await ExecutaAPI.PutAPI("Agencia", agencia);
                     if (retornoApi.success)
@@ -178,6 +163,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
+                      
 
                         return View("Manutencao", agencia);
                     }
@@ -244,6 +230,16 @@ namespace Web.Controllers
 
 
 
-     
+
+        private async Task<IEnumerable<SelectListItem>> ListaBancos()
+        {
+            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetAll");
+            List<BancoDTO> objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
+
+            ViewBag.Bancos = objRetorno.Select(a => new SelectListItem(a.Codigo.ToString() + " - " + a.Nome, a.Id.ToString()));
+
+            return ViewBag.Bancos;
+        }
+
     }
 }
