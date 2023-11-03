@@ -15,6 +15,7 @@ namespace Dominio.DTO
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Display(Name = "Banco")]
         [ForeignKey("Banco")]
+        [Range(1, 999, ErrorMessage = "Valor Deve Entre 1 ~ 999")]
         public int BancoId { get; set; }
 
         [Display(Name = "Código Banco")]
@@ -24,7 +25,6 @@ namespace Dominio.DTO
 
 
         [Display(Name = "Nome do Banco")]
-        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(30)]
         public string NomeBanco { get; set; } = String.Empty;
 
@@ -32,7 +32,6 @@ namespace Dominio.DTO
 
         [Display(Name = "Número da Agência")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [StringLength(5)]
         public int NumeroAgencia { get; set; } = 0;
 
         [Display(Name = "Dígito da Agência")]
@@ -42,6 +41,8 @@ namespace Dominio.DTO
 
 
         [Display(Name = "Nome")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [StringLength(30)]
         public string Nome { get; set; } = String.Empty;
 
 

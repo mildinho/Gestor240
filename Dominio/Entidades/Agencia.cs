@@ -20,7 +20,6 @@ namespace Dominio.Entidades
 
         [Display(Name = "Número da Agência")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [StringLength(5)]
         public int NumeroAgencia { get; set; } = 0;
 
         [Display(Name = "Dígito da Agência")]
@@ -30,6 +29,8 @@ namespace Dominio.Entidades
 
 
         [Display(Name = "Nome")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [StringLength(30)]
         public string Nome { get; set; } = String.Empty;
 
 
