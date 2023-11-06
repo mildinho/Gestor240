@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio.Entidades
 {
-  
-   
+
+    [Index(nameof(BancoId), nameof(NumeroAgencia), nameof(DigitoAgencia), IsUnique = true)]
+
     public class Agencia : ModelBase
     {
 

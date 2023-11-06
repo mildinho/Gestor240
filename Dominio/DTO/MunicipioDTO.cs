@@ -16,12 +16,24 @@ namespace Dominio.DTO
         [Display(Name = "UF")]
         [ForeignKey("UF")]
         public int UFId { get; set; }
-      
 
-        [Display(Name = "Descrição")]
+
+
+        [Display(Name = "UF")]
+        [StringLength(2)]
+        public string SiglaUF { get; set; } = String.Empty;
+
+
+        [Display(Name = "Nome da UF")]
+        [StringLength(50)]
+        public string NomeUF { get; set; } = String.Empty;
+
+
+
+        [Display(Name = "Nome")]
         [StringLength(100)]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public string Descricao { get; set; } = String.Empty;
+        public string Nome { get; set; } = String.Empty;
 
 
 
@@ -41,7 +53,7 @@ namespace Dominio.DTO
             {
                 Id = municipioDTO.Id,
                 UFId = municipioDTO.UFId,
-                Descricao = municipioDTO.Descricao,
+                Nome = municipioDTO.Nome,
                 CodigoFiscal = municipioDTO.CodigoFiscal
 
             };
@@ -58,8 +70,10 @@ namespace Dominio.DTO
                 {
                     Id = item.Id,
                     UFId = item.UFId,
-                    Descricao = item.Descricao,
-                    CodigoFiscal = item.CodigoFiscal
+                    Nome = item.Nome,
+                    CodigoFiscal = item.CodigoFiscal,
+                    SiglaUF = item.UF.Sigla,
+                    NomeUF = item.UF.Descricao
                 });
             }
             return municipioDTO;
@@ -72,8 +86,10 @@ namespace Dominio.DTO
             {
                 Id = municipio.Id,
                 UFId = municipio.UFId,
-                Descricao = municipio.Descricao,
-                CodigoFiscal = municipio.CodigoFiscal
+                Nome = municipio.Nome,
+                CodigoFiscal = municipio.CodigoFiscal,
+                SiglaUF = municipio.UF.Sigla,
+                NomeUF = municipio.UF.Descricao
             };
         }
     }

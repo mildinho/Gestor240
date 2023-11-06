@@ -19,8 +19,6 @@ namespace Dominio.DTO
         public int BancoId { get; set; }
 
         [Display(Name = "Código Banco")]
-        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [Range(1, 999, ErrorMessage = "Valor Deve Ser Entre 1 ~ 999")]
         public int CodigoBanco { get; set; }
 
 
@@ -77,8 +75,8 @@ namespace Dominio.DTO
                     NumeroAgencia = item.NumeroAgencia,
                     DigitoAgencia = item.DigitoAgencia,
                     Nome = item.Nome,
-                    CodigoBanco = 237,
-                    NomeBanco = "Bradesco"
+                    CodigoBanco = item.Banco.Codigo,
+                    NomeBanco = item.Banco.Nome
 
                 });
             }

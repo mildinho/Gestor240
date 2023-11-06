@@ -47,9 +47,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<AgenciaDTO> GetAll()
+        public async Task<ActionResult<AgenciaDTO>> GetAll()
         {
-            var Objeto = _UOW.Agencia.ListarTodos();
+            var Objeto = await _UOW.Agencia.ListarTodosAgregados();
             var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -82,11 +82,22 @@ namespace API.Controllers
         }
 
         [HttpPut("{Id}")]
-        public async Task<ActionResult<AgenciaDTO>> Patch(int Id, AgenciaDTO tabela)
+        public async Task<ActionResult<AgenciaDTO>> Put(int Id, AgenciaDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
 
+            Agencia ObjetoPesquisa = await _UOW.Agencia.PesquisarPorIdAsync(tabela.Id);
+            if (ObjetoPesquisa == null)
+            {
+                return BadRequest(Mensagens.MSG_E002);
+            }
+
+            IEnumerable<Agencia> ObjetoLista = await _UOW.Agencia.PesquisarPorBancoAgenciaAsync(tabela.BancoId, tabela.NumeroAgencia);
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
 
             if (ModelState.IsValid)
             {

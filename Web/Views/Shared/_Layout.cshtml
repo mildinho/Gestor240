@@ -16,7 +16,7 @@
     <link href="~/thema/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/limonte-sweetalert2/sweetalert2.min.css" />
-    
+
 </head>
 
 <body id="page-top">
@@ -43,14 +43,14 @@
 
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" asp-controller="Remessa" asp-action="Index">
                     <i class="fas fa-file-upload"></i>
                     <span>Remessa</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" asp-controller="Retorno" asp-action="Index">
                     <i class="fas fa-file-download"></i>
                     <span>Retorno</span>
                 </a>
@@ -63,14 +63,14 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" asp-controller="Beneficiario" asp-action="Index">
                     <i class="fas fa-user-tie"></i>
                     <span>Beneficiário</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" asp-controller="Pagador" asp-action="Index">
                     <i class="fas fa-users"></i>
                     <span>Pagador</span>
                 </a>
@@ -102,6 +102,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Dados Febraban</h6>
                         <a class="collapse-item" asp-controller="UF" asp-action="Index">Unidade Federativa</a>
+                        <a class="collapse-item" asp-controller="Municipio" asp-action="Index">Município</a>
 
                         <hr class="sidebar-divider">
 

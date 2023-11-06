@@ -46,9 +46,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<MunicipioDTO> GetAll()
+        public async Task<ActionResult<MunicipioDTO>> GetAll()
         {
-            var Objeto = _UOW.Municipio.ListarTodos();
+            var Objeto = await _UOW.Municipio.ListarTodosAgregados();
             var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -60,10 +60,10 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<MunicipioDTO>> Post(MunicipioDTO tabela)
         {
-            IEnumerable<Municipio> ObjetoLista = await _UOW.Municipio.PesquisarPorDescricaoAsync(tabela.Descricao);
+            IEnumerable<Municipio> ObjetoLista = await _UOW.Municipio.PesquisarPorDescricaoAsync(tabela.Nome);
             if (ObjetoLista.Any())
             {
-                return BadRequest("O código deste UF já existe cadastrado!");
+                return BadRequest(Mensagens.MSG_E003);
             }
 
             if (ModelState.IsValid)
@@ -83,11 +83,16 @@ namespace API.Controllers
         }
 
         [HttpPut("{Id}")]
-        public async Task<ActionResult<MunicipioDTO>> Patch(int Id, MunicipioDTO tabela)
+        public async Task<ActionResult<MunicipioDTO>> Put(int Id, MunicipioDTO tabela)
         {
             if (Id != tabela.Id)
-                return BadRequest("O para ID está diferente do ID do Modelo!");
+                return BadRequest(Mensagens.MSG_E001);
 
+            Municipio ObjetoPesquisa = await _UOW.Municipio.PesquisarPorIdAsync(tabela.Id);
+            if (ObjetoPesquisa == null)
+            {
+                return BadRequest(Mensagens.MSG_E002);
+            }
 
             if (ModelState.IsValid)
             {

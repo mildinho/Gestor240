@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Dominio.Entidades
 {
 
-    [Index(nameof(Descricao))]
+    [Index(nameof(Nome))]
+    [Index(nameof(UFId), nameof(Nome), IsUnique = true)]
+
     public class Municipio : ModelBase
     {
 
@@ -16,10 +18,10 @@ namespace Dominio.Entidades
         public virtual UF? UF { get; set; }
 
 
-        [Display(Name = "Descrição")]
+        [Display(Name = "Nome")]
         [StringLength(100)]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)] 
-        public string Descricao { get; set; } = String.Empty;
+        public string Nome { get; set; } = String.Empty;
 
 
 

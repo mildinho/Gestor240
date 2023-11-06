@@ -12,6 +12,7 @@ namespace Dominio.Interfaces
     {
 
         Task<IEnumerable<Municipio>> PesquisarPorDescricaoAsync(string Descricao);
-
+        Task<Municipio> PesquisarPorIdAgregadoAsync(int Id);
+        Task<IQueryable<Municipio>> ListarTodosAgregados();
     }
 }

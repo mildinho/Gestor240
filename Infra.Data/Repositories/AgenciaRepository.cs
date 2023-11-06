@@ -3,6 +3,8 @@ using Dominio.Interfaces;
 using Infra.Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
+using System.Linq;
+using System;
 
 namespace Infra.Data.Repositories
 {
@@ -37,6 +39,10 @@ namespace Infra.Data.Repositories
              
         }
 
-
+        public async Task<IQueryable<Agencia>> ListarTodosAgregados()
+        {
+            var urls = await _context.Agencia.Include( a=> a.Banco).ToListAsync();
+            return urls.AsQueryable();
+        }
     }
 }
