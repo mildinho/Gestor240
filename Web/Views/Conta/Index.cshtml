@@ -1,5 +1,106 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* 
 @{
+    @model IEnumerable<ContaDTO>
+    ViewData["Title"] = "Cadastro de Contas";
 }
+
+<div id="wrapper">
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- Container Fluid-->
+            <div class="container-fluid" id="container-wrapper">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Conta Financeira</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                        <li class="breadcrumb-item">Conta</li>
+                    </ol>
+                </div>
+
+                <!-- Row -->
+                <div class="row">
+                    <!-- DataTable with Hover -->
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Contas</h6>
+
+
+                                <a asp-action="Cadastrar" asp-controller="Conta" class="btn btn-outline-primary btn-sm mb-1"> <strong>Novo Registro</strong></a>
+
+                            </div>
+                            <div class="table-responsive p-3">
+                                <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th> @Html.DisplayNameFor(model => model.Id)</th>
+                                            <th> @Html.DisplayNameFor(model => model.CodigoBanco)</th>
+                                            <th> @Html.DisplayNameFor(model => model.NomeBanco)</th>
+                                            <th> @Html.DisplayNameFor(model => model.NumeroAgencia)</th>
+                                            <th> @Html.DisplayNameFor(model => model.DigitoAgencia)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Nome)</th>
+                                            <th> Ação</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th> @Html.DisplayNameFor(model => model.Id)</th>
+                                            <th> @Html.DisplayNameFor(model => model.CodigoBanco)</th>
+                                            <th> @Html.DisplayNameFor(model => model.NomeBanco)</th>
+                                            <th> @Html.DisplayNameFor(model => model.NumeroAgencia)</th>
+                                            <th> @Html.DisplayNameFor(model => model.DigitoAgencia)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Nome)</th>
+                                            <th> Ação</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (ContaDTO conta in Model)
+                                        {
+                                            <tr>
+                                                <td>@conta.Id</td>
+                                                <td>@conta.CodigoBanco</td>
+                                                <td>@conta.NomeBanco</td>
+                                                <td>@conta.NumeroAgencia</td>
+                                                <td>@conta.DigitoAgencia</td>
+                                                <td>@conta.Nome</td>
+                                                <td>
+
+                                                    <a asp-action="Editar" asp-route-id="@conta.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Editar">
+                                                        <span class="material-symbols-outlined">
+                                                            box_edit
+                                                        </span>
+                                                    </a>
+                                                    <a asp-action="Consultar" asp-route-id="@conta.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Consultar">
+                                                        <span class="material-symbols-outlined">
+                                                            dictionary
+                                                        </span>
+                                                    </a>
+                                                    <a asp-action="Deletar" asp-route-id="@conta.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Excluir">
+                                                        <span class="material-symbols-outlined">
+                                                            delete_forever
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Row-->
+
+
+
+
+            </div>
+            <!---Container Fluid-->
+        </div>
+
+
+    </div>
+</div>
+ *@

@@ -17,26 +17,43 @@ namespace Infra.IoC
         public static IServiceCollection AddInfraStructure(this IServiceCollection services, IConfiguration configuration)
         {
 
-            bool Casa = true;
             ServerVersion serverVersion;
-            if (Casa)
+
+            string ConfiguracaoDB = "MYSQL";
+
+            if (configuration.GetConnectionString("BancoDados").ToUpper().Length > 0)
+                ConfiguracaoDB = configuration.GetConnectionString("BancoDados").ToUpper();
+
+
+
+            if (ConfiguracaoDB == "MYSQL" || ConfiguracaoDB == "MARIADB")
             {
-                serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+                if (ConfiguracaoDB == "MYSQL")
+                {
+                    serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+                }
+                else
+                {
+                    serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+                }
+
+                services.AddDbContext<DBContexto>(options =>
+                    {
+                        options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                        options.UseMySql(configuration.GetConnectionString("ConexaoDB"),
+                            serverVersion,
+                            builder => builder.MigrationsAssembly("API"));
+                    });
             }
             else
             {
-                serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(configuration.GetConnectionString("ConexaoDB")));
+                services.AddDbContext<DBContexto>(options =>
+                {
+                    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                    options.UseSqlServer(configuration.GetConnectionString("ConexaoDB"));
+
+                });
             }
-
-
-            services.AddDbContext<DBContexto>(options =>
-            {
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-                options.UseMySql(configuration.GetConnectionString("ConexaoDB"), serverVersion,
-                builder => builder.MigrationsAssembly("API"));
-
-            });
-
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRemessa, Remessa>();
