@@ -11,7 +11,8 @@ namespace Dominio.Interfaces
     public interface IMunicipioRepository : IGenericoRepository<Municipio>
     {
 
-        Task<IEnumerable<Municipio>> PesquisarPorDescricaoAsync(string Descricao);
+        Task<IEnumerable<Municipio>> PesquisarPorMunicipioAsync(string Municipio);
+        Task<IEnumerable<Municipio>> PesquisarPorUFMunicipioAgregadoAsync(int IdUF, string Municipio);
         Task<Municipio> PesquisarPorIdAgregadoAsync(int Id);
         Task<IQueryable<Municipio>> ListarTodosAgregados();
     }

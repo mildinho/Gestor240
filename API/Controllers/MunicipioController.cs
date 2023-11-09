@@ -19,7 +19,7 @@ namespace API.Controllers
         [HttpGet("GetbyId/{Id}")]
         public async Task<ActionResult<MunicipioDTO>> GetbyId(int Id)
         {
-            var Objeto = await _UOW.Municipio.PesquisarPorIdAsync(Id);
+            var Objeto = await _UOW.Municipio.PesquisarPorIdAgregadoAsync(Id);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
@@ -34,7 +34,7 @@ namespace API.Controllers
         [HttpGet("Descricao")]
         public async Task<ActionResult<MunicipioDTO>> Descricao(string Descricao)
         {
-            var Objeto = await _UOW.Municipio.PesquisarPorDescricaoAsync(Descricao);
+            var Objeto = await _UOW.Municipio.PesquisarPorMunicipioAsync(Descricao);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
@@ -60,7 +60,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<MunicipioDTO>> Post(MunicipioDTO tabela)
         {
-            IEnumerable<Municipio> ObjetoLista = await _UOW.Municipio.PesquisarPorDescricaoAsync(tabela.Nome);
+            IEnumerable<Municipio> ObjetoLista = await _UOW.Municipio.PesquisarPorUFMunicipioAgregadoAsync(tabela.UFId,tabela.Nome);
             if (ObjetoLista.Any())
             {
                 return BadRequest(Mensagens.MSG_E003);
@@ -70,10 +70,11 @@ namespace API.Controllers
             {
                 var ObjetoEntitade = MunicipioDTO.ToEntidade(tabela);
                 Municipio Objeto = await _UOW.Municipio.InserirAsync(ObjetoEntitade);
-
-                var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
-
+              
                 await _UOW.SaveAsync();
+
+                Objeto = await _UOW.Municipio.PesquisarPorIdAgregadoAsync(Objeto.Id);
+                var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
                 return Ok(ObjetoDTO);
 
@@ -88,24 +89,30 @@ namespace API.Controllers
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);
 
-            Municipio ObjetoPesquisa = await _UOW.Municipio.PesquisarPorIdAsync(tabela.Id);
+            Municipio ObjetoPesquisa = await _UOW.Municipio.PesquisarPorIdAgregadoAsync(tabela.Id);
             if (ObjetoPesquisa == null)
             {
                 return BadRequest(Mensagens.MSG_E002);
             }
 
+            IEnumerable<Municipio> ObjetoLista = await _UOW.Municipio.PesquisarPorUFMunicipioAgregadoAsync(tabela.UFId, tabela.Nome);
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
             if (ModelState.IsValid)
             {
 
                 var ObjetoEntitade = MunicipioDTO.ToEntidade(tabela);
-                Municipio Objeto = await _UOW.Municipio.InserirAsync(ObjetoEntitade);
+                Municipio Objeto = await _UOW.Municipio.AtualizarAsync(ObjetoEntitade);
+                await _UOW.SaveAsync();
+
+
+                Objeto = await _UOW.Municipio.PesquisarPorIdAgregadoAsync(tabela.Id);
 
                 var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
-                await _UOW.SaveAsync();
-
                 return Ok(ObjetoDTO);
-
             }
             return BadRequest();
 

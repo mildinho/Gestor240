@@ -1,5 +1,4 @@
-﻿@* 
-@{
+﻿@{
     @model IEnumerable<ContaDTO>
     ViewData["Title"] = "Cadastro de Contas";
 }
@@ -35,11 +34,12 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th> @Html.DisplayNameFor(model => model.Id)</th>
-                                            <th> @Html.DisplayNameFor(model => model.CodigoBanco)</th>
-                                            <th> @Html.DisplayNameFor(model => model.NomeBanco)</th>
-                                            <th> @Html.DisplayNameFor(model => model.NumeroAgencia)</th>
-                                            <th> @Html.DisplayNameFor(model => model.DigitoAgencia)</th>
-                                            <th> @Html.DisplayNameFor(model => model.Nome)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Banco_Codigo)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Banco_Nome)</th>
+                                            <th> @Html.DisplayNameFor(model => model.NumeroConta)</th>
+                                            <th> @Html.DisplayNameFor(model => model.DigitoConta)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Beneficiario_CNPJ_CPF)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Beneficiario_Nome)</th>
                                             <th> Ação</th>
 
                                         </tr>
@@ -47,11 +47,12 @@
                                     <tfoot>
                                         <tr>
                                             <th> @Html.DisplayNameFor(model => model.Id)</th>
-                                            <th> @Html.DisplayNameFor(model => model.CodigoBanco)</th>
-                                            <th> @Html.DisplayNameFor(model => model.NomeBanco)</th>
-                                            <th> @Html.DisplayNameFor(model => model.NumeroAgencia)</th>
-                                            <th> @Html.DisplayNameFor(model => model.DigitoAgencia)</th>
-                                            <th> @Html.DisplayNameFor(model => model.Nome)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Banco_Codigo)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Banco_Nome)</th>
+                                            <th> @Html.DisplayNameFor(model => model.NumeroConta)</th>
+                                            <th> @Html.DisplayNameFor(model => model.DigitoConta)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Beneficiario_CNPJ_CPF)</th>
+                                            <th> @Html.DisplayNameFor(model => model.Beneficiario_Nome)</th>
                                             <th> Ação</th>
                                         </tr>
                                     </tfoot>
@@ -60,11 +61,12 @@
                                         {
                                             <tr>
                                                 <td>@conta.Id</td>
-                                                <td>@conta.CodigoBanco</td>
-                                                <td>@conta.NomeBanco</td>
-                                                <td>@conta.NumeroAgencia</td>
-                                                <td>@conta.DigitoAgencia</td>
-                                                <td>@conta.Nome</td>
+                                                <td>@conta.Banco_Codigo</td>
+                                                <td>@conta.Banco_Nome</td>
+                                                <td>@conta.NumeroConta</td>
+                                                <td>@conta.DigitoConta</td>
+                                                <td>@conta.Beneficiario_CNPJ_CPF</td>
+                                                <td>@conta.Beneficiario_Nome</td>
                                                 <td>
 
                                                     <a asp-action="Editar" asp-route-id="@conta.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Editar">
@@ -103,4 +105,4 @@
 
     </div>
 </div>
- *@
+ 

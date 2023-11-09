@@ -31,6 +31,7 @@ namespace Web.Controllers
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
             ViewBag.Bancos = await ListaBancos();
+            ViewBag.Agencias = await ListaAgencias();
 
             return View("Manutencao");
         }
@@ -43,6 +44,7 @@ namespace Web.Controllers
 
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ViewBag.Bancos = await ListaBancos();
+            ViewBag.Agencias = await ListaAgencias();
 
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
@@ -59,6 +61,7 @@ namespace Web.Controllers
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
             ViewBag.Bancos = await ListaBancos();
+            ViewBag.Agencias = await ListaAgencias();
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
@@ -83,6 +86,7 @@ namespace Web.Controllers
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
             ViewBag.Bancos = await ListaBancos();
+            ViewBag.Agencias = await ListaAgencias();
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
@@ -190,38 +194,38 @@ namespace Web.Controllers
 
             if (opcoes == Opcoes.Information)
             {
-                objCRUD.Titulo = "Agência";
-                objCRUD.Descricao = "Aqui você poderá configurar sua Agência";
-                objCRUD.SubTitulo = "Dados para Controlar sua Agência";
+                objCRUD.Titulo = "Conta";
+                objCRUD.Descricao = "Aqui você poderá configurar sua Conta";
+                objCRUD.SubTitulo = "Dados para Controlar sua Conta";
                 objCRUD.Operacao = Opcoes.Information;
 
             }
             else if (opcoes == Opcoes.Create)
             {
-                objCRUD.Titulo = "Incluir Agência Financeira";
-                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Agência Financeira";
-                objCRUD.SubTitulo = "Inserir Nova Agência";
+                objCRUD.Titulo = "Incluir Conta Financeira";
+                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Conta Financeira";
+                objCRUD.SubTitulo = "Inserir Nova Conta";
                 objCRUD.Operacao = Opcoes.Create;
             }
             else if (opcoes == Opcoes.Update)
             {
-                objCRUD.Titulo = "Alterar Agência Financeira";
-                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Agência Financeira";
-                objCRUD.SubTitulo = "Alterar Agência Financeira";
+                objCRUD.Titulo = "Alterar Conta Financeira";
+                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Conta Financeira";
+                objCRUD.SubTitulo = "Alterar Conta Financeira";
                 objCRUD.Operacao = Opcoes.Update;
             }
             else if (opcoes == Opcoes.Delete)
             {
-                objCRUD.Titulo = "Excluir Agência Financeira";
-                objCRUD.Descricao = "CUIDADO ao Excluir uma Agência, Este processo é irreversivel";
-                objCRUD.SubTitulo = "Excluir Agência Financeira";
+                objCRUD.Titulo = "Excluir Conta Financeira";
+                objCRUD.Descricao = "CUIDADO ao Excluir uma Conta, Este processo é irreversivel";
+                objCRUD.SubTitulo = "Excluir Conta Financeira";
                 objCRUD.Operacao = Opcoes.Delete;
             }
             else if (opcoes == Opcoes.Read)
             {
-                objCRUD.Titulo = "Consultar Agência Financeira";
-                objCRUD.Descricao = "Aqui você poderá consultar sua Agência Financeira";
-                objCRUD.SubTitulo = "Consultar Agência Financeira";
+                objCRUD.Titulo = "Consultar Conta Financeira";
+                objCRUD.Descricao = "Aqui você poderá consultar sua Conta Financeira";
+                objCRUD.SubTitulo = "Consultar Conta Financeira";
                 objCRUD.Operacao = Opcoes.Read;
             }
 
@@ -239,6 +243,16 @@ namespace Web.Controllers
             ViewBag.Bancos = objRetorno.Select(a => new SelectListItem(a.Codigo.ToString() + " - " + a.Nome, a.Id.ToString()));
 
             return ViewBag.Bancos;
+        }
+
+        private async Task<IEnumerable<SelectListItem>> ListaAgencias()
+        {
+            var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetAll");
+            List<AgenciaDTO> objRetorno = JsonConvert.DeserializeObject<List<AgenciaDTO>>(retornoApi.data);
+
+            ViewBag.Agencias = objRetorno.Select(a => new SelectListItem(a.NumeroAgencia.ToString() + " - " + a.DigitoAgencia + " - " + a.Nome, a.Id.ToString()));
+
+            return ViewBag.Agencias;
         }
 
     }

@@ -1,4 +1,4 @@
-﻿@model AgenciaDTO;
+﻿@model ContaDTO;
 
 @{
 
@@ -32,8 +32,8 @@
             else
             {
                 <div class="form-group">
- 
-                    <select asp-for="BancoId" class="select2-single form-control form-control-lg" id="select2Single" asp-items="@ViewBag.Bancos">
+
+                    <select asp-for="BancoId" class="select2-single form-control form-control-lg" id="select2SingleBanco" asp-items="@ViewBag.Bancos">
                         <option value="">Escolha o Banco</option>
                     </select>
                 </div>
@@ -44,50 +44,78 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="form-group col-2">
-            <label asp-for="NumeroAgencia"></label>
 
+      
+     <div class="row">
+        <div class="form-group col-5">
+
+            <label asp-for="AgenciaId"></label>
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
             {
-                <input asp-for="NumeroAgencia" class="form-control" placeholder="Código da Agência" disabled="disabled">
+                <select asp-for="AgenciaId" class="select2-single form-control" asp-items="@ViewBag.Agencias" disabled="disabled">
+                    <option value="">Selecione a Agência</option>
+                </select>
+
             }
             else
             {
-                <input asp-for="NumeroAgencia" class="form-control" placeholder="Código da Agência">
+                <div class="form-group">
+ 
+                    <select asp-for="AgenciaId" class="select2-single form-control form-control-lg" id="select2SingleAgencia" asp-items="@ViewBag.Agencias">
+                        <option value="">Escolha a Agência</option>
+                    </select>
+                </div>
+
+            }
+            <span asp-validation-for="AgenciaId" class="text-danger"></span>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-2">
+            <label asp-for="NumeroConta"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="NumeroConta" class="form-control" placeholder="Número da Conta" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="NumeroConta" class="form-control" placeholder="Número da Conta">
             }
 
-            <span asp-validation-for="NumeroAgencia" class="text-danger"></span>
+            <span asp-validation-for="NumeroConta" class="text-danger"></span>
         </div>
 
         <div class="form-group col-2">
-            <label asp-for="DigitoAgencia"></label>
+            <label asp-for="DigitoConta"></label>
 
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
             {
-                <input asp-for="DigitoAgencia" class="form-control" placeholder="Dígito da Agência" disabled="disabled">
+                <input asp-for="DigitoConta" class="form-control" placeholder="Dígito da Conta" disabled="disabled">
             }
             else
             {
-                <input asp-for="DigitoAgencia" class="form-control " placeholder="Dígito da Agência">
+                <input asp-for="DigitoConta" class="form-control " placeholder="Dígito da Conta">
             }
 
-            <span asp-validation-for="DigitoAgencia" class="text-danger"></span>
+            <span asp-validation-for="DigitoConta" class="text-danger"></span>
         </div>
 
         <div class="form-group col-8">
-            <label asp-for="Nome"></label>
+            <label asp-for="NumeroConvenio"></label>
 
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
             {
-                <input asp-for="Nome" class="form-control" placeholder="Nome da Agência" disabled="disabled">
+                <input asp-for="NumeroConvenio" class="form-control" placeholder="Número do Convênio" disabled="disabled">
             }
             else
             {
-                <input asp-for="Nome" class="form-control " placeholder="Nome da Agência">
+                <input asp-for="NumeroConvenio" class="form-control " placeholder="Número do Convênio">
             }
 
-            <span asp-validation-for="Nome" class="text-danger"></span>
+            <span asp-validation-for="NumeroConvenio" class="text-danger"></span>
         </div>
 
 

@@ -198,30 +198,30 @@ namespace Web.Controllers
             }
             else if (opcoes == Opcoes.Create)
             {
-                objCRUD.Titulo = "Incluir Agência Financeira";
-                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Agência Financeira";
-                objCRUD.SubTitulo = "Inserir Nova Agência";
+                objCRUD.Titulo = "Incluir Município";
+                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Município";
+                objCRUD.SubTitulo = "Inserir Novo Município";
                 objCRUD.Operacao = Opcoes.Create;
             }
             else if (opcoes == Opcoes.Update)
             {
-                objCRUD.Titulo = "Alterar Agência Financeira";
-                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Agência Financeira";
-                objCRUD.SubTitulo = "Alterar Agência Financeira";
+                objCRUD.Titulo = "Alterar Município";
+                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Município";
+                objCRUD.SubTitulo = "Alterar Município";
                 objCRUD.Operacao = Opcoes.Update;
             }
             else if (opcoes == Opcoes.Delete)
             {
-                objCRUD.Titulo = "Excluir Agência Financeira";
-                objCRUD.Descricao = "CUIDADO ao Excluir uma Agência, Este processo é irreversivel";
-                objCRUD.SubTitulo = "Excluir Agência Financeira";
+                objCRUD.Titulo = "Excluir Município";
+                objCRUD.Descricao = "CUIDADO ao Excluir um Município, Este processo é irreversivel";
+                objCRUD.SubTitulo = "Excluir Município";
                 objCRUD.Operacao = Opcoes.Delete;
             }
             else if (opcoes == Opcoes.Read)
             {
-                objCRUD.Titulo = "Consultar Agência Financeira";
-                objCRUD.Descricao = "Aqui você poderá consultar sua Agência Financeira";
-                objCRUD.SubTitulo = "Consultar Agência Financeira";
+                objCRUD.Titulo = "Consultar Município";
+                objCRUD.Descricao = "Aqui você poderá consultar seu Município";
+                objCRUD.SubTitulo = "Consultar Município";
                 objCRUD.Operacao = Opcoes.Read;
             }
 

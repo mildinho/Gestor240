@@ -15,9 +15,9 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Municipio>> PesquisarPorDescricaoAsync(string Descricao)
+        public async Task<IEnumerable<Municipio>> PesquisarPorMunicipioAsync(string Municipio)
         {
-            return await _context.Municipio.Where(x => x.Nome.ToLower().Contains(Descricao.ToLower())).ToListAsync();
+            return await _context.Municipio.Include(a => a.UF).Where(x => x.Nome.ToLower().Contains(Municipio.ToLower())).ToListAsync();
         }
 
 
@@ -33,5 +33,15 @@ namespace Infra.Data.Repositories
             var urls = await _context.Municipio.Include(a => a.UF).ToListAsync();
             return urls.AsQueryable();
         }
+
+
+        public async Task<IEnumerable<Municipio>> PesquisarPorUFMunicipioAgregadoAsync(int IdUF, string Municipio)
+        {
+            return await _context.Municipio.
+                Include(a => a.UF).
+                Where(x => x.UFId == IdUF && x.Nome == Municipio).
+            ToListAsync();
+        }
+        
     }
 }

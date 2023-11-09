@@ -18,23 +18,14 @@ namespace Dominio.DTO
         public int AgenciaId { get; set; }
 
 
-
-        [Display(Name = "Número da Conta Corrente")]
+        [Display(Name = "Número da Conta")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public int NumeroConta { get; set; } = 0;
 
-        [Display(Name = "Dígito da Conta Corrente")]
+        [Display(Name = "Dígito da Conta")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(1)]
         public string DigitoConta { get; set; } = String.Empty;
-
-
-        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [Display(Name = "Beneficiario")]
-        [ForeignKey("Beneficiario")]
-        public int BeneficiarioID { get; set; }
-
-
 
         [Display(Name = "Número do Convênio")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
@@ -42,6 +33,34 @@ namespace Dominio.DTO
         public string NumeroConvenio { get; set; } = String.Empty;
 
         public int Sequencia_NSA { get; set; } = 0;
+
+
+        //Dados do Beneficiario
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "Beneficiario")]
+        [ForeignKey("Beneficiario")]
+        public int BeneficiarioID { get; set; }
+
+        [Display(Name = "CNPJ / CPF")]
+        public string Beneficiario_CNPJ_CPF { get; set; } = String.Empty;
+
+        [Display(Name = "Beneficiário")]
+        public string Beneficiario_Nome { get; set; } = String.Empty;
+
+
+
+        //Dados do Banco
+        [Display(Name = "Banco")]
+        public int BancoId { get; set; }
+
+        [Display(Name = "Banco")]
+        public int Banco_Codigo { get; set; }
+
+        [Display(Name = "Instituição")]
+        public string Banco_Nome { get; set; } = String.Empty;
+
+
 
 
         public ContaDTO() { }
