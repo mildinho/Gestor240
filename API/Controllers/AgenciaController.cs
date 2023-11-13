@@ -45,6 +45,20 @@ namespace API.Controllers
         }
 
 
+        [HttpGet("GetByIdBanco/{IdBanco}")]
+        public async Task<ActionResult<AgenciaDTO>> GetByIdBanco(int IdBanco)
+        {
+            var Objeto = await _UOW.Agencia.PesquisarPorBancoAgregadoAsync(IdBanco);
+            if (Objeto == null)
+            {
+                return NotFound(Mensagens.MSG_E002);
+            }
+
+            var ObjetoDTO = AgenciaDTO.ToDTO(Objeto);
+            return Ok(ObjetoDTO);
+        }
+
+
         [HttpGet]
         [Route("GetAll")]
         public async Task<ActionResult<AgenciaDTO>> GetAll()

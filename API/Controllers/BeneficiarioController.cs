@@ -102,7 +102,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{Id}")]
-        public async Task<ActionResult<BeneficiarioDTO>> Patch(int Id, BeneficiarioDTO tabela)
+        public async Task<ActionResult<BeneficiarioDTO>> Put(int Id, BeneficiarioDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);

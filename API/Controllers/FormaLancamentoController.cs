@@ -96,7 +96,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{Id}")]
-        public async Task<ActionResult<FormaLancamentoDTO>> Patch(int Id, FormaLancamentoDTO tabela)
+        public async Task<ActionResult<FormaLancamentoDTO>> Put(int Id, FormaLancamentoDTO tabela)
         {
             if (Id != tabela.Id)
                 return BadRequest(Mensagens.MSG_E001);

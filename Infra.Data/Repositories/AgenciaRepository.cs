@@ -17,17 +17,30 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
+
         public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAsync(int IdBanco, int Agencia)
         {
             return await _context.Agencia.Where(x => x.BancoId == IdBanco && x.NumeroAgencia == Agencia).ToListAsync();
         }
+
+
         public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgenciaAgregadoAsync(int IdBanco, int Agencia)
         {
-           
+
 
             return await _context.Agencia.
                 Include(a => a.Banco).
                 Where(x => x.BancoId == IdBanco && x.NumeroAgencia == Agencia).
+            ToListAsync();
+        }
+
+        public async Task<IEnumerable<Agencia>> PesquisarPorBancoAgregadoAsync(int IdBanco)
+        {
+
+
+            return await _context.Agencia.
+                Include(a => a.Banco).
+                Where(x => x.BancoId == IdBanco).
             ToListAsync();
         }
 
@@ -36,12 +49,12 @@ namespace Infra.Data.Repositories
             return await _context.Agencia.
                  Include(a => a.Banco).
                  Where(x => x.Id == Id).FirstOrDefaultAsync();
-             
+
         }
 
         public async Task<IQueryable<Agencia>> ListarTodosAgregados()
         {
-            var urls = await _context.Agencia.Include( a=> a.Banco).ToListAsync();
+            var urls = await _context.Agencia.Include(a => a.Banco).ToListAsync();
             return urls.AsQueryable();
         }
     }
