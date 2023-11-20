@@ -25,6 +25,7 @@ namespace Infra.Data.Repositories
         public IPagadorRepository Pagador { get; private set; }
         public IFinancasRepository Financas { get; private set; }
         public ITipoPixRepository TipoPix { get; private set; }
+        public ITipoContaCorrenteRepository TipoContaCorrente { get; private set; }
 
 
         public UnitOfWork(DBContexto context)
@@ -48,6 +49,7 @@ namespace Infra.Data.Repositories
             Pagador = new PagadorRepository(_context);
             Financas = new FinancasRepository(_context);
             TipoPix = new TipoPixRepository(_context);
+            TipoContaCorrente = new TipoContaCorrenteRepository(_context);
         }
 
 

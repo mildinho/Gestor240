@@ -355,18 +355,15 @@ namespace Infra.Data.Contexto
 
             if (!dbContext.Financas.Any())
             {
-                Random diasPagamento = new Random();
-                Random formaLancamento = new Random();
-                Random tipoServico = new Random();
+                Random diasPagamento = new ();
+                Random formaLancamento = new ();
+                Random tipoServico = new ();
 
                 List<Financas> registros = new();
                 for (int i = 0; i < 500; i++)
                 {
                     DateTime? dataPagamento = null;
                     DateTime dataVencimento = DateTime.Now.AddDays(i);
-                    DateTime dataAuxiliar = dataVencimento;
-
-
 
                     if ((i % 5) == 0)
                     {

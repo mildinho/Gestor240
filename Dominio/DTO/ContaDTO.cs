@@ -43,6 +43,7 @@ namespace Dominio.DTO
         public int BeneficiarioID { get; set; }
 
         [Display(Name = "CNPJ / CPF")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public string Beneficiario_CNPJ_CPF { get; set; } = String.Empty;
 
         [Display(Name = "Beneficiário")]
@@ -98,7 +99,11 @@ namespace Dominio.DTO
                     DigitoConta = item.DigitoConta,
                     BeneficiarioID = item.BeneficiarioID,
                     NumeroConvenio = item.NumeroConvenio,
-                    Sequencia_NSA = item.Sequencia_NSA
+                    Sequencia_NSA = item.Sequencia_NSA,
+                    Beneficiario_CNPJ_CPF = item.Beneficiario.CNPJ_CPF,
+                    Beneficiario_Nome = item.Beneficiario.Nome,
+                    Banco_Codigo = item.Agencia.Banco.Codigo,
+                    Banco_Nome = item.Agencia.Banco.Nome
                 });
             }
             return contaDTO;
@@ -115,7 +120,11 @@ namespace Dominio.DTO
                 DigitoConta = conta.DigitoConta,
                 BeneficiarioID = conta.BeneficiarioID,
                 NumeroConvenio = conta.NumeroConvenio,
-                Sequencia_NSA = conta.Sequencia_NSA
+                Sequencia_NSA = conta.Sequencia_NSA,
+                Beneficiario_CNPJ_CPF = conta.Beneficiario.CNPJ_CPF,
+                Beneficiario_Nome = conta.Beneficiario.Nome,
+                Banco_Codigo = conta.Agencia.Banco.Codigo,
+                Banco_Nome = conta.Agencia.Banco.Nome
             };
         }
     }

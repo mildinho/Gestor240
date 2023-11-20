@@ -184,7 +184,7 @@ namespace Web.Controllers
 
 
 
-        private CRUD ConfiguraMensagem(Opcoes opcoes)
+        private static CRUD ConfiguraMensagem(Opcoes opcoes)
         {
             CRUD objCRUD = new();
 

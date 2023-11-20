@@ -1,12 +1,8 @@
-using System.Configuration;
-using System.Text;
-using API;
 using API.Biblioteca.JWT;
 using Infra.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +32,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+//services cors
+builder.Services.AddCors(p => p.AddPolicy("default", builder =>
+{
+    builder.WithOrigins("*").
+    AllowAnyMethod().
+    AllowAnyHeader();
+}));
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -55,15 +61,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
+
+
+app.UseCors("default");
+
+
 
 //app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
+
 app.Run();
+
 
 
 
@@ -79,4 +91,6 @@ app.Run();
  * https://themewagon.com/themes/free-bootstrap-4-html-5-admin-dashboard-website-template-ruang/
  * https://themewagon.github.io/ruang-admin/datatables.html
  * https://www.codeproject.com/Articles/741207/Repository-with-Unit-of-Work-IoC-and-Unit-Test
+ * https://codewithmukesh.com/blog/dapper-in-aspnet-core/
+ * https://macoratti.net/21/07/netcore_reptrandapp1.htm
  */

@@ -12,6 +12,7 @@
         ITipoOperacaoRepository TipoOperacao { get; }
         ITipoServicoRepository TipoServico { get; }
         ITipoPixRepository TipoPix { get; }
+        ITipoContaCorrenteRepository TipoContaCorrente { get; }
 
         IFormaLancamentoRepository FormaLancamento { get; }
         ITipoInscricaoEmpresaRepository TipoInscricaoEmpresa { get; }

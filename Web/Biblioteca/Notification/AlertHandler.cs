@@ -93,49 +93,61 @@ namespace Web.Biblioteca.Notification
 
         public static void Success(string message)
         {
-            var alertObj = new AlertNotification();
-            alertObj.Type = NotificationType.Success;
-            alertObj.Message = message;
+            AlertNotification alertObj = new()
+            {
+                Type = NotificationType.Success,
+                Message = message
+            };
             AlertHandler.Add(alertObj);
         }
 
         public static void Warning(string message)
         {
-            var alertObj = new AlertNotification();
-            alertObj.Type = NotificationType.Warning;
-            alertObj.Message = message;
+            AlertNotification alertObj = new()
+            {
+                Type = NotificationType.Warning,
+                Message = message
+            };
             AlertHandler.Add(alertObj);
         }
 
         public static void Error(string message)
         {
-            var alertObj = new AlertNotification();
-            alertObj.Type = NotificationType.Error;
-            alertObj.Message = message;
+            AlertNotification alertObj = new()
+            {
+                Type = NotificationType.Error,
+                Message = message
+            };
             AlertHandler.Add(alertObj);
         }
 
         public static void Info(string message)
         {
-            var alertObj = new AlertNotification();
-            alertObj.Type = NotificationType.Info;
-            alertObj.Message = message;
+            AlertNotification alertObj = new()
+            {
+                Type = NotificationType.Info,
+                Message = message
+            };
             AlertHandler.Add(alertObj);
         }
 
         public static void Question(string message)
         {
-            var alertObj = new AlertNotification();
-            alertObj.Type = NotificationType.Question;
-            alertObj.Message = message;
+            AlertNotification alertObj = new()
+            {
+                Type = NotificationType.Question,
+                Message = message
+            };
             AlertHandler.Add(alertObj);
         }
 
         public static void Clear()
         {
-            var alertObj = new AlertNotification();
-            alertObj.Type = NotificationType.Question;
-            alertObj.Message = null;
+            AlertNotification alertObj = new()
+            {
+                Type = NotificationType.Question,
+                Message = null
+            };
             AlertHandler.Add(alertObj);
         }
 

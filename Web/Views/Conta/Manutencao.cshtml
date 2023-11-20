@@ -32,8 +32,7 @@
             else
             {
                 <div class="form-group">
-
-                    <select asp-for="BancoId" class="select2-single form-control form-control-lg" id="select2SingleBanco" asp-items="@ViewBag.Bancos">
+                    <select asp-for="BancoId" class="select2-single form-control form-control-lg" id="select2SingleBanco" asp-items="@ViewBag.Bancos" onchange="CarregaAgencia()">
                         <option value="">Escolha o Banco</option>
                     </select>
                 </div>
@@ -45,8 +44,8 @@
     </div>
 
 
-      
-     <div class="row">
+
+    <div class="row">
         <div class="form-group col-5">
 
             <label asp-for="AgenciaId"></label>
@@ -60,7 +59,7 @@
             else
             {
                 <div class="form-group">
- 
+
                     <select asp-for="AgenciaId" class="select2-single form-control form-control-lg" id="select2SingleAgencia" asp-items="@ViewBag.Agencias">
                         <option value="">Escolha a Agência</option>
                     </select>
@@ -103,7 +102,7 @@
             <span asp-validation-for="DigitoConta" class="text-danger"></span>
         </div>
 
-        <div class="form-group col-8">
+        <div class="form-group col-2">
             <label asp-for="NumeroConvenio"></label>
 
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
@@ -121,6 +120,65 @@
 
     </div>
 
+
+
+    <div class="row">
+        <div class="form-group col-3">
+            <label asp-for="Beneficiario_CNPJ_CPF"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Beneficiario_CNPJ_CPF" class="form-control" placeholder="CNPJ / CPF Beneficiário" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Beneficiario_CNPJ_CPF" class="form-control" placeholder="CNPJ / CPF Beneficiário">
+            }
+
+            <span asp-validation-for="Beneficiario_CNPJ_CPF" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-8">
+            <label asp-for="Beneficiario_Nome"></label>
+            <input asp-for="Beneficiario_Nome" class="form-control" disabled="disabled">
+        </div>
+
+
+    </div>
+
     @await Component.InvokeAsync("CRUD_Acao")
 
 </form>
+
+
+<script type="text/javascript">
+    function CarregaAgencia() {
+
+        IdBanco = $('#select2SingleBanco').val();
+
+        console.log("banco", IdBanco);
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:7092/v1/Agencia/GetByIdBanco/' + IdBanco,
+            contentType: 'application/json',
+            dataType: "JSON",
+            success: function (r) {
+                console.log("RESULT", r);
+
+
+                $('#select2SingleAgencia').empty();
+
+                for (let i = 0; i < r.length; i = i + 1) {
+                    var option = new Option(r[i].numeroAgencia + " - " + r[i].digitoAgencia + " - " + r[i].nome, r[i].id, true, true);
+                    $('#select2SingleAgencia').append(option).trigger('change');
+
+                }
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+            }
+        });
+    }
+</script>

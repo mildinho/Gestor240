@@ -7,6 +7,7 @@ namespace Dominio.Interfaces
 
         Task<IEnumerable<Conta>> PesquisarPorAgenciaContaAsync(int IdAgencia, int Conta);
         Task<Conta> PesquisarPorIdAgregadoAsync(int Id);
+        Task<IQueryable<Conta>> ListarTodosAgregados();
 
     }
 }

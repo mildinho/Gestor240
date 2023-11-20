@@ -1,4 +1,5 @@
 ﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -113,6 +114,8 @@ namespace Web.Controllers
         public async Task<IActionResult> Manutencao([FromForm] ContaDTO conta, Opcoes operacao)
         {
             ViewBag.Bancos = await ListaBancos();
+            ViewBag.Agencias = await ListaAgencias();
+
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 
@@ -133,6 +136,20 @@ namespace Web.Controllers
             }
             else if (ModelState.IsValid)
             {
+                ViewBag.CRUD = ConfiguraMensagem(operacao);
+
+                BeneficiarioDTO Beneficiarios = await PesquisarCliente(conta.Beneficiario_CNPJ_CPF);
+                if (Beneficiarios == null)
+                {
+                    AlertNotification.Error(" CNPJ / CPF = " + conta.Beneficiario_CNPJ_CPF + " Não Encontrado!");
+                    return View("Manutencao", conta);
+
+                }
+
+                conta.BeneficiarioID = Beneficiarios.Id;
+
+                ExecutaAPI.ParametrosAPI.Clear();
+
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
                     var retornoApi = await ExecutaAPI.PostAPI("Conta", conta);
@@ -144,11 +161,11 @@ namespace Web.Controllers
                     }
                     else
                     {
-                        ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
+                        //ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
 
 
                         AlertNotification.Error(retornoApi.data);
-              
+
                         return View("Manutencao", conta);
                     }
                 }
@@ -163,11 +180,11 @@ namespace Web.Controllers
                     }
                     else
                     {
-                        ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
+                        //ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
 
 
                         AlertNotification.Error(retornoApi.data);
-                      
+
 
                         return View("Manutencao", conta);
                     }
@@ -180,7 +197,7 @@ namespace Web.Controllers
             }
 
 
-            ViewBag.CRUD = ConfiguraMensagem((Opcoes)operacao);
+            ViewBag.CRUD = ConfiguraMensagem(operacao);
 
             return View();
 
@@ -188,7 +205,7 @@ namespace Web.Controllers
 
 
 
-        private CRUD ConfiguraMensagem(Opcoes opcoes)
+        private static CRUD ConfiguraMensagem(Opcoes opcoes)
         {
             CRUD objCRUD = new();
 
@@ -253,6 +270,21 @@ namespace Web.Controllers
             ViewBag.Agencias = objRetorno.Select(a => new SelectListItem(a.NumeroAgencia.ToString() + " - " + a.DigitoAgencia + " - " + a.Nome, a.Id.ToString()));
 
             return ViewBag.Agencias;
+        }
+
+
+        private async Task<BeneficiarioDTO> PesquisarCliente(string CNPJ_CPF)
+        {
+            ExecutaAPI.ParametrosAPI.Clear();
+            ExecutaAPI.ParametrosAPI.Add(CNPJ_CPF);
+
+            BeneficiarioDTO objRetorno = null;
+
+            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/CNPJ_CPF");
+            if (retornoApi.success)
+                objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+
+            return objRetorno;
         }
 
     }

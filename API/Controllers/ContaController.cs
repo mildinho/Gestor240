@@ -18,7 +18,7 @@ namespace API.Controllers
         [HttpGet("GetbyId/{Id}")]
         public async Task<ActionResult<ContaDTO>> GetbyId(int Id)
         {
-            var Objeto = await _UOW.Conta.PesquisarPorIdAsync(Id);
+            var Objeto = await _UOW.Conta.PesquisarPorIdAgregadoAsync(Id);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
@@ -44,9 +44,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult<ContaDTO> GetAll()
+        public async Task<ActionResult<ContaDTO>> GetAll()
         {
-            var Objeto = _UOW.Conta.ListarTodos();
+            var Objeto = await _UOW.Conta.ListarTodosAgregados();
             var ObjetoDTO = ContaDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);

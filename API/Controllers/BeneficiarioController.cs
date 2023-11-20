@@ -30,14 +30,16 @@ namespace API.Controllers
 
         }
 
-        [HttpGet("CNPJ_CPF")]
-        public async Task<ActionResult<BeneficiarioDTO>> CNPJ_CPFAsync(string CNPJ_CPF)
+        [HttpGet("CNPJ_CPF/{CNPJ_CPF}")]
+        public async Task<ActionResult<BeneficiarioDTO>> CNPJ_CPF(string CNPJ_CPF)
         {
             var Objeto = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(CNPJ_CPF);
+
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
             }
+
             var ObjetoDTO = BeneficiarioDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
@@ -73,8 +75,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Beneficiario>> Post(BeneficiarioDTO tabela)
         {
-            IEnumerable<Beneficiario> ObjetoLista = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
-            if (ObjetoLista.Any())
+            Beneficiario ObjBeneficiario = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
+            if (ObjBeneficiario != null)
             {
                 return BadRequest(Mensagens.MSG_E003);
             }
