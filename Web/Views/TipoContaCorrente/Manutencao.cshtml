@@ -1,0 +1,43 @@
+﻿@model TipoContaCorrenteDTO;
+
+@{
+
+    ViewData["Title"] = ViewBag.Crud.Titulo;
+}
+
+@await Component.InvokeAsync("CRUD")
+
+<form method="post" id="@String.Concat("frm_manutencao_",ViewBag.Crud.Operacao).ToLower()" asp-action="Manutencao">
+
+    <input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
+
+
+    @if (ViewBag.Crud.Operacao != Opcoes.Create)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="row">
+
+        <div class="form-group col-8">
+            <label asp-for="Descricao"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Descricao" class="form-control" placeholder="Digite a Descrição" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Descricao" class="form-control " placeholder="Digite a Descrição">
+            }
+
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+
+      
+    </div>
+
+    @await Component.InvokeAsync("CRUD_Acao")
+
+</form>
