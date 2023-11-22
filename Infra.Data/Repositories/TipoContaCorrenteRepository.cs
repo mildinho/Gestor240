@@ -14,9 +14,13 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<TipoContaCorrente>> PesquisarPorDescricaoAsync(string Descricao)
+        public async Task<IEnumerable<TipoContaCorrente>> PesquisarPorDescricaoAsync(string Descricao, bool PesquisaExata = false)
         {
+            if (PesquisaExata)
+                return await _context.TipoContaCorrente.Where(x => x.Descricao.ToLower() == Descricao.ToLower()).ToListAsync();
+
             return await _context.TipoContaCorrente.Where(x => x.Descricao.ToLower().Contains(Descricao.ToLower())).ToListAsync();
+
         }
 
     }

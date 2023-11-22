@@ -39,7 +39,7 @@ namespace Infra.Data.Repositories
         {
             return await _context.Municipio.
                 Include(a => a.UF).
-                Where(x => x.UFId == IdUF && x.Nome == Municipio).
+                Where(x => x.UFId == IdUF && x.Nome.ToUpper() == Municipio.ToUpper()).
             ToListAsync();
         }
         

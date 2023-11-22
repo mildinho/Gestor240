@@ -32,7 +32,7 @@ namespace API.Controllers
         [HttpGet("Descricao")]
         public async Task<ActionResult<TipoContaCorrenteDTO>> Descricao(string Descricao)
         {
-            var Objeto = await _UOW.TipoContaCorrente.PesquisarPorDescricaoAsync(Descricao);
+            var Objeto = await _UOW.TipoContaCorrente.PesquisarPorDescricaoAsync(Descricao, false);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
@@ -58,9 +58,15 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<TipoPixDTO>> Post(TipoContaCorrenteDTO tabela)
+        public async Task<ActionResult<TipoContaCorrenteDTO>> Post(TipoContaCorrenteDTO tabela)
         {
-           if (ModelState.IsValid)
+            IEnumerable<TipoContaCorrente> ObjetoLista = await _UOW.TipoContaCorrente.PesquisarPorDescricaoAsync(tabela.Descricao, true);
+            if (ObjetoLista.Any())
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
+
+            if (ModelState.IsValid)
             {
                
                 var ObjetoEntitade = TipoContaCorrenteDTO.ToEntidade(tabela);
@@ -89,6 +95,12 @@ namespace API.Controllers
                 return BadRequest(Mensagens.MSG_E002);
             }
 
+
+            IEnumerable<TipoContaCorrente> ObjetoLista = await _UOW.TipoContaCorrente.PesquisarPorDescricaoAsync(tabela.Descricao, true);
+            if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
+            {
+                return BadRequest(Mensagens.MSG_E003);
+            }
             if (ModelState.IsValid)
             {
 

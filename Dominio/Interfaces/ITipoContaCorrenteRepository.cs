@@ -5,7 +5,7 @@ namespace Dominio.Interfaces
     public interface ITipoContaCorrenteRepository : IGenericoRepository<TipoContaCorrente>
     {
 
-        Task<IEnumerable<TipoContaCorrente>> PesquisarPorDescricaoAsync(string Descricao);
+        Task<IEnumerable<TipoContaCorrente>> PesquisarPorDescricaoAsync(string Descricao, bool PesquisaExata);
 
     }
 }

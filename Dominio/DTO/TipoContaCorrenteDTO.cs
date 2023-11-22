@@ -12,7 +12,7 @@ namespace Dominio.DTO
         [Display(Name = "Código")]
         public int Id { get; set; }
 
-        [Display(Name = "Descrição do Operação")]
+        [Display(Name = "Descrição da Conta Corrente")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(200)]
         public string Descricao { get; set; } = String.Empty;
