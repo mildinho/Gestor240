@@ -55,8 +55,12 @@ namespace Dominio.DTO
         [Display(Name = "UF")]
         [ForeignKey("UF")]
         public int UFId { get; set; }
-       
 
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "Município")]
+        [ForeignKey("Municipio")]
+        public int MunicipioId { get; set; }
 
 
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]

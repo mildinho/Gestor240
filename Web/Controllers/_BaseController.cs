@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dominio.DTO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Web.Services;
 
 namespace Web.Controllers
@@ -18,5 +21,26 @@ namespace Web.Controllers
         protected IntegracaoApi? ExecutaAPI => _integracaoApi ?? (_integracaoApi = HttpContext?.RequestServices.GetService<IntegracaoApi>());
 
 
+
+
+        public async Task<IEnumerable<SelectListItem>> ListaUF()
+        {
+            var retornoApi = await ExecutaAPI.GetAPI("UF/GetAll");
+            List<UFDTO> objRetorno = JsonConvert.DeserializeObject<List<UFDTO>>(retornoApi.data);
+
+            var ListaObj = objRetorno.Select(a => new SelectListItem(a.Sigla.ToString() + " - " + a.Descricao, a.Id.ToString()));
+
+            return ListaObj;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> ListaMunicipio()
+        {
+            var retornoApi = await ExecutaAPI.GetAPI("Municipio/GetAll");
+            List<MunicipioDTO> objRetorno = JsonConvert.DeserializeObject<List<MunicipioDTO>>(retornoApi.data);
+
+            var ListaObj = objRetorno.Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
+
+            return ListaObj;
+        }
     }
 }

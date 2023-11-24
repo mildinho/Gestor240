@@ -30,8 +30,9 @@ namespace Web.Controllers
         public async Task<IActionResult> Cadastrar()
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
-            ViewBag.UF = await ListaUF();
+          
 
+            ViewBag.UF = await ListaUF();
             return View("Manutencao");
         }
 
@@ -229,17 +230,6 @@ namespace Web.Controllers
         }
 
 
-
-
-        private async Task<IEnumerable<SelectListItem>> ListaUF()
-        {
-            var retornoApi = await ExecutaAPI.GetAPI("UF/GetAll");
-            List<UFDTO> objRetorno = JsonConvert.DeserializeObject<List<UFDTO>>(retornoApi.data);
-
-            ViewBag.Bancos = objRetorno.Select(a => new SelectListItem(a.Sigla.ToString() + " - " + a.Descricao, a.Id.ToString()));
-
-            return ViewBag.Bancos;
-        }
 
     }
 }

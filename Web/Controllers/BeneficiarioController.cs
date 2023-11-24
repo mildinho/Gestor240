@@ -30,7 +30,8 @@ namespace Web.Controllers
         public async Task<IActionResult> Cadastrar()
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
-            ViewBag.Bancos = await ListaBancos();
+
+            ViewBag.UF = await ListaUF();
 
             return View("Manutencao");
         }
@@ -40,9 +41,9 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
-            ViewBag.Bancos = await ListaBancos();
+
+            ViewBag.UF = await ListaUF();
 
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
@@ -58,7 +59,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Consultar(int Id)
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            ViewBag.Bancos = await ListaBancos();
+            ViewBag.UF = await ListaUF();
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
@@ -82,7 +83,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Deletar(int Id)
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Delete);
-            ViewBag.Bancos = await ListaBancos();
+            ViewBag.UF = await ListaUF();
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
@@ -108,7 +109,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] BeneficiarioDTO beneficiario, Opcoes operacao)
         {
-            ViewBag.Bancos = await ListaBancos();
+            ViewBag.UF = await ListaUF();
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 
@@ -228,18 +229,6 @@ namespace Web.Controllers
             return objCRUD;
         }
 
-
-
-
-        private async Task<IEnumerable<SelectListItem>> ListaBancos()
-        {
-            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetAll");
-            List<BancoDTO> objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
-
-            ViewBag.Bancos = objRetorno.Select(a => new SelectListItem(a.Codigo.ToString() + " - " + a.Nome, a.Id.ToString()));
-
-            return ViewBag.Bancos;
-        }
 
     }
 }

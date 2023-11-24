@@ -1,0 +1,223 @@
+﻿@model BeneficiarioDTO;
+
+@{
+
+    ViewData["Title"] = ViewBag.Crud.Titulo;
+}
+
+@await Component.InvokeAsync("CRUD")
+
+<form method="post" id="@String.Concat("frm_manutencao_",ViewBag.Crud.Operacao).ToLower()" asp-action="Manutencao">
+
+    <input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
+
+
+
+    @if (ViewBag.Crud.Operacao != Opcoes.Create)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="row">
+
+        <div class="form-group col-2">
+            <label asp-for="CNPJ_CPF"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ">
+            }
+
+            <span asp-validation-for="CNPJ_CPF" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-5">
+            <label asp-for="Nome"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Beneficiário" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Nome" class="form-control " placeholder="Digite o Nome do Beneficiário">
+            }
+
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-5">
+            <label asp-for="Fantasia"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Fantasia" class="form-control " placeholder="Digite o Nome Fantasia">
+            }
+
+            <span asp-validation-for="Fantasia" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="form-group col-4">
+            <label asp-for="Endereco"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Endereco" class="form-control" placeholder="Digite o Logradouro" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Endereco" class="form-control" placeholder="Digite o Logradouro">
+            }
+
+            <span asp-validation-for="Endereco" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-1">
+            <label asp-for="Numero"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Numero" class="form-control" placeholder="Digite o Número" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Numero" class="form-control " placeholder="Digite o Número">
+            }
+
+            <span asp-validation-for="Numero" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-4">
+            <label asp-for="Bairro"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Bairro" class="form-control" placeholder="Digite o Bairro" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Bairro" class="form-control " placeholder="Digite o Bairro">
+            }
+
+            <span asp-validation-for="Bairro" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-3">
+            <label asp-for="Complemento"></label>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="Complemento" class="form-control" placeholder="Digite o Complemento" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="Complemento" class="form-control " placeholder="Digite o Complemento">
+            }
+
+            <span asp-validation-for="Complemento" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="form-group col-3">
+
+            <label asp-for="UFId"></label>
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <select asp-for="UFId" class="select2-single form-control" asp-items="@ViewBag.UF" disabled="disabled">
+                    <option value="">Selecione a UF </option>
+                </select>
+
+            }
+            else
+            {
+                <div class="form-group">
+
+                    <select asp-for="UFId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.UF" onchange="CarregaMunicipio()">
+                        <option value="">Escolha a UF</option>
+                    </select>
+                </div>
+
+            }
+            <span asp-validation-for="UFId" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group col-3">
+
+            <label asp-for="MunicipioId"></label>
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <select asp-for="MunicipioId" class="select2-single form-control" asp-items="@ViewBag.Municipio" disabled="disabled">
+                    <option value="">Selecione o Município </option>
+                </select>
+
+            }
+            else
+            {
+                <div class="form-group">
+
+                    <select asp-for="MunicipioId" class="select2-single form-control form-control-lg" id="select2SingleMunicipio" asp-items="@ViewBag.Municipio">
+                        <option value="">Escolha o Município</option>
+                    </select>
+                </div>
+
+            }
+            <span asp-validation-for="MunicipioId" class="text-danger"></span>
+
+        </div>
+    </div>
+
+    @await Component.InvokeAsync("CRUD_Acao")
+
+</form>
+
+
+<script type="text/javascript">
+    function CarregaMunicipio() {
+
+        IdBanco = $('#select2SingleUF').val();
+
+        console.log("banco", IdBanco);
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:7092/v1/Agencia/GetByIdBanco/' + IdBanco,
+            contentType: 'application/json',
+            dataType: "JSON",
+            success: function (r) {
+                console.log("RESULT", r);
+
+
+                $('#select2SingleMunicipio').empty();
+
+                for (let i = 0; i < r.length; i = i + 1) {
+                    var option = new Option(r[i].nome, r[i].id, true, true);
+                    $('#select2SingleMunicipio').append(option).trigger('change');
+
+                }
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+            }
+        });
+    }
+</script>
