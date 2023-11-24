@@ -71,7 +71,7 @@ function justNumbers(text) {
 
 function buscar_cep() {
 
-    var campo = document.getElementById('cep_parceiro');
+    var campo = document.getElementById('cep_beneficiario');
     campo = justNumbers(campo.value);
 
 
@@ -82,10 +82,10 @@ function buscar_cep() {
             console.log(response);
             if (response.erro != true) {
 
-                document.getElementById('endereco_parceiro').value = response.logradouro;
-                document.getElementById('complemento_parceiro').value = response.complemento;
-                document.getElementById('bairro_parceiro').value = response.bairro;
-                document.getElementById('cidade_parceiro').value = response.localidade;
+                document.getElementById('endereco_beneficiario').value = response.logradouro;
+                document.getElementById('complemento_beneficiario').value = response.complemento;
+                document.getElementById('bairro_beneficiario').value = response.bairro;
+                document.getElementById('cidade_beneficiario').value = response.localidade;
             } else if (response.erro == true) {
                 Swal.fire(
                     {

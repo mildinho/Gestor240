@@ -42,6 +42,14 @@ namespace Infra.Data.Repositories
                 Where(x => x.UFId == IdUF && x.Nome.ToUpper() == Municipio.ToUpper()).
             ToListAsync();
         }
-        
+
+
+        public async Task<IEnumerable<Municipio>> PesquisarPorUFAgregadoAsync(int IdUF)
+        {
+            return await _context.Municipio.
+                Include(a => a.UF).
+                Where(x => x.UFId == IdUF).ToListAsync();
+        }
+
     }
 }

@@ -71,16 +71,41 @@
 
     <div class="row">
 
+        <div class="form-group col-2">
+            <label asp-for="CEP"></label>
+            
+            <i class="fas fa-search" onclick="buscar_cep()">&nbsp;</i>
+
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <input asp-for="CEP" class="form-control" placeholder="Digite o CEP" disabled="disabled">
+            }
+            else
+            {
+                <input asp-for="CEP" class="form-control" placeholder="Digite o CEP" onkeypress="$(this).mask('00.000-000')" id="cep_beneficiario">
+
+            }
+
+            <span asp-validation-for="CEP" class="text-danger"></span>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="row">
+
         <div class="form-group col-4">
             <label asp-for="Endereco"></label>
 
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
             {
-                <input asp-for="Endereco" class="form-control" placeholder="Digite o Logradouro" disabled="disabled">
+                <input asp-for="Endereco" class="form-control" placeholder="Digite o Logradouro" disabled="disabled" id="endereco_beneficiario">
             }
             else
             {
-                <input asp-for="Endereco" class="form-control" placeholder="Digite o Logradouro">
+                <input asp-for="Endereco" class="form-control" placeholder="Digite o Logradouro" id="endereco_beneficiario">
             }
 
             <span asp-validation-for="Endereco" class="text-danger"></span>
@@ -108,11 +133,11 @@
 
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
             {
-                <input asp-for="Bairro" class="form-control" placeholder="Digite o Bairro" disabled="disabled">
+                <input asp-for="Bairro" class="form-control" placeholder="Digite o Bairro" disabled="disabled" id="endereco_beneficiario">
             }
             else
             {
-                <input asp-for="Bairro" class="form-control " placeholder="Digite o Bairro">
+                <input asp-for="Bairro" class="form-control " placeholder="Digite o Bairro" id="endereco_beneficiario">
             }
 
             <span asp-validation-for="Bairro" class="text-danger"></span>
@@ -194,12 +219,11 @@
 <script type="text/javascript">
     function CarregaMunicipio() {
 
-        IdBanco = $('#select2SingleUF').val();
+        IdUF = $('#select2SingleUF').val();
 
-        console.log("banco", IdBanco);
         $.ajax({
             type: 'GET',
-            url: 'https://localhost:7092/v1/Agencia/GetByIdBanco/' + IdBanco,
+            url: 'https://localhost:7092/v1/Municipio/GetbyIdUF/' + IdUF,
             contentType: 'application/json',
             dataType: "JSON",
             success: function (r) {

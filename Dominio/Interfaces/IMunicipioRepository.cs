@@ -13,6 +13,7 @@ namespace Dominio.Interfaces
 
         Task<IEnumerable<Municipio>> PesquisarPorMunicipioAsync(string Municipio);
         Task<IEnumerable<Municipio>> PesquisarPorUFMunicipioAgregadoAsync(int IdUF, string Municipio);
+        Task<IEnumerable<Municipio>> PesquisarPorUFAgregadoAsync(int IdUF);
         Task<Municipio> PesquisarPorIdAgregadoAsync(int Id);
         Task<IQueryable<Municipio>> ListarTodosAgregados();
     }

@@ -29,6 +29,18 @@ namespace API.Controllers
             return Ok(ObjetoDTO);
         }
 
+        [HttpGet("GetbyIdUF/{Id}")]
+        public async Task<ActionResult<MunicipioDTO>> GetbyIdUF(int Id)
+        {
+            var Objeto = await _UOW.Municipio.PesquisarPorUFAgregadoAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound(Mensagens.MSG_E002);
+            }
+            var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
+        }
 
 
         [HttpGet("Descricao")]
