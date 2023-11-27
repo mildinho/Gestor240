@@ -12,7 +12,7 @@ namespace API.Biblioteca.JWT
         public static string Generate()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(Settings.Chave);
+            byte[] key = Encoding.ASCII.GetBytes(Settings.SecretKey);
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
 

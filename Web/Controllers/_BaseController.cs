@@ -42,5 +42,16 @@ namespace Web.Controllers
 
             return ListaObj;
         }
+
+
+        public async Task<IEnumerable<SelectListItem>> ListaTipoInscricaoEmpresa()
+        {
+            var retornoApi = await ExecutaAPI.GetAPI("TipoInscricaoEmpresa/GetAll");
+            List<TipoInscricaoEmpresaDTO> objRetorno = JsonConvert.DeserializeObject<List<TipoInscricaoEmpresaDTO>>(retornoApi.data);
+
+            var ListaObj = objRetorno.Select(a => new SelectListItem(a.Descricao, a.Id.ToString()));
+
+            return ListaObj;
+        }
     }
 }

@@ -80,12 +80,18 @@ function buscar_cep() {
         dataType: 'json',
         success: function (response) {
             console.log(response);
+            
+
             if (response.erro != true) {
+                console.log(response.bairro);
+                console.log(response.localidade);
+                console.log(response.uf);
+
 
                 document.getElementById('endereco_beneficiario').value = response.logradouro;
-                document.getElementById('complemento_beneficiario').value = response.complemento;
                 document.getElementById('bairro_beneficiario').value = response.bairro;
-                document.getElementById('cidade_beneficiario').value = response.localidade;
+                
+                document.getElementById('select2-select2SingleUF-container').value = response.uf;
             } else if (response.erro == true) {
                 Swal.fire(
                     {

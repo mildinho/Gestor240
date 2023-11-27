@@ -237,6 +237,27 @@ namespace Infra.Data.Contexto
                 dbContext.SaveChanges();
             }
 
+
+            if (!dbContext.Municipio.Any())
+            {
+
+                var registros = new Municipio[]
+                {
+                    new Municipio{Nome = "CAMPINAS", UFId = 20, CodigoFiscal = "1"},
+                    new Municipio{Nome = "SUMARÉ", UFId = 20, CodigoFiscal = "2"},
+                    new Municipio{Nome = "HORTOLANDIA", UFId = 20, CodigoFiscal = "3"},
+                    new Municipio{Nome = "GUAXUPE", UFId = 17, CodigoFiscal = "4"},
+                    new Municipio{Nome = "GUARANESIA", UFId = 17, CodigoFiscal = "5"},
+                    
+                    
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Municipio.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
             if (!dbContext.Agencia.Any())
             {
                 var registros = new Agencia[]

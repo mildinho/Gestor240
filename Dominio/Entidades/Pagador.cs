@@ -27,8 +27,7 @@ namespace Dominio.Entidades
 
 
         [Display(Name = "Fantasia")]
-        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public string Fantasia { get; set; } = String.Empty;
+        public string? Fantasia { get; set; } = String.Empty;
 
 
         [Display(Name = "Endereço")]
@@ -41,7 +40,7 @@ namespace Dominio.Entidades
         public string Bairro { get; set; } = String.Empty;
 
         [Display(Name = "Complemento")]
-        public string Complemento { get; set; } = String.Empty;
+        public string? Complemento { get; set; } = String.Empty;
 
         [Display(Name = "Cidade")]
         public string Cidade { get; set; } = String.Empty;

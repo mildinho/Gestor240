@@ -10,13 +10,17 @@ builder.WebHost.UseKestrel();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//builder.Services.AddRazorPages()
+
+
+//Esta linha fez com que os campos Nullos do Modelo deixassem de ser obrigatorios
+//builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
+
 builder.Services.AddRazorPages()
     .AddMvcOptions(options =>
     {
         options.MaxModelValidationErrors = 50;
-        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
-            _ => "Este Campo é Obrigatório.");
+        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "Este Campo é Obrigatório.");
     }).AddRazorRuntimeCompilation(); ;
 
 builder.Services.Add_DI(builder.Configuration);

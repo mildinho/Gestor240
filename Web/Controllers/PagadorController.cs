@@ -1,4 +1,5 @@
 ﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -10,18 +11,18 @@ using Web.Services;
 
 namespace Web.Controllers
 {
-    public class BeneficiarioController : _BaseController<BeneficiarioController>
+    public class PagadorController : _BaseController<PagadorController>
     {
 
-        public BeneficiarioController()
+        public PagadorController()
         {
 
         }
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<BeneficiarioDTO>>(retornoApi.data);
+            var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetAll");
+            var objRetorno = JsonConvert.DeserializeObject<List<PagadorDTO>>(retornoApi.data);
 
             return View(objRetorno);
         }
@@ -49,8 +50,8 @@ namespace Web.Controllers
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+            var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetbyId");
+            var objRetorno = JsonConvert.DeserializeObject<PagadorDTO>(retornoApi.data);
 
             return View("Manutencao", objRetorno);
         }
@@ -65,10 +66,10 @@ namespace Web.Controllers
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetbyId");
             if (retornoApi.success)
             {
-                var objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+                var objRetorno = JsonConvert.DeserializeObject<PagadorDTO>(retornoApi.data);
 
                 return View("Manutencao", objRetorno);
             }
@@ -90,10 +91,10 @@ namespace Web.Controllers
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
+            var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetbyId");
             if (retornoApi.success)
             {
-                var objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+                var objRetorno = JsonConvert.DeserializeObject<PagadorDTO>(retornoApi.data);
 
                 return View("Manutencao", objRetorno);
             }
@@ -110,7 +111,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Manutencao([FromForm] BeneficiarioDTO beneficiario, Opcoes operacao)
+        public async Task<IActionResult> Manutencao([FromForm] PagadorDTO pagador, Opcoes operacao)
         {
             ViewBag.UF = await ListaUF();
             ViewBag.TipoInscricaoEmpresa = await ListaTipoInscricaoEmpresa();
@@ -118,9 +119,9 @@ namespace Web.Controllers
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-                ExecutaAPI.ParametrosAPI.Add(beneficiario.Id.ToString());
+                ExecutaAPI.ParametrosAPI.Add(pagador.Id.ToString());
 
-                var retornoApi = await ExecutaAPI.DeleteAPI("Beneficiario");
+                var retornoApi = await ExecutaAPI.DeleteAPI("Pagador");
                 if (retornoApi.success)
                 {
                     AlertNotification.Success(mensagens.MSG_S003);
@@ -137,7 +138,7 @@ namespace Web.Controllers
             {
                 if (Opcoes.Create == (Opcoes)operacao)
                 {
-                    var retornoApi = await ExecutaAPI.PostAPI("Beneficiario", beneficiario);
+                    var retornoApi = await ExecutaAPI.PostAPI("Pagador", pagador);
 
 
                     if (retornoApi.success)
@@ -151,14 +152,14 @@ namespace Web.Controllers
 
                         AlertNotification.Error(retornoApi.data);
               
-                        return View("Manutencao", beneficiario);
+                        return View("Manutencao", pagador);
                     }
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
-                    ExecutaAPI.ParametrosAPI.Add(beneficiario.Id.ToString());
+                    ExecutaAPI.ParametrosAPI.Add(pagador.Id.ToString());
 
-                    var retornoApi = await ExecutaAPI.PutAPI("Beneficiario", beneficiario);
+                    var retornoApi = await ExecutaAPI.PutAPI("Pagador", pagador);
                     if (retornoApi.success)
                     {
                         AlertNotification.Success(mensagens.MSG_S002);
@@ -171,7 +172,7 @@ namespace Web.Controllers
                         AlertNotification.Error(retornoApi.data);
                       
 
-                        return View("Manutencao", beneficiario);
+                        return View("Manutencao", pagador);
                     }
 
 
@@ -196,38 +197,38 @@ namespace Web.Controllers
 
             if (opcoes == Opcoes.Information)
             {
-                objCRUD.Titulo = "Beneficiário";
-                objCRUD.Descricao = "Aqui você poderá configurar o Beneficiário";
-                objCRUD.SubTitulo = "Dados para Controlar o Beneficiário";
+                objCRUD.Titulo = "Pagador";
+                objCRUD.Descricao = "Aqui você poderá configurar o Pagador";
+                objCRUD.SubTitulo = "Dados para Controlar o Pagador";
                 objCRUD.Operacao = Opcoes.Information;
 
             }
             else if (opcoes == Opcoes.Create)
             {
-                objCRUD.Titulo = "Incluir Beneficiário";
-                objCRUD.Descricao = "Aqui você poderá configurar o Cadastro de Beneficiário";
-                objCRUD.SubTitulo = "Inserir Novo Beneficiário";
+                objCRUD.Titulo = "Incluir Pagador";
+                objCRUD.Descricao = "Aqui você poderá configurar o Cadastro de Pagador";
+                objCRUD.SubTitulo = "Inserir Novo Pagador";
                 objCRUD.Operacao = Opcoes.Create;
             }
             else if (opcoes == Opcoes.Update)
             {
-                objCRUD.Titulo = "Alterar Beneficiário";
-                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Beneficiário";
-                objCRUD.SubTitulo = "Alterar Beneficiário";
+                objCRUD.Titulo = "Alterar Pagador";
+                objCRUD.Descricao = "Aqui você poderá configurar seu Cadastro de Pagador";
+                objCRUD.SubTitulo = "Alterar Pagador";
                 objCRUD.Operacao = Opcoes.Update;
             }
             else if (opcoes == Opcoes.Delete)
             {
-                objCRUD.Titulo = "Excluir Beneficiário";
-                objCRUD.Descricao = "CUIDADO ao Excluir um Beneficiário, Este processo é irreversivel";
-                objCRUD.SubTitulo = "Excluir Beneficiário";
+                objCRUD.Titulo = "Excluir Pagador";
+                objCRUD.Descricao = "CUIDADO ao Excluir um Pagador, Este processo é irreversivel";
+                objCRUD.SubTitulo = "Excluir Pagador";
                 objCRUD.Operacao = Opcoes.Delete;
             }
             else if (opcoes == Opcoes.Read)
             {
-                objCRUD.Titulo = "Consultar Beneficiário";
-                objCRUD.Descricao = "Aqui você poderá consultar o Beneficiário";
-                objCRUD.SubTitulo = "Consultar Beneficiário";
+                objCRUD.Titulo = "Consultar Pagador";
+                objCRUD.Descricao = "Aqui você poderá consultar o Pagador";
+                objCRUD.SubTitulo = "Consultar Pagador";
                 objCRUD.Operacao = Opcoes.Read;
             }
 
