@@ -28,6 +28,7 @@ namespace Infra.Data.Contexto
         public DbSet<TipoPix>? TipoPix { get; set; }
         public DbSet<TipoContaCorrente>? TipoContaCorrente { get; set; }
         public DbSet<ContaCorrente>? ContaCorrente { get; set; }
+        public DbSet<Login>? Login { get; set; }
 
     }
 

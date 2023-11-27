@@ -1,7 +1,6 @@
-﻿using Dominio.Entidades;
-using Dominio.Interfaces;
+﻿using Dominio.Interfaces;
 using Infra.Data.Contexto;
-using System.Transactions;
+
 
 namespace Infra.Data.Repositories
 {
@@ -27,6 +26,8 @@ namespace Infra.Data.Repositories
         public ITipoPixRepository TipoPix { get; private set; }
         public ITipoContaCorrenteRepository TipoContaCorrente { get; private set; }
 
+        public ILoginRepository Login { get; private set; }
+
 
         public UnitOfWork(DBContexto context)
         {
@@ -50,6 +51,7 @@ namespace Infra.Data.Repositories
             Financas = new FinancasRepository(_context);
             TipoPix = new TipoPixRepository(_context);
             TipoContaCorrente = new TipoContaCorrenteRepository(_context);
+            Login = new LoginRepository(_context);
         }
 
 
@@ -73,10 +75,6 @@ namespace Infra.Data.Repositories
             this.disposed = true;
         }
 
-        public void Dispose()
-        {
-            //Dispose(true);
-            //GC.SuppressFinalize(this);
-        }
+       
     }
 }

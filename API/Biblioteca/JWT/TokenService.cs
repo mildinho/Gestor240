@@ -16,7 +16,7 @@ namespace API.Biblioteca.JWT
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
 
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(12),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 algorithm: SecurityAlgorithms.HmacSha512Signature)
             };

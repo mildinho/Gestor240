@@ -1,6 +1,6 @@
 ﻿namespace Dominio.Interfaces
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork 
     {
 
         IBancoRepository Banco { get; }
@@ -20,6 +20,8 @@
         IBeneficiarioRepository Beneficiario { get; }
         IPagadorRepository Pagador { get; }
         IFinancasRepository Financas { get; }
+
+        ILoginRepository Login { get; }
 
         Task<int> SaveAsync();
 

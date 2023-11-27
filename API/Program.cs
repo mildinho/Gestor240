@@ -6,7 +6,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-byte[] key = Encoding.ASCII.GetBytes(Settings.Chave);
+byte[] key = Encoding.ASCII.GetBytes(Settings.SecretKey);
 
 // Add services to the container.
 

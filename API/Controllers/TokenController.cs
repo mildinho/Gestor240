@@ -1,6 +1,5 @@
 ﻿using API.Biblioteca.JWT;
 using Dominio.DTO;
-using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,17 +16,17 @@ namespace API.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult<TokenUsuario>> Login(Login login)
+        [HttpPost]
+        public async Task<ActionResult<TokenUsuario>> Login(LoginDTO login)
         {
-            var Objeto = await _UOW.Banco.PesquisarPorIdAsync(Id);
+            var Objeto = await _UOW.Login.PesquisarPorEmailAsync(login.Email, login.Password);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
             }
 
 
-            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
+            var ObjetoDTO = LoginDTO.ToDTO(Objeto);
 
             return Ok(ObjetoDTO);
 
