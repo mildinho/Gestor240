@@ -1,4 +1,5 @@
 ﻿using Dominio.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web.Biblioteca.CRUD;
@@ -8,6 +9,7 @@ using Web.Services;
 
 namespace Web.Controllers
 {
+  
     public class BancoController : _BaseController<BancoController>
     {
 
@@ -19,6 +21,10 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
             var retornoApi = await ExecutaAPI.GetAPI("Banco/GetAll");
+            if (retornoApi.statuscode == 401)
+                return View("PageLogin");
+
+
             var objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
 
             return View(objRetorno);

@@ -16,7 +16,13 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Login>> PesquisarPorEmailAsync(string Email, string Senha)
+        public async Task<IEnumerable<Login>> PesquisarPorEmailAsync(string Email)
+        {
+            return await _context.Login.
+                Where(x => x.Email == Email).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Login>> PesquisarPorEmailSenhaAsync(string Email, string Senha)
         {
             Senha = Encrypt(Senha);
 
@@ -24,7 +30,6 @@ namespace Infra.Data.Repositories
                 Where(x => x.Email == Email && x.Password == Senha).
                 ToListAsync();
         }
-
 
 
         private string Encrypt(string clearText)

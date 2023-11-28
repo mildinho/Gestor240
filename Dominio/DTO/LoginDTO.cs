@@ -19,6 +19,7 @@ namespace Dominio.DTO
         public string Password { get; set; } = String.Empty;
 
 
+
         public LoginDTO() { }
 
 

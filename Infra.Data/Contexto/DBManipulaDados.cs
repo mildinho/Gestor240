@@ -11,6 +11,22 @@ namespace Infra.Data.Contexto
 
             dbContext.Database.EnsureCreated();
 
+            if (!dbContext.Login.Any())
+            {
+                var registros = new Login[]
+                {
+                    //fer123
+                    new Login{Email="mildinho@gmail.com", Password = "NjhQI/aFYQikKjc478qUVQ=="}
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.Login.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
+
             if (!dbContext.TipoPix.Any())
             {
                 var registros = new TipoPix[]
@@ -27,6 +43,9 @@ namespace Infra.Data.Contexto
 
                 dbContext.SaveChanges();
             }
+
+
+
 
             if (!dbContext.Banco.Any())
             {
