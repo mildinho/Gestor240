@@ -8,7 +8,6 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    [Authorize]
     public class BancoController : Controller
     {
         private readonly IUnitOfWork _UOW;

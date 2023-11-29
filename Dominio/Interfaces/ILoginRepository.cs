@@ -6,5 +6,8 @@ namespace Dominio.Interfaces
     {
         Task<IEnumerable<Login>> PesquisarPorEmailSenhaAsync(string Email, string Senha);
         Task<IEnumerable<Login>> PesquisarPorEmailAsync(string Email);
+
+        string Criptografar(string Texto);
+        string DesCriptografar(string Texto);
     }
 }

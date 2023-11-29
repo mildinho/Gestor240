@@ -1,5 +1,6 @@
 ﻿using API.Biblioteca.JWT;
 using Dominio.DTO;
+using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,8 @@ namespace API.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<TokenUsuario>> Login(LoginDTO login)
         {
+            login.Password = _UOW.Login.Criptografar(login.Password);
+
             var Objeto = await _UOW.Login.PesquisarPorEmailSenhaAsync(login.Email, login.Password);
             if (Objeto == null || Objeto.Count() == 0)
             {
@@ -27,7 +30,7 @@ namespace API.Controllers
 
 
             TokenUsuario tokenUsuario = TokenService.Generate(login);
-           
+
 
             return Ok(tokenUsuario);
 
@@ -36,19 +39,28 @@ namespace API.Controllers
 
 
         [HttpPost("Registrar")]
-        public async Task<ActionResult<TokenUsuario>> Cadastrar(LoginDTO login)
+        public async Task<ActionResult<bool>> Cadastrar(LoginRegistroDTO login)
         {
-            var Objeto = await _UOW.Login.PesquisarPorEmailAsync(login.Email);
-            if (Objeto == null || Objeto.Count() == 0)
+            var ObjetoLista = await _UOW.Login.PesquisarPorEmailAsync(login.Email);
+            if (ObjetoLista.Any())
             {
-                return NotFound(Mensagens.MSG_E002);
+                return BadRequest(Mensagens.MSG_E004);
             }
 
+            if (ModelState.IsValid)
+            {
+                login.Password = _UOW.Login.Criptografar(login.Password);
 
-            TokenUsuario tokenUsuario = TokenService.Generate(login);
+                var ObjetoEntitade = LoginRegistroDTO.ToEntidade(login);
+                Login Objeto = await _UOW.Login.InserirAsync(ObjetoEntitade);
+
+                await _UOW.SaveAsync();
+
+                return true;
+            }
+            return BadRequest();
 
 
-            return Ok(tokenUsuario);
 
         }
 

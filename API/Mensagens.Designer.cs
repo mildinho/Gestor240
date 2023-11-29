@@ -86,5 +86,14 @@ namespace API {
                 return ResourceManager.GetString("MSG_E003", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Este E-Mail já existe cadastrado!.
+        /// </summary>
+        public static string MSG_E004 {
+            get {
+                return ResourceManager.GetString("MSG_E004", resourceCulture);
+            }
+        }
     }
 }

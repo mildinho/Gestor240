@@ -24,11 +24,20 @@ namespace Infra.Data.Repositories
 
         public async Task<IEnumerable<Login>> PesquisarPorEmailSenhaAsync(string Email, string Senha)
         {
-            Senha = Encrypt(Senha);
-
             return await _context.Login.
                 Where(x => x.Email == Email && x.Password == Senha).
                 ToListAsync();
+        }
+
+
+        public string Criptografar(string Texto)
+        {
+            return Encrypt(Texto);
+        }
+
+        public string DesCriptografar(string Texto)
+        {
+            return Decrypt(Texto);
         }
 
 
@@ -56,12 +65,10 @@ namespace Infra.Data.Repositories
         }
 
 
-
-
-
         private string Decrypt(string cipherText)
         {
-            string encryptionKey = "MAKV2SPBNI99212";
+            //string encryptionKey = "MAKV2SPBNI99212";
+            string encryptionKey = "_Y(8)51LcpW/gq7Ob1JKBEFW#";
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
             using (Aes encryptor = Aes.Create())
             {
@@ -81,7 +88,6 @@ namespace Infra.Data.Repositories
 
             return cipherText;
         }
-
 
     }
 

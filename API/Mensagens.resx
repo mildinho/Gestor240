@@ -126,4 +126,7 @@
   <data name="MSG_E003" xml:space="preserve">
     <value>Este código já existe cadastrado!</value>
   </data>
+  <data name="MSG_E004" xml:space="preserve">
+    <value>Este E-Mail já existe cadastrado!</value>
+  </data>
 </root>
