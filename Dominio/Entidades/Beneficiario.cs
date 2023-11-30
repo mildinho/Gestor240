@@ -56,6 +56,13 @@ namespace Dominio.Entidades
 
 
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "Município")]
+        [ForeignKey("Municipio")]
+        public int MunicipioId { get; set; }
+        public virtual Municipio? Municipio { get; set; }
+
+
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Display(Name = "Tipo de Inscrição")]
         [ForeignKey("TipoInscricaoEmpresa")]
         public int TipoInscricaoEmpresaId { get; set; }

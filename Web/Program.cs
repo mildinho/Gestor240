@@ -14,7 +14,7 @@ builder.Services.AddControllersWithViews();
 
 //Esta linha fez com que os campos Nullos do Modelo deixassem de ser obrigatorios
 //builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
-/*
+
 
 builder.Services.AddRazorPages()
     .AddMvcOptions(options =>
@@ -22,7 +22,7 @@ builder.Services.AddRazorPages()
         options.MaxModelValidationErrors = 50;
         options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "Este Campo é Obrigatório.");
     }).AddRazorRuntimeCompilation(); ;
-*/
+
 builder.Services.Add_DI(builder.Configuration);
 
 var app = builder.Build();

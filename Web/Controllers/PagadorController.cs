@@ -116,6 +116,9 @@ namespace Web.Controllers
             ViewBag.UF = await ListaUF();
             ViewBag.TipoInscricaoEmpresa = await ListaTipoInscricaoEmpresa();
 
+            if (pagador.UFId > 0)
+                ViewBag.Municipio = await ListaMunicipioPorIdUF(pagador.UFId);
+
             if (Opcoes.Delete == (Opcoes)operacao)
             {
 

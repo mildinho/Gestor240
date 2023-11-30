@@ -28,12 +28,15 @@ namespace Dominio.DTO
 
 
         [Display(Name = "Endereço")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public string Endereco { get; set; } = String.Empty;
 
         [Display(Name = "Número")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public string Numero { get; set; } = String.Empty;
 
         [Display(Name = "Bairro")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public string Bairro { get; set; } = String.Empty;
 
         [Display(Name = "Complemento")]
@@ -44,6 +47,7 @@ namespace Dominio.DTO
 
 
         [Display(Name = "CEP")]
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public string CEP { get; set; } = String.Empty;
 
 
@@ -66,7 +70,7 @@ namespace Dominio.DTO
         [Display(Name = "Tipo de Inscrição")]
         [ForeignKey("TipoInscricaoEmpresa")]
         public int TipoInscricaoEmpresaId { get; set; }
-        
+
 
 
 
@@ -91,7 +95,8 @@ namespace Dominio.DTO
                 Cidade = beneficiarioDTO.Cidade,
                 CEP = beneficiarioDTO.CEP,
                 UFId = beneficiarioDTO.UFId,
-                TipoInscricaoEmpresaId = beneficiarioDTO.TipoInscricaoEmpresaId
+                TipoInscricaoEmpresaId = beneficiarioDTO.TipoInscricaoEmpresaId,
+                MunicipioId = beneficiarioDTO.MunicipioId
             };
 
         }
@@ -115,6 +120,7 @@ namespace Dominio.DTO
                     Cidade = item.Cidade,
                     CEP = item.CEP,
                     UFId = item.UFId,
+                    MunicipioId = item.MunicipioId,
                     TipoInscricaoEmpresaId = item.TipoInscricaoEmpresaId
                 });
             }
@@ -137,7 +143,8 @@ namespace Dominio.DTO
                 Cidade = beneficiario.Cidade,
                 CEP = beneficiario.CEP,
                 UFId = beneficiario.UFId,
-                TipoInscricaoEmpresaId = beneficiario.TipoInscricaoEmpresaId
+                TipoInscricaoEmpresaId = beneficiario.TipoInscricaoEmpresaId,
+                MunicipioId = beneficiario.MunicipioId
             };
         }
     }

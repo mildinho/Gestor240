@@ -15,18 +15,12 @@ namespace Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            DashBoard dashBoard = new();
+            return View(dashBoard);
         }
 
-        public IActionResult Casagrande()
-        {
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+       
+      
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

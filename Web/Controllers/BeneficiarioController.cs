@@ -1,4 +1,5 @@
 ﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -52,6 +53,9 @@ namespace Web.Controllers
             var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
             var objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
 
+            if (objRetorno.UFId > 0)
+                ViewBag.Municipio = await ListaMunicipioPorIdUF(objRetorno.UFId);
+
             return View("Manutencao", objRetorno);
         }
 
@@ -69,6 +73,8 @@ namespace Web.Controllers
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+                if (objRetorno.UFId > 0)
+                    ViewBag.Municipio = await ListaMunicipioPorIdUF(objRetorno.UFId);
 
                 return View("Manutencao", objRetorno);
             }
@@ -93,7 +99,10 @@ namespace Web.Controllers
             var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
             if (retornoApi.success)
             {
+
                 var objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+                if (objRetorno.UFId > 0)
+                    ViewBag.Municipio = await ListaMunicipioPorIdUF(objRetorno.UFId);
 
                 return View("Manutencao", objRetorno);
             }
@@ -114,6 +123,9 @@ namespace Web.Controllers
         {
             ViewBag.UF = await ListaUF();
             ViewBag.TipoInscricaoEmpresa = await ListaTipoInscricaoEmpresa();
+            
+            if (beneficiario.UFId > 0)
+                ViewBag.Municipio = await ListaMunicipioPorIdUF(beneficiario.UFId);
 
             if (Opcoes.Delete == (Opcoes)operacao)
             {

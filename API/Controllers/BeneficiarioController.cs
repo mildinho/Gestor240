@@ -78,7 +78,7 @@ namespace API.Controllers
             Beneficiario ObjBeneficiario = await _UOW.Beneficiario.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
             if (ObjBeneficiario != null)
             {
-                return BadRequest(Mensagens.MSG_E003);
+                return BadRequest(Mensagens.MSG_E005);
             }
 
             UF objUF = await _UOW.UF.PesquisarPorIdAsync(tabela.UFId);

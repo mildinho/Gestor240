@@ -59,6 +59,11 @@ namespace Dominio.Entidades
         public int UFId { get; set; }
         public virtual UF? UF { get; set; }
 
+        [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
+        [Display(Name = "Município")]
+        [ForeignKey("Municipio")]
+        public int MunicipioId { get; set; }
+        public virtual Municipio? Municipio { get; set; }
 
 
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]

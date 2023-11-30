@@ -73,16 +73,16 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Pagador>> Post(PagadorDTO tabela)
         {
-            IEnumerable<Pagador> ObjetoLista = await _UOW.Pagador.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
-            if (ObjetoLista.Any())
+            Pagador ObjPagador = await _UOW.Pagador.PesquisarPorCNPJ_CPFAsync(tabela.CNPJ_CPF);
+            if (ObjPagador != null)
             {
-                return BadRequest(Mensagens.MSG_E003);
+                return BadRequest(Mensagens.MSG_E005);
             }
 
             UF objUF = await _UOW.UF.PesquisarPorIdAsync(tabela.UFId);
             if (objUF == null)
             {
-                return BadRequest("UF não Encontrado!");
+                return BadRequest(Mensagens.MSG_E002);
             }
 
 

@@ -14,9 +14,13 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Pagador>> PesquisarPorCNPJ_CPFAsync(string CNPJ_CPF)
+        public async Task<Pagador> PesquisarPorCNPJ_CPFAsync(string CNPJ_CPF)
         {
-            return await _context.Pagador.Include(a => a.UF).Where(x => x.CNPJ_CPF == CNPJ_CPF).ToListAsync();
+            CNPJ_CPF = string.Concat(CNPJ_CPF.Where(char.IsDigit));
+            return await _context.Pagador.
+                 Include(a => a.UF).
+                 Include(b => b.TipoInscricaoEmpresa).
+                 Where(x => x.CNPJ_CPF == CNPJ_CPF).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Pagador>> PesquisarPorNomeAsync(string Nome)

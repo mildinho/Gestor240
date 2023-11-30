@@ -33,10 +33,13 @@ namespace Web.Controllers
             return ListaObj;
         }
 
-        public async Task<IEnumerable<SelectListItem>> ListaMunicipio()
+        public async Task<IEnumerable<SelectListItem>> ListaMunicipioPorIdUF(int IdUF)
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Municipio/GetAll");
+            ExecutaAPI.ParametrosAPI.Clear();
+            ExecutaAPI.ParametrosAPI.Add(IdUF.ToString());
+            var retornoApi = await ExecutaAPI.GetAPI("Municipio/GetbyIdUF");
             List<MunicipioDTO> objRetorno = JsonConvert.DeserializeObject<List<MunicipioDTO>>(retornoApi.data);
+            ExecutaAPI.ParametrosAPI.Clear();
 
             var ListaObj = objRetorno.Select(a => new SelectListItem(a.Nome, a.Id.ToString()));
 
