@@ -12,6 +12,8 @@ byte[] key = Encoding.ASCII.GetBytes(Settings.SecretKey);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddMemoryCache();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

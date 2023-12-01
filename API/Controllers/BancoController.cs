@@ -1,8 +1,8 @@
 ﻿using Dominio.DTO;
 using Dominio.Entidades;
 using Dominio.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -11,9 +11,14 @@ namespace API.Controllers
     public class BancoController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public BancoController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_Banco";
+
+
+        public BancoController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
 
@@ -48,18 +53,27 @@ namespace API.Controllers
             return Ok(ObjetoDTO);
         }
 
-
         [HttpGet]
         [Route("GetAll")]
         public ActionResult<BancoDTO> GetAll()
         {
-            var Objeto = _UOW.Banco.ListarTodos();
-           
-            var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
-            return Ok(ObjetoDTO);
+            IEnumerable<BancoDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.Banco.ListarTodos();
+
+                cacheValue = BancoDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
+
         }
-
 
 
 
@@ -80,6 +94,8 @@ namespace API.Controllers
                 var ObjetoDTO = BancoDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
 
                 return Ok(ObjetoDTO);
 
@@ -118,6 +134,7 @@ namespace API.Controllers
 
                 await _UOW.SaveAsync();
 
+                _MemoryCache.Remove(_KeyCache);
 
                 return Ok(ObjetoDTO);
 
@@ -133,9 +150,15 @@ namespace API.Controllers
             await _UOW.Banco.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
+
+            _MemoryCache.Remove(_KeyCache);
+
+
             return Ok(_removidos);
 
         }
+
+
 
 
     }

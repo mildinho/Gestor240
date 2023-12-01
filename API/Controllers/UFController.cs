@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,13 @@ namespace API.Controllers
     public class UFController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public UFController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_UF";
+
+        public UFController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
         [HttpGet("GetbyId/{Id}")]
@@ -59,10 +64,20 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<UFDTO> GetAll()
         {
-            var Objeto = _UOW.UF.ListarTodos();
-            var ObjetoDTO = UFDTO.ToDTO(Objeto);
+            IEnumerable<UFDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.UF.ListarTodos();
 
-            return Ok(ObjetoDTO);
+                cacheValue = UFDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
         }
 
 
@@ -85,6 +100,8 @@ namespace API.Controllers
                 var ObjetoDTO = UFDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
 
                 return Ok(ObjetoDTO);
 
@@ -122,6 +139,8 @@ namespace API.Controllers
 
                 await _UOW.SaveAsync();
 
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(ObjetoDTO);
 
             }
@@ -136,6 +155,10 @@ namespace API.Controllers
             await _UOW.UF.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
+
+            _MemoryCache.Remove(_KeyCache);
+
+
             return Ok(_removidos);
 
         }

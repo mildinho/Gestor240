@@ -70,7 +70,7 @@ namespace Infra.Data.Contexto
                 {
                     new TipoInscricaoEmpresa{Codigo = 0, Descricao = "Isento / Não Informado"},
                     new TipoInscricaoEmpresa{Codigo = 1, Descricao = "CPF"},
-                    new TipoInscricaoEmpresa{Codigo = 2, Descricao = "CNPJ / CGC"},
+                    new TipoInscricaoEmpresa{Codigo = 2, Descricao = "CNPJ"},
                     new TipoInscricaoEmpresa{Codigo = 3, Descricao = "PIS / PASEP"},
                     new TipoInscricaoEmpresa{Codigo = 9, Descricao = "Outros"},
                 };
@@ -267,8 +267,9 @@ namespace Infra.Data.Contexto
                     new Municipio{Nome = "HORTOLANDIA", UFId = 20, CodigoFiscal = "3"},
                     new Municipio{Nome = "GUAXUPE", UFId = 17, CodigoFiscal = "4"},
                     new Municipio{Nome = "GUARANESIA", UFId = 17, CodigoFiscal = "5"},
-                    
-                    
+                    new Municipio{Nome = "RIO DE JANEIRO", UFId = 19, CodigoFiscal = "5"},
+
+
                 };
 
                 foreach (var ObjetoRegistro in registros)
@@ -313,7 +314,9 @@ namespace Infra.Data.Contexto
                         Cidade = "Campinas",
                         CEP = "13051110",
                         UFId = 20,
-                        TipoInscricaoEmpresaId = 2
+                        TipoInscricaoEmpresaId = 2,
+                        MunicipioId = 1,
+                        
                     },
                     new Beneficiario{
                         CNPJ_CPF = "08897417000534",
@@ -325,7 +328,8 @@ namespace Infra.Data.Contexto
                         Cidade = "Rio de Janeiro",
                         CEP = "21241051",
                         UFId = 19,
-                        TipoInscricaoEmpresaId = 3
+                        TipoInscricaoEmpresaId = 3,
+                        MunicipioId = 6,
                     },
 
                 };
@@ -351,7 +355,9 @@ namespace Infra.Data.Contexto
                         Cidade = "CAMPINAS",
                         CEP = "13050088",
                         UFId = 20,
-                        TipoInscricaoEmpresaId = 1
+                        TipoInscricaoEmpresaId = 1,
+                        MunicipioId = 1,
+
                     }
 
                 };
