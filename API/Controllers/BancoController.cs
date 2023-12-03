@@ -57,7 +57,6 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<BancoDTO> GetAll()
         {
-
             IEnumerable<BancoDTO> cacheValue = null;
             if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
             {

@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,13 @@ namespace API.Controllers
     public class TipoOperacaoController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public TipoOperacaoController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_TipoOperacao";
+
+        public TipoOperacaoController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
         [HttpGet("GetbyId/{Id}")]
@@ -62,9 +67,20 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<TipoOperacao> GetAll()
         {
-            var Objeto =  _UOW.TipoOperacao.ListarTodos();
-            var ObjetoDTO = TipoOperacaoDTO.ToDTO(Objeto);
-            return Ok(ObjetoDTO);
+            IEnumerable<TipoOperacaoDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.TipoOperacao.ListarTodos();
+
+                cacheValue = TipoOperacaoDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
         }
 
 

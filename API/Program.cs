@@ -27,11 +27,19 @@ builder.Services.AddAuthentication(options =>
     options.RequireHttpsMetadata = false;
     options.TokenValidationParameters = new TokenValidationParameters()
     {
+        /* O token por padrao adiciona 5 minutos a mais. a propriedade ClockSkew = Zera este tempo;
+            Se for usar as propriedades ValidateIssuer e ValidateAudience devem estar configurados
+            no Settings.Issuer e Settings.Audience
+          */
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key)
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+
+        ValidIssuer = Settings.Issuer,
+        ValidAudience = Settings.Audience,
+        ClockSkew = TimeSpan.Zero
     };
 });
 

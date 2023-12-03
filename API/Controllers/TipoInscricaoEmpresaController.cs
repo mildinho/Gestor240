@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,14 @@ namespace API.Controllers
     public class TipoInscricaoEmpresaController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public TipoInscricaoEmpresaController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_TipoInscricao";
+
+
+        public TipoInscricaoEmpresaController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
         [HttpGet("GetbyId/{Id}")]
@@ -61,10 +67,20 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<TipoInscricaoEmpresaDTO> GetAll()
         {
-            var Objeto = _UOW.TipoInscricaoEmpresa.ListarTodos();
-            var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
+            IEnumerable<TipoInscricaoEmpresaDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.TipoInscricaoEmpresa.ListarTodos();
 
-            return Ok(ObjetoDTO);
+                cacheValue = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
         }
 
 

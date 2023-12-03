@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,14 @@ namespace API.Controllers
     public class TipoContaCorrenteController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public TipoContaCorrenteController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_TipoContaCorrente";
+
+
+        public TipoContaCorrenteController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
         [HttpGet("GetbyId/{Id}")]
@@ -48,10 +54,20 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<TipoContaCorrenteDTO> GetAll()
         {
-            var Objeto = _UOW.TipoContaCorrente.ListarTodos();
-            var ObjetoDTO = TipoContaCorrenteDTO.ToDTO(Objeto);
+            IEnumerable<TipoContaCorrenteDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.TipoContaCorrente.ListarTodos();
 
-            return Ok(ObjetoDTO);
+                cacheValue = TipoContaCorrenteDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
         }
 
 
@@ -68,7 +84,7 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-               
+
                 var ObjetoEntitade = TipoContaCorrenteDTO.ToEntidade(tabela);
                 TipoContaCorrente Objeto = await _UOW.TipoContaCorrente.InserirAsync(ObjetoEntitade);
 

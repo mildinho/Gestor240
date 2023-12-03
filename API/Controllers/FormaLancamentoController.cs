@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,13 @@ namespace API.Controllers
     public class FormaLancamentoController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public FormaLancamentoController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_FormaLancamento";
+
+        public FormaLancamentoController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
         [HttpGet("GetbyId/{Id}")]
@@ -33,7 +38,7 @@ namespace API.Controllers
         [HttpGet("Codigo")]
         public async Task<ActionResult<FormaLancamentoDTO>> Codigo(string Codigo)
         {
-            var Objeto = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(Codigo); 
+            var Objeto = await _UOW.FormaLancamento.PesquisarPorCodigoAsync(Codigo);
             if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
@@ -62,10 +67,21 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<FormaLancamentoDTO> GetAll()
         {
-            var Objeto = _UOW.FormaLancamento.ListarTodos();
-            var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
+            IEnumerable<FormaLancamentoDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.FormaLancamento.ListarTodos();
 
-            return Ok(ObjetoDTO);
+                cacheValue = FormaLancamentoDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
+
         }
 
 
@@ -82,7 +98,7 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
                 var ObjetoEntitade = FormaLancamentoDTO.ToEntidade(tabela);
                 FormaLancamento Objeto = await _UOW.FormaLancamento.InserirAsync(ObjetoEntitade);
 
@@ -111,7 +127,7 @@ namespace API.Controllers
             if (ModelState.IsValid)
             {
 
-                
+
                 var ObjetoEntitade = FormaLancamentoDTO.ToEntidade(tabela);
                 var Objeto = await _UOW.FormaLancamento.AtualizarAsync(ObjetoEntitade);
 

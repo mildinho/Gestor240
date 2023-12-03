@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,13 @@ namespace API.Controllers
     public class MunicipioController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public MunicipioController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_Municipio";
+
+        public MunicipioController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
 
@@ -60,10 +65,21 @@ namespace API.Controllers
         [Route("GetAll")]
         public async Task<ActionResult<MunicipioDTO>> GetAll()
         {
-            var Objeto = await _UOW.Municipio.ListarTodosAgregados();
-            var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
+            IEnumerable<MunicipioDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = await _UOW.Municipio.ListarTodosAgregados();
 
-            return Ok(ObjetoDTO);
+                cacheValue = MunicipioDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
+
         }
 
 

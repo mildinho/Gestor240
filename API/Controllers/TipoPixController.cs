@@ -2,6 +2,7 @@
 using Dominio.Entidades;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -10,9 +11,13 @@ namespace API.Controllers
     public class TipoPixController : Controller
     {
         private readonly IUnitOfWork _UOW;
-        public TipoPixController(IUnitOfWork unitOfWork)
+        private readonly IMemoryCache _MemoryCache;
+        const string _KeyCache = "GetAll_TipoPix";
+
+        public TipoPixController(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             _UOW = unitOfWork;
+            _MemoryCache = memoryCache;
         }
 
         [HttpGet("GetbyId/{Id}")]
@@ -61,10 +66,22 @@ namespace API.Controllers
         [Route("GetAll")]
         public ActionResult<TipoPix> GetAll()
         {
-            var Objeto = _UOW.TipoPix.ListarTodos();
-            var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
 
-            return Ok(ObjetoDTO);
+            IEnumerable<TipoPixDTO> cacheValue = null;
+            if (!_MemoryCache.TryGetValue(_KeyCache, out cacheValue))
+            {
+                var Objeto = _UOW.TipoPix.ListarTodos();
+
+                cacheValue = TipoPixDTO.ToDTO(Objeto);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+
+                _MemoryCache.Set(_KeyCache, cacheValue, cacheEntryOptions);
+            }
+
+            return Ok(cacheValue);
+
         }
 
 
@@ -79,9 +96,9 @@ namespace API.Controllers
                 return BadRequest(Mensagens.MSG_E003);
             }
 
-           if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-               
+
                 var ObjetoEntitade = TipoPixDTO.ToEntidade(tabela);
                 TipoPix Objeto = await _UOW.TipoPix.InserirAsync(ObjetoEntitade);
 
@@ -108,7 +125,7 @@ namespace API.Controllers
                 return BadRequest(Mensagens.MSG_E002);
             }
             IEnumerable<TipoPix> ObjetoLista = await _UOW.TipoPix.PesquisarPorCodigoAsync(tabela.Codigo);
-            
+
             if (ObjetoLista.Any() && ObjetoLista.FirstOrDefault().Id != Id)
             {
                 return BadRequest(Mensagens.MSG_E003);
