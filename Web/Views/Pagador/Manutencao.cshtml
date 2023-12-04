@@ -1,4 +1,4 @@
-﻿@model BeneficiarioDTO;
+﻿@model PagadorDTO;
 
 @{
 
@@ -41,11 +41,11 @@
 
             @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
             {
-                <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Beneficiário" disabled="disabled">
+                <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
             }
             else
             {
-                <input asp-for="Nome" class="form-control " placeholder="Digite o Nome do Beneficiário">
+                <input asp-for="Nome" class="form-control " placeholder="Digite o Nome do Pagador">
             }
 
             <span asp-validation-for="Nome" class="text-danger"></span>

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Reflection;
+﻿using System.Net.Http.Headers;
 using Web.Interface;
 
 namespace Web.Services
@@ -115,9 +111,6 @@ namespace Web.Services
         {
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            //API_Retorno resposta = JsonConvert.DeserializeObject<API_Retorno>(jsonString);
-
-
             API_Retorno resposta = new API_Retorno
             {
                 data = jsonString,
@@ -125,6 +118,7 @@ namespace Web.Services
                 success = response.IsSuccessStatusCode,
                 message = (int)response.StatusCode == 401 ? "Acesso Negado" : response.StatusCode.ToString()
             };
+
 
             return resposta;
         }

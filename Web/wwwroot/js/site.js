@@ -28,12 +28,24 @@ $(document).ready(function () {
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json',
         },
-    }); // ID From dataTable
+        processing: true,
+    });
+
     $('#dataTableHover').DataTable({
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json',
         },
-    }); // ID From dataTable with Hover
+        processing: true,
+
+    });
+
+    $('#dataTableContaCorrente').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json',
+        },
+        scrollY: true,
+        processing: true,
+    });
 
 
 });
@@ -80,7 +92,7 @@ function buscar_cep() {
         dataType: 'json',
         success: function (response) {
             console.log(response);
-            
+
 
             if (response.erro != true) {
                 console.log(response.bairro);
@@ -90,7 +102,7 @@ function buscar_cep() {
 
                 document.getElementById('endereco_beneficiario').value = response.logradouro;
                 document.getElementById('bairro_beneficiario').value = response.bairro;
-                
+
                 document.getElementById('select2-select2SingleUF-container').value = response.uf;
             } else if (response.erro == true) {
                 Swal.fire(

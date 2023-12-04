@@ -100,6 +100,9 @@ namespace API.Controllers
                 TipoOperacao Objeto = await _UOW.TipoOperacao.InserirAsync(tabela);
 
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(Objeto);
 
             }
@@ -129,12 +132,13 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
                 var Objeto = await _UOW.TipoOperacao.AtualizarAsync(tabela);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
 
+                _MemoryCache.Remove(_KeyCache);
+
+                return Ok(Objeto);
             }
             return BadRequest();
 
@@ -143,12 +147,13 @@ namespace API.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult<int>> Delete(int Id)
         {
-
             await _UOW.TipoOperacao.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
-            return Ok(_removidos);
 
+            _MemoryCache.Remove(_KeyCache);
+
+            return Ok(_removidos);
         }
 
 

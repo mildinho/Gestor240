@@ -104,6 +104,11 @@ namespace API.Controllers
 
                 var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
+
+
+                _MemoryCache.Remove(_KeyCache);
+
+
                 return Ok(Objeto);
 
             }
@@ -133,6 +138,9 @@ namespace API.Controllers
 
                 var ObjetoDTO = FormaLancamentoDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(Objeto);
 
             }
@@ -143,10 +151,12 @@ namespace API.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult<int>> Delete(int Id)
         {
-
             await _UOW.FormaLancamento.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
+
+            _MemoryCache.Remove(_KeyCache);
+
             return Ok(_removidos);
 
         }

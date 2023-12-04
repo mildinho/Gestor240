@@ -95,11 +95,13 @@ namespace API.Controllers
                 TipoServico Objeto = await _UOW.TipoServico.InserirAsync(tabela);
 
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(Objeto);
 
             }
             return BadRequest();
-
         }
 
         [HttpPut("{Id}")]
@@ -117,26 +119,27 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
                 var Objeto = await _UOW.TipoServico.AtualizarAsync(tabela);
 
                 await _UOW.SaveAsync();
-                return Ok(Objeto);
 
+                _MemoryCache.Remove(_KeyCache);
+
+                return Ok(Objeto);
             }
             return BadRequest();
-
         }
 
         [HttpDelete("{Id}")]
         public async Task<ActionResult<int>> Delete(int Id)
         {
-
             await _UOW.TipoServico.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
-            return Ok(_removidos);
 
+            _MemoryCache.Remove(_KeyCache);
+
+            return Ok(_removidos);
         }
 
 

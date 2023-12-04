@@ -1,0 +1,121 @@
+﻿@model ContaCorrenteDTO;
+
+@{
+
+    ViewData["Title"] = ViewBag.Crud.Titulo;
+}
+
+@await Component.InvokeAsync("CRUD")
+
+<form method="post" id="@String.Concat("frm_manutencao_",ViewBag.Crud.Operacao).ToLower()" asp-action="Manutencao">
+
+    <input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
+
+
+
+    @if (ViewBag.Crud.Operacao != Opcoes.Create)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="row">
+        <div class="form-group col-1">
+            <label asp-for="SaldoCC"></label>
+            <input asp-for="SaldoCC" class="form-control" placeholder="Saldo da C/C" disabled="disabled">
+            <span asp-validation-for="SaldoCC" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group col-2">
+            <label asp-for="CNPJ_CPF"></label>
+            <input asp-for="CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
+            <span asp-validation-for="CNPJ_CPF" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-5">
+            <label asp-for="Nome"></label>
+            <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group col-5">
+            <label asp-for="Fantasia"></label>
+            <input asp-for="Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
+            <span asp-validation-for="Fantasia" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="form-group col-3">
+
+            <label asp-for="TipoContaCorrenteId"></label>
+            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
+            {
+                <select asp-for="TipoContaCorrenteId" class="select2-single form-control" asp-items="@ViewBag.TContaCorrente" disabled="disabled">
+                    <option value="">Selecione a Conta Corrente  </option>
+                </select>
+
+            }
+            else
+            {
+                <div class="form-group">
+
+                    <select asp-for="TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.TContaCorrente" onchange="CarregaMunicipio()">
+                        <option value="">Selecione a Conta Corrente  </option>
+                    </select>
+                </div>
+
+            }
+            <span asp-validation-for="TipoContaCorrenteId" class="text-danger"></span>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    @await Component.InvokeAsync("CRUD_Acao")
+
+</form>
+
+
+<script type="text/javascript">
+    function CarregaMunicipio() {
+
+        IdUF = $('#select2SingleUF').val();
+
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:7092/v1/Municipio/GetbyIdUF/' + IdUF,
+            contentType: 'application/json',
+            dataType: "JSON",
+            success: function (r) {
+                console.log("RESULT", r);
+
+
+                $('#select2SingleMunicipio').empty();
+
+                for (let i = 0; i < r.length; i = i + 1) {
+                    var option = new Option(r[i].nome, r[i].id, true, true);
+                    $('#select2SingleMunicipio').append(option).trigger('change');
+
+                }
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+            }
+        });
+    }
+</script>

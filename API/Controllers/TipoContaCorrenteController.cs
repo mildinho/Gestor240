@@ -84,12 +84,13 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
                 var ObjetoEntitade = TipoContaCorrenteDTO.ToEntidade(tabela);
                 TipoContaCorrente Objeto = await _UOW.TipoContaCorrente.InserirAsync(ObjetoEntitade);
 
                 var ObjetoDTO = TipoContaCorrenteDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
 
                 return Ok(ObjetoDTO);
 
@@ -126,6 +127,8 @@ namespace API.Controllers
                 var ObjetoDTO = TipoContaCorrenteDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
 
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(ObjetoDTO);
 
             }
@@ -136,12 +139,13 @@ namespace API.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult<int>> Delete(int Id)
         {
-
             await _UOW.TipoContaCorrente.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
-            return Ok(_removidos);
 
+            _MemoryCache.Remove(_KeyCache);
+
+            return Ok(_removidos);
         }
 
 

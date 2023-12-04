@@ -112,6 +112,10 @@ app.UseCors("default");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Para Retornar o Codigo de Erro das paginas.
+app.UseStatusCodePages();
+
+
 app.MapControllers();
 
 

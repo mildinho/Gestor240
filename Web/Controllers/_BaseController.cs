@@ -1,4 +1,5 @@
-﻿using Dominio.DTO;
+﻿using AspNetCore;
+using Dominio.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -9,18 +10,12 @@ namespace Web.Controllers
 
     public abstract class _BaseController<T> : Controller where T : _BaseController<T>
     {
-
         private IConfiguration? _configuration;
         private IntegracaoApi? _integracaoApi;
 
 
         protected IConfiguration? Configuration => _configuration ?? (_configuration = HttpContext?.RequestServices.GetService<IConfiguration>());
-
-
-        //protected IntegracaoApi ExecutaAPI => new IntegracaoApi(Configuration);
         protected IntegracaoApi? ExecutaAPI => _integracaoApi ?? (_integracaoApi = HttpContext?.RequestServices.GetService<IntegracaoApi>());
-
-
 
 
         public async Task<IEnumerable<SelectListItem>> ListaUF()
@@ -32,6 +27,7 @@ namespace Web.Controllers
 
             return ListaObj;
         }
+
 
         public async Task<IEnumerable<SelectListItem>> ListaMunicipioPorIdUF(int IdUF)
         {
@@ -56,5 +52,16 @@ namespace Web.Controllers
 
             return ListaObj;
         }
+
+        public async Task<IEnumerable<SelectListItem>> ListaTipoContaCorrente()
+        {
+            var retornoApi = await ExecutaAPI.GetAPI("TipoContaCorrente/GetAll");
+            List<TipoContaCorrenteDTO> objRetorno = JsonConvert.DeserializeObject<List<TipoContaCorrenteDTO>>(retornoApi.data);
+
+            ViewBag.TContaCorrente = objRetorno.Select(a => new SelectListItem(a.Id.ToString() + " - " + a.Descricao, a.Id.ToString()));
+
+            return ViewBag.TContaCorrente;
+        }
+
     }
 }

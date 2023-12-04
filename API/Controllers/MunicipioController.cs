@@ -104,6 +104,8 @@ namespace API.Controllers
                 Objeto = await _UOW.Municipio.PesquisarPorIdAgregadoAsync(Objeto.Id);
                 var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(ObjetoDTO);
 
             }
@@ -140,6 +142,8 @@ namespace API.Controllers
 
                 var ObjetoDTO = MunicipioDTO.ToDTO(Objeto);
 
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(ObjetoDTO);
             }
             return BadRequest();
@@ -149,12 +153,13 @@ namespace API.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult<int>> Delete(int Id)
         {
-
             await _UOW.Municipio.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
-            return Ok(_removidos);
 
+            _MemoryCache.Remove(_KeyCache);
+
+            return Ok(_removidos);
         }
 
 

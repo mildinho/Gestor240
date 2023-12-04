@@ -98,12 +98,13 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-
                 var ObjetoEntitade = TipoPixDTO.ToEntidade(tabela);
                 TipoPix Objeto = await _UOW.TipoPix.InserirAsync(ObjetoEntitade);
 
                 var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
+
+                _MemoryCache.Remove(_KeyCache);
 
                 return Ok(ObjetoDTO);
 
@@ -140,6 +141,8 @@ namespace API.Controllers
                 var ObjetoDTO = TipoPixDTO.ToDTO(Objeto);
                 await _UOW.SaveAsync();
 
+                _MemoryCache.Remove(_KeyCache);
+
                 return Ok(ObjetoDTO);
 
             }
@@ -150,12 +153,13 @@ namespace API.Controllers
         [HttpDelete("{Id}")]
         public async Task<ActionResult<int>> Delete(int Id)
         {
-
             await _UOW.TipoPix.DeletarAsync(Id);
 
             int _removidos = await _UOW.SaveAsync();
-            return Ok(_removidos);
 
+            _MemoryCache.Remove(_KeyCache);
+
+            return Ok(_removidos);
         }
 
 
