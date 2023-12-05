@@ -133,7 +133,7 @@ namespace API.Controllers
             {
 
                 var ObjetoEntitade = UFDTO.ToEntidade(tabela);
-                UF Objeto = await _UOW.UF.InserirAsync(ObjetoEntitade);
+                UF Objeto = await _UOW.UF.AtualizarAsync(ObjetoEntitade);
 
                 var ObjetoDTO = UFDTO.ToDTO(Objeto);
 

@@ -129,7 +129,7 @@ namespace API.Controllers
             {
 
                 var ObjetoEntitade = TipoInscricaoEmpresaDTO.ToEntidade(tabela);
-                TipoInscricaoEmpresa Objeto = await _UOW.TipoInscricaoEmpresa.InserirAsync(ObjetoEntitade);
+                TipoInscricaoEmpresa Objeto = await _UOW.TipoInscricaoEmpresa.AtualizarAsync(ObjetoEntitade);
                 var ObjetoDTO = TipoInscricaoEmpresaDTO.ToDTO(Objeto);
 
                 await _UOW.SaveAsync();

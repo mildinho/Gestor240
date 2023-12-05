@@ -73,3 +73,8 @@ app.MapControllerRoute(
 app.Run();
 
 
+
+
+//https://programtown.com/how-to-create-custom-user-login-authentication-with-session-in-asp-net-core-mvc-visual-studio-2022/
+//https://learn.microsoft.com/pt-br/aspnet/core/fundamentals/app-state?view=aspnetcore-8.0
+//https://learn.microsoft.com/pt-br/aspnet/core/security/authentication/cookie?view=aspnetcore-8.0
