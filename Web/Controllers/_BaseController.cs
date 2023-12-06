@@ -1,5 +1,4 @@
-﻿using AspNetCore;
-using Dominio.DTO;
+﻿using Dominio.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;

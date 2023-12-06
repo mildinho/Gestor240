@@ -1,15 +1,14 @@
 ﻿using Dominio.DTO;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web.Biblioteca.CRUD;
+using Web.Biblioteca.Filtro;
 using Web.Biblioteca.msgDefault;
 using Web.Biblioteca.Notification;
-using Web.Services;
 
 namespace Web.Controllers
 {
-  
+    [LoginAutorizacao]
     public class BancoController : _BaseController<BancoController>
     {
 

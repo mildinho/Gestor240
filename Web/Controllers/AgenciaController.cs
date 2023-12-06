@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Web.Biblioteca.CRUD;
+using Web.Biblioteca.Filtro;
 using Web.Biblioteca.msgDefault;
 using Web.Biblioteca.Notification;
-using Web.Services;
 
 
 namespace Web.Controllers
 {
+    [LoginAutorizacao]
     public class AgenciaController : _BaseController<AgenciaController>
     {
 

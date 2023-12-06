@@ -1,4 +1,5 @@
 ﻿using Web.Biblioteca.Notification;
+using Web.Biblioteca.Session;
 using Web.Interface;
 
 namespace Web.Services
@@ -12,7 +13,7 @@ namespace Web.Services
             services.AddHttpContextAccessor();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -22,7 +23,8 @@ namespace Web.Services
             });
 
             services.AddScoped<IntegracaoApi>();
-
+            services.AddScoped<ConfiguraSessao>();
+            services.AddScoped<SessaoUsuario>();
 
             return services;
         }
