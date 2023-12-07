@@ -14,15 +14,15 @@ namespace Web.Biblioteca.Filtro
             _loginUsuario = (SessaoUsuario)context.HttpContext.RequestServices.GetService(typeof(SessaoUsuario));
 
             
-            //TokenUsuario obj = _loginUsuario.GetToken();
-            
-            //if (obj == null)
-            //{
-            //    context.Result = new RedirectToActionResult("Login", "Home", null);
-            //}
-            
-            
+            TokenUsuario obj = _loginUsuario.GetToken();
 
-         }
+            if (obj == null)
+            {
+                context.Result = new RedirectToActionResult("Login", "Home", null);
+            }
+
+
+
+        }
     }
 }

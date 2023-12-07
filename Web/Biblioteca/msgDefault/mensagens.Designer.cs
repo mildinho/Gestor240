@@ -61,6 +61,15 @@ namespace Web.Biblioteca.msgDefault {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário e Senha Inválido..
+        /// </summary>
+        public static string MSG_E001 {
+            get {
+                return ResourceManager.GetString("MSG_E001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Registro Salvo com Sucesso!.
         /// </summary>
         public static string MSG_S001 {
@@ -84,15 +93,6 @@ namespace Web.Biblioteca.msgDefault {
         public static string MSG_S003 {
             get {
                 return ResourceManager.GetString("MSG_S003", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a .
-        /// </summary>
-        public static string String {
-            get {
-                return ResourceManager.GetString("String", resourceCulture);
             }
         }
     }

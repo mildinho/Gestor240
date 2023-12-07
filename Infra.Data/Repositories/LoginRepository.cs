@@ -22,11 +22,11 @@ namespace Infra.Data.Repositories
                 Where(x => x.Email == Email).ToListAsync();
         }
 
-        public async Task<IEnumerable<Login>> PesquisarPorEmailSenhaAsync(string Email, string Senha)
+        public async Task<Login> PesquisarPorEmailSenhaAsync(string Email, string Senha)
         {
             return await _context.Login.
-                Where(x => x.Email == Email && x.Password == Senha).
-                ToListAsync();
+                Where(x => x.Email == Email && x.Password == Senha).FirstOrDefaultAsync();
+                
         }
 
 

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MSG_E001" xml:space="preserve">
+    <value>Usuário e Senha Inválido.</value>
+  </data>
   <data name="MSG_S001" xml:space="preserve">
     <value>Registro Salvo com Sucesso!</value>
   </data>
@@ -125,8 +128,5 @@
   </data>
   <data name="MSG_S003" xml:space="preserve">
     <value>Registro Excluído com Sucesso!</value>
-  </data>
-  <data name="String" xml:space="preserve">
-    <value />
   </data>
 </root>

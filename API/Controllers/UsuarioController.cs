@@ -22,15 +22,15 @@ namespace API.Controllers
         {
             login.Password = _UOW.Login.Criptografar(login.Password);
 
-            var Objeto = await _UOW.Login.PesquisarPorEmailSenhaAsync(login.Email, login.Password);
-            if (Objeto == null || Objeto.Count() == 0)
+            Login Objeto = await _UOW.Login.PesquisarPorEmailSenhaAsync(login.Email, login.Password);
+            if (Objeto == null )
             {
                 return NotFound(Mensagens.MSG_E002);
             }
 
 
             TokenUsuario tokenUsuario = TokenService.Generate(login);
-
+            tokenUsuario.Nome = Objeto.Nome;
 
             return Ok(tokenUsuario);
 

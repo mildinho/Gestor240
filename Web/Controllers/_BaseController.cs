@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Web.Biblioteca.Session;
 using Web.Services;
 
 namespace Web.Controllers
@@ -11,10 +12,13 @@ namespace Web.Controllers
     {
         private IConfiguration? _configuration;
         private IntegracaoApi? _integracaoApi;
+        private SessaoUsuario? _sessaoUsuario;
+
 
 
         protected IConfiguration? Configuration => _configuration ?? (_configuration = HttpContext?.RequestServices.GetService<IConfiguration>());
         protected IntegracaoApi? ExecutaAPI => _integracaoApi ?? (_integracaoApi = HttpContext?.RequestServices.GetService<IntegracaoApi>());
+        protected SessaoUsuario? UsuarioLogado => _sessaoUsuario ?? (_sessaoUsuario = HttpContext?.RequestServices.GetService<SessaoUsuario>());
 
 
         public async Task<IEnumerable<SelectListItem>> ListaUF()

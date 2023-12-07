@@ -1,4 +1,9 @@
-﻿
+﻿@model LoginDTO;
+
+@{
+
+    ViewData["Title"] = "Identificação do Usuário";
+}
 <body class="bg-gradient-login">
     <!-- Login Content -->
     <div class="container-login">
@@ -10,16 +15,21 @@
                             <div class="col-lg-12">
                                 <div class="login-form">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Identificação do Usuário</h1>
                                     </div>
-                                    <form class="user">
+                                    <form method="post" asp-action="Login" class="user">
+
                                         <div class="form-group">
-                                            <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-                                                   placeholder="Informe seu E-Mail">
+                                            <input asp-for="Email" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu E-Mail">
                                         </div>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+
                                         <div class="form-group">
-                                            <input type="password" class="form-control" id="exampleInputPassword" placeholder="Senha">
+                                            <input asp-for="Password" class="form-control" placeholder="Senha">
                                         </div>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+
+
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
@@ -29,7 +39,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <a href="index.html" class="btn btn-primary btn-block">Login</a>
+                                     
+                                            <button accesskey="s" type="submit" class="btn btn-primary btn-block">
+                                                <i class="fas fa-save"></i> Acessar
+                                            </button>
                                         </div>
                                     </form>
                                     <hr>

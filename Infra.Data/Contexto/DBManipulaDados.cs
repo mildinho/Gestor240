@@ -16,7 +16,11 @@ namespace Infra.Data.Contexto
                 var registros = new Login[]
                 {
                     //fer123
-                    new Login{Email="mildinho@gmail.com", Password = "NjhQI/aFYQikKjc478qUVQ=="}
+                    new Login{
+                        Email="mildinho@gmail.com",
+                        Password = "NjhQI/aFYQikKjc478qUVQ==",
+                        Nome = "Casagrande"
+                    }
 
                 };
 
@@ -316,7 +320,7 @@ namespace Infra.Data.Contexto
                         UFId = 20,
                         TipoInscricaoEmpresaId = 2,
                         MunicipioId = 1,
-                        
+
                     },
                     new Beneficiario{
                         CNPJ_CPF = "08897417000534",
@@ -401,9 +405,9 @@ namespace Infra.Data.Contexto
 
             if (!dbContext.Financas.Any())
             {
-                Random diasPagamento = new ();
-                Random formaLancamento = new ();
-                Random tipoServico = new ();
+                Random diasPagamento = new();
+                Random formaLancamento = new();
+                Random tipoServico = new();
 
                 List<Financas> registros = new();
                 for (int i = 0; i < 500; i++)

@@ -18,6 +18,7 @@ namespace Dominio.DTO
         [DataType(DataType.Password)]
         public string Password { get; set; } = String.Empty;
 
+        public string Nome { get; set; } = String.Empty;
 
 
         public LoginDTO() { }
@@ -30,7 +31,8 @@ namespace Dominio.DTO
             return new Login
             {
                 Email = loginDTO.Email,
-                Password = loginDTO.Password
+                Password = loginDTO.Password,
+                Nome = loginDTO.Nome
             };
 
         }
@@ -44,7 +46,8 @@ namespace Dominio.DTO
                 loginDTO.Add(new LoginDTO
                 {
                     Email = item.Email,
-                    Password = item.Password
+                    Password = item.Password,
+                    Nome = item.Nome
                 });
             }
             return loginDTO;
@@ -56,7 +59,8 @@ namespace Dominio.DTO
             return new LoginDTO
             {
                 Email = login.Email,
-                Password = login.Password
+                Password = login.Password,
+                Nome = login.Nome
 
             };
         }

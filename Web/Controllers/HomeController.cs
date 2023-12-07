@@ -1,16 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dominio.DTO;
+using Dominio.Entidades;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using Web.Biblioteca.msgDefault;
+using Web.Biblioteca.Notification;
+using Web.Biblioteca.Session;
 using Web.Models;
 
 namespace Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : _BaseController<HomeController>
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+
         }
 
         public IActionResult Index()
@@ -19,9 +24,39 @@ namespace Web.Controllers
             return View(dashBoard);
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login([FromForm] LoginDTO login)
+        {
+
+            var retornoApi = await ExecutaAPI.PostAPI("Usuario/Login", login);
+
+            if (ModelState.IsValid)
+            {
+                if (retornoApi.success)
+                {
+                    TokenUsuario obj = JsonConvert.DeserializeObject<TokenUsuario>(retornoApi.data);
+
+                    UsuarioLogado.GravaToken(obj);
+                   
+                    AlertNotification.Success("É bom tê-lo de volta, " + obj.Nome);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    AlertNotification.Info(mensagens.MSG_E001);
+                    return View("Login", login);
+                }
+            }
+
+            return View("Login", login);
+
         }
 
 
@@ -35,6 +70,15 @@ namespace Web.Controllers
         public IActionResult PageNotFound()
         {
             return View();
+        }
+
+
+
+        public IActionResult Logout()
+        {
+            UsuarioLogado.Logout();
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }
