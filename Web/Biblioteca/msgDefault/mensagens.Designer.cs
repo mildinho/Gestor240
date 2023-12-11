@@ -70,6 +70,15 @@ namespace Web.Biblioteca.msgDefault {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-Mail Já Cadastrado..
+        /// </summary>
+        public static string MSG_E002 {
+            get {
+                return ResourceManager.GetString("MSG_E002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Registro Salvo com Sucesso!.
         /// </summary>
         public static string MSG_S001 {

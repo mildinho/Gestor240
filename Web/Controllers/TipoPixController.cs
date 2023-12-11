@@ -19,10 +19,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<TipoPixDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<TipoPixDTO>("TipoPix/GetAll", "Index");
         }
 
         [HttpGet]
@@ -41,12 +38,7 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<TipoPixDTO>(retornoApi.data);
-
-
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<TipoPixDTO>("TipoPix/GetbyId", "Manutencao");
         }
 
 
@@ -100,10 +92,10 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] TipoPixDTO tipoPix, Opcoes operacao)
         {
-             if (Opcoes.Delete == (Opcoes)operacao)
+            if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-         
+
                 ExecutaAPI.ParametrosAPI.Add(tipoPix.Id.ToString());
 
                 var retornoApi = await ExecutaAPI.DeleteAPI("TipoPix");

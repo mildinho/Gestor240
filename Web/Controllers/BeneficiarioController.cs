@@ -20,10 +20,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<BeneficiarioDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<BeneficiarioDTO>("Beneficiario/GetAll", "Index");
         }
 
         [HttpGet]
@@ -122,7 +119,7 @@ namespace Web.Controllers
         {
             ViewBag.UF = await ListaUF();
             ViewBag.TipoInscricaoEmpresa = await ListaTipoInscricaoEmpresa();
-            
+
             if (beneficiario.UFId > 0)
                 ViewBag.Municipio = await ListaMunicipioPorIdUF(beneficiario.UFId);
 
@@ -161,7 +158,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-              
+
                         return View("Manutencao", beneficiario);
                     }
                 }
@@ -180,7 +177,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-                      
+
 
                         return View("Manutencao", beneficiario);
                     }

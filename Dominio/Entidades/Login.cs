@@ -20,14 +20,10 @@ namespace Dominio.Entidades
 
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [StringLength(50, ErrorMessage = "{0} Deve haver no Minimo {2} e no Máximo {1}", MinimumLength = 5)]
+        [StringLength(50, ErrorMessage = "{0} Deve haver no Minimo {2} e no Máximo {1}", MinimumLength = 3)]
         [DataType(DataType.Password)]
         public string Password { get; set; } = String.Empty;
 
     }
-
-
-
-
 
 }

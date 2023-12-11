@@ -19,11 +19,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<TipoServicoDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<TipoServicoDTO>("TipoServico/GetAll", "Index");
         }
+
 
         [HttpGet]
         public IActionResult Cadastrar()
@@ -41,12 +39,7 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
-
-
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<TipoServicoDTO>("TipoServico/GetbyId", "Manutencao");
         }
 
 

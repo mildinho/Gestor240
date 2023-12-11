@@ -19,15 +19,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetAll");
-            if (retornoApi.statuscode == 401)
-                return View("PageLogin");
-
-
-            var objRetorno = JsonConvert.DeserializeObject<List<BancoDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<BancoDTO>("Banco/GetAll", "Index");
         }
+
 
         [HttpGet]
         public IActionResult Cadastrar()
@@ -42,16 +36,10 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-           
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
-
-
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<BancoDTO>("Banco/GetbyId", "Manutencao");
         }
 
 
@@ -62,6 +50,10 @@ namespace Web.Controllers
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
+
+            if (retornoApi.statuscode == 401)
+                return RedirectToAction("Login", "Home");
+
             if (retornoApi.success)
             {
                 var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
@@ -105,10 +97,10 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] BancoDTO banco, Opcoes operacao)
         {
-               if (Opcoes.Delete == (Opcoes)operacao)
+            if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-                  ExecutaAPI.ParametrosAPI.Add(banco.Id.ToString());
+                ExecutaAPI.ParametrosAPI.Add(banco.Id.ToString());
 
                 var retornoApi = await ExecutaAPI.DeleteAPI("Banco");
                 if (retornoApi.success)

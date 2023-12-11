@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Web.Biblioteca.Session;
+using Web.Interface;
 using Web.Services;
 
 namespace Web.Controllers
@@ -65,6 +66,56 @@ namespace Web.Controllers
 
             return ViewBag.TContaCorrente;
         }
+
+
+        public async Task<IActionResult> Index_Geral<T>(string Rota, string ViewName)
+        {
+            var retornoApi = await ExecutaAPI.GetAPI(Rota);
+
+            if (retornoApi.statuscode == 401)
+                return RedirectToAction("Login", "Home");
+
+            if (!retornoApi.success)
+                return RedirectToAction("ErrorAPI", "Home", retornoApi);
+
+            try
+            {
+                var objRetorno = JsonConvert.DeserializeObject<List<T>>(retornoApi.data);
+                return View(ViewName, objRetorno);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("ErrorAPI", "Home", retornoApi);
+            }
+            
+        }
+
+
+
+        public async Task<IActionResult> Editar_Geral<T>(string Rota, string ViewName)
+        {
+            var retornoApi = await ExecutaAPI.GetAPI(Rota);
+
+            if (retornoApi.statuscode == 401)
+                return RedirectToAction("Login", "Home");
+
+            if (!retornoApi.success)
+                return RedirectToAction("ErrorAPI", "Home", retornoApi);
+
+            try
+            {
+                var objRetorno = JsonConvert.DeserializeObject<T>(retornoApi.data);
+                return View(ViewName, objRetorno);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("ErrorAPI", "Home", retornoApi);
+            }
+
+        }
+
 
     }
 }

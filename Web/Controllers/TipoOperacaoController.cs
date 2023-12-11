@@ -19,10 +19,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<TipoOperacaoDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<TipoOperacaoDTO>("TipoOperacao/GetAll", "Index");
         }
 
         [HttpGet]
@@ -41,12 +38,7 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<TipoOperacaoDTO>(retornoApi.data);
-
-
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<TipoOperacaoDTO>("TipoOperacao/GetbyId", "Manutencao");
         }
 
 
@@ -142,7 +134,7 @@ namespace Web.Controllers
                 }
                 else if (Opcoes.Update == (Opcoes)operacao)
                 {
-       
+
                     ExecutaAPI.ParametrosAPI.Add(tipoOperacao.Id.ToString());
 
                     var retornoApi = await ExecutaAPI.PutAPI("TipoOperacao", tipoOperacao);

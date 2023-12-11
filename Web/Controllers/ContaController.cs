@@ -21,11 +21,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Conta/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<ContaDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<ContaDTO>("Conta/GetAll", "Index");
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Cadastrar()
@@ -42,18 +40,13 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ViewBag.Bancos = await ListaBancos();
             ViewBag.Agencias = await ListaAgencias();
 
-
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Conta/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<ContaDTO>(retornoApi.data);
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<ContaDTO>("Conta/GetbyId", "Manutencao");
         }
 
 

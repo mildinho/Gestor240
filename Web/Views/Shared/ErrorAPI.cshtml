@@ -3,7 +3,7 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
+<h1 class="text-danger">Algo Inesperado Acontece :(</h1>
 <h2 class="text-danger">Ocorreu um erro durante o processamento da requisição.</h2>
 
 @if (Model.ShowRequestId)
@@ -13,7 +13,10 @@
     </p>
 }
 
-<h3>Mensagem Informativa</h3>
+<br />
+
+<h3 class="text-center">Mensagem de Resposta da API:</h3>
+<br />
 <p>
-    @Model.Message
+    <strong>@Html.Raw( Model.Message)</strong>
 </p>

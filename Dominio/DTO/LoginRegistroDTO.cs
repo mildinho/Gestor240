@@ -27,7 +27,7 @@ namespace Dominio.DTO
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(50, ErrorMessage = "{0} Deve haver no Minimo {2} e no Máximo {1}", MinimumLength = 5)]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage ="Senha Estão Diferentes")]
+        [Compare("Password", ErrorMessage ="Senha NÃO Confere")]
         public string ConfirmPassword { get; set; } = String.Empty;
 
 

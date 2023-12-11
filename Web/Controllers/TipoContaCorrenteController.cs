@@ -19,10 +19,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("TipoContaCorrente/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<TipoContaCorrenteDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<TipoContaCorrenteDTO>("TipoContaCorrente/GetAll", "Index");
         }
 
         [HttpGet]
@@ -41,12 +38,7 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("TipoContaCorrente/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<TipoContaCorrenteDTO>(retornoApi.data);
-
-
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<TipoContaCorrenteDTO>("TipoContacorrente/GetbyId", "Manutencao");
         }
 
 
@@ -100,10 +92,10 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] TipoContaCorrenteDTO tipoCC, Opcoes operacao)
         {
-             if (Opcoes.Delete == (Opcoes)operacao)
+            if (Opcoes.Delete == (Opcoes)operacao)
             {
 
-         
+
                 ExecutaAPI.ParametrosAPI.Add(tipoCC.Id.ToString());
 
                 var retornoApi = await ExecutaAPI.DeleteAPI("TipoContaCorrente");

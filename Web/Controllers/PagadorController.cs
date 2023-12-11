@@ -20,10 +20,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<PagadorDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<PagadorDTO>("Pagador/GetAll", "Index");
         }
 
         [HttpGet]

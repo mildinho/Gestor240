@@ -120,6 +120,9 @@
   <data name="MSG_E001" xml:space="preserve">
     <value>Usuário e Senha Inválido.</value>
   </data>
+  <data name="MSG_E002" xml:space="preserve">
+    <value>E-Mail Já Cadastrado.</value>
+  </data>
   <data name="MSG_S001" xml:space="preserve">
     <value>Registro Salvo com Sucesso!</value>
   </data>

@@ -21,10 +21,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<AgenciaDTO>>(retornoApi.data);
+            return await Index_Geral<AgenciaDTO>("Agencia/GetAll", "Index");
 
-            return View(objRetorno);
         }
 
         [HttpGet]
@@ -41,17 +39,13 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ViewBag.Bancos = await ListaBancos();
 
-
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<AgenciaDTO>(retornoApi.data);
+            return await Editar_Geral<AgenciaDTO>("Agencia/GetbyId", "Manutencao");
 
-            return View("Manutencao", objRetorno);
         }
 
 
@@ -145,7 +139,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-              
+
                         return View("Manutencao", agencia);
                     }
                 }
@@ -164,7 +158,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-                      
+
 
                         return View("Manutencao", agencia);
                     }

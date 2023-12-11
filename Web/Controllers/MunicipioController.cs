@@ -20,17 +20,15 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var retornoApi = await ExecutaAPI.GetAPI("Municipio/GetAll");
-            var objRetorno = JsonConvert.DeserializeObject<List<MunicipioDTO>>(retornoApi.data);
-
-            return View(objRetorno);
+            return await Index_Geral<MunicipioDTO>("Municipio/GetAll", "Index");
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Cadastrar()
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
-          
+
 
             ViewBag.UF = await ListaUF();
             return View("Manutencao");
@@ -41,17 +39,12 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int Id)
         {
-
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Update);
             ViewBag.UF = await ListaUF();
 
-
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Municipio/GetbyId");
-            var objRetorno = JsonConvert.DeserializeObject<MunicipioDTO>(retornoApi.data);
-
-            return View("Manutencao", objRetorno);
+            return await Editar_Geral<MunicipioDTO>("Municipio/GetbyId", "Manutencao");
         }
 
 
@@ -145,7 +138,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-              
+
                         return View("Manutencao", municipio);
                     }
                 }
@@ -164,7 +157,7 @@ namespace Web.Controllers
 
 
                         AlertNotification.Error(retornoApi.data);
-                      
+
 
                         return View("Manutencao", municipio);
                     }

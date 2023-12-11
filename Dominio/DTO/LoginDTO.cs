@@ -14,12 +14,9 @@ namespace Dominio.DTO
 
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        [StringLength(50, ErrorMessage = "{0} Deve haver no Minimo {2} e no Máximo {1}", MinimumLength = 5)]
+        [StringLength(50, ErrorMessage = "{0} Deve haver no Minimo {2} e no Máximo {1}", MinimumLength = 3)]
         [DataType(DataType.Password)]
         public string Password { get; set; } = String.Empty;
-
-        public string Nome { get; set; } = String.Empty;
-
 
         public LoginDTO() { }
 
@@ -31,8 +28,7 @@ namespace Dominio.DTO
             return new Login
             {
                 Email = loginDTO.Email,
-                Password = loginDTO.Password,
-                Nome = loginDTO.Nome
+                Password = loginDTO.Password
             };
 
         }
@@ -46,8 +42,7 @@ namespace Dominio.DTO
                 loginDTO.Add(new LoginDTO
                 {
                     Email = item.Email,
-                    Password = item.Password,
-                    Nome = item.Nome
+                    Password = item.Password
                 });
             }
             return loginDTO;
@@ -59,8 +54,7 @@ namespace Dominio.DTO
             return new LoginDTO
             {
                 Email = login.Email,
-                Password = login.Password,
-                Nome = login.Nome
+                Password = login.Password
 
             };
         }
