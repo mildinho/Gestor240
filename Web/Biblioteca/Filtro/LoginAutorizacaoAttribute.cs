@@ -14,7 +14,7 @@ namespace Web.Biblioteca.Filtro
             _loginUsuario = (SessaoUsuario)context.HttpContext.RequestServices.GetService(typeof(SessaoUsuario));
 
             
-            TokenUsuario obj = _loginUsuario.GetToken();
+            TokenUsuarioDTO obj = _loginUsuario.GetToken();
 
             if (obj == null)
             {

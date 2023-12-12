@@ -29,6 +29,7 @@ namespace Infra.Data.Contexto
         public DbSet<TipoContaCorrente>? TipoContaCorrente { get; set; }
         public DbSet<ContaCorrente>? ContaCorrente { get; set; }
         public DbSet<Login>? Login { get; set; }
+        public DbSet<LoginHistorico>? LoginHistorico { get; set; }
 
     }
 

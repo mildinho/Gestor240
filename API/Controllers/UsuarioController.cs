@@ -18,19 +18,34 @@ namespace API.Controllers
 
 
         [HttpPost("Login")]
-        public async Task<ActionResult<TokenUsuario>> Login(LoginDTO login)
+        public async Task<ActionResult<TokenUsuarioDTO>> Login(LoginDTO login)
         {
             login.Password = _UOW.Login.Criptografar(login.Password);
 
             Login Objeto = await _UOW.Login.PesquisarPorEmailSenhaAsync(login.Email, login.Password);
-            if (Objeto == null )
+            if (Objeto == null)
             {
                 return NotFound(Mensagens.MSG_E002);
             }
 
 
-            TokenUsuario tokenUsuario = TokenService.Generate(login);
-            tokenUsuario.Nome = Objeto.Nome;
+            TokenUsuarioDTO tokenUsuario = TokenService.Generate(login);
+            tokenUsuario.Nome = Objeto.Nome.Trim();
+            tokenUsuario.PrimeiroNome = tokenUsuario.Nome;
+
+            if (tokenUsuario.Nome.IndexOf(' ') > 0)
+                tokenUsuario.PrimeiroNome = tokenUsuario.Nome.Substring(0, tokenUsuario.Nome.IndexOf(' '));
+
+            LoginHistorico loginHistorico = new LoginHistorico
+            {
+                Data = DateTime.Now,
+                EMail = tokenUsuario.Email,
+                IP = "111111"
+            };
+            
+
+            _UOW.LoginHistorico.InserirAsync(loginHistorico);
+            _UOW.SaveAsync();
 
             return Ok(tokenUsuario);
 

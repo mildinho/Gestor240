@@ -22,6 +22,7 @@
         IFinancasRepository Financas { get; }
 
         ILoginRepository Login { get; }
+        ILoginHistoricoRepository LoginHistorico { get; }
 
         Task<int> SaveAsync();
 

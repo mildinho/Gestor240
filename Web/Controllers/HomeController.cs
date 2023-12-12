@@ -41,7 +41,7 @@ namespace Web.Controllers
 
                 if (retornoApi.success)
                 {
-                    TokenUsuario obj = JsonConvert.DeserializeObject<TokenUsuario>(retornoApi.data);
+                    TokenUsuarioDTO obj = JsonConvert.DeserializeObject<TokenUsuarioDTO>(retornoApi.data);
 
                     UsuarioLogado.GravaToken(obj);
 

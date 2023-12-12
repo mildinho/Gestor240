@@ -10,7 +10,7 @@ namespace API.Biblioteca.JWT
     //--https://www.youtube.com/watch?v=vAUXU0YIWlU&t=10s
     public static class TokenService
     {
-        public static TokenUsuario Generate(LoginDTO loginDTO)
+        public static TokenUsuarioDTO Generate(LoginDTO loginDTO)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(Settings.SecretKey);
@@ -26,7 +26,7 @@ namespace API.Biblioteca.JWT
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             //return new TokenUsuario tokenHandler.WriteToken(token);
-            return new TokenUsuario
+            return new TokenUsuarioDTO
             {
                 Email = loginDTO.Email,
                 Token = tokenHandler.WriteToken(token),

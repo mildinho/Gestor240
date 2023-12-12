@@ -14,18 +14,18 @@ namespace Web.Biblioteca.Session
         }
 
 
-        public void GravaToken(TokenUsuario token)
+        public void GravaToken(TokenUsuarioDTO token)
         {
            string obj =  JsonConvert.SerializeObject(token);
             _sessao.Cadastrar(_key, obj);
         }
 
-        public TokenUsuario GetToken()
+        public TokenUsuarioDTO GetToken()
         {
             if (_sessao.Existe(_key))
             {
                 string obj = _sessao.Consultar(_key);
-                TokenUsuario login = JsonConvert.DeserializeObject<TokenUsuario>(obj); 
+                TokenUsuarioDTO login = JsonConvert.DeserializeObject<TokenUsuarioDTO>(obj); 
 
                 return login;
             }
