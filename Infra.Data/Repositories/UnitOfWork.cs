@@ -53,6 +53,7 @@ namespace Infra.Data.Repositories
             TipoPix = new TipoPixRepository(_context);
             TipoContaCorrente = new TipoContaCorrenteRepository(_context);
             Login = new LoginRepository(_context);
+            LoginHistorico = new LoginHistoricoRepository(_context);
         }
 
 

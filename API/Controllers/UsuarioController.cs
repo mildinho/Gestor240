@@ -2,6 +2,7 @@
 using Dominio.DTO;
 using Dominio.Entidades;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,6 +12,7 @@ namespace API.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUnitOfWork _UOW;
+
         public UsuarioController(IUnitOfWork unitOfWork)
         {
             _UOW = unitOfWork;
@@ -36,11 +38,13 @@ namespace API.Controllers
             if (tokenUsuario.Nome.IndexOf(' ') > 0)
                 tokenUsuario.PrimeiroNome = tokenUsuario.Nome.Substring(0, tokenUsuario.Nome.IndexOf(' '));
 
+            string remoteIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+
             LoginHistorico loginHistorico = new LoginHistorico
             {
                 Data = DateTime.Now,
                 EMail = tokenUsuario.Email,
-                IP = "111111"
+                IP = remoteIpAddress
             };
             
 
