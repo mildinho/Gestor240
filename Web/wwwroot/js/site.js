@@ -17,6 +17,7 @@ $(document).ready(function () {
 
     $('.select2-single').select2();
 
+    $('.toast').toast('show');
 
     $("#frm_manutencao_update").submit(function (event) {
         document.getElementById('PrecoVenda').value = AjustaPreco('PrecoVenda');

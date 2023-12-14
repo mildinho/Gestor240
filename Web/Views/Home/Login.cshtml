@@ -18,12 +18,18 @@
                                     </div>
                                     <form method="post" asp-action="Login" class="user">
 
-                                        <div class="form-group">
+                                       <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">&#64;</span>
+                                            </div>
                                             <input asp-for="Email" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu E-Mail">
                                         </div>
                                         <span asp-validation-for="Email" class="text-danger"></span>
 
-                                        <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                            </div>
                                             <input asp-for="Password" class="form-control" placeholder="Senha">
                                         </div>
                                         <span asp-validation-for="Password" class="text-danger"></span>
@@ -38,7 +44,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                     
+
                                             <button accesskey="s" type="submit" class="btn btn-primary btn-block">
                                                 <i class="fas fa-lock"></i> Acessar
                                             </button>

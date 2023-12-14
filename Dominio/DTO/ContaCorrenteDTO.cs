@@ -21,7 +21,7 @@ namespace Dominio.DTO
 
         [Display(Name = "Data")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public DateTime Data { get; set; } = DateTime.Now;
+        public DateOnly Data { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         [Display(Name = "D/C")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]

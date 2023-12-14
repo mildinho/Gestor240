@@ -17,81 +17,145 @@
     {
         <input type="hidden" asp-for="Id" />
     }
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+            <div class="card-header" role="tab" id="headingOne">
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Dados da Conta
+                    </a>
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                    <div class="row">
 
-    <div class="row">
-        <div class="form-group col-1">
-            <label asp-for="SaldoCC"></label>
-            <input asp-for="SaldoCC" class="form-control" placeholder="Saldo da C/C" disabled="disabled">
-            <span asp-validation-for="SaldoCC" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="form-group col-2">
-            <label asp-for="CNPJ_CPF"></label>
-            <input asp-for="CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
-            <span asp-validation-for="CNPJ_CPF" class="text-danger"></span>
-        </div>
-
-
-        <div class="form-group col-5">
-            <label asp-for="Nome"></label>
-            <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
-            <span asp-validation-for="Nome" class="text-danger"></span>
-        </div>
+                        <div class="form-group col-2">
+                            <label asp-for="CNPJ_CPF"></label>
+                            <input asp-for="CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
+                            <span asp-validation-for="CNPJ_CPF" class="text-danger"></span>
+                        </div>
 
 
-        <div class="form-group col-5">
-            <label asp-for="Fantasia"></label>
-            <input asp-for="Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
-            <span asp-validation-for="Fantasia" class="text-danger"></span>
-        </div>
-    </div>
+                        <div class="form-group col-5">
+                            <label asp-for="Nome"></label>
+                            <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
 
 
-
-    <div class="row">
-        <div class="form-group col-3">
-
-            <label asp-for="TipoContaCorrenteId"></label>
-            @if (ViewBag.Crud.Operacao == Opcoes.Read || ViewBag.Crud.Operacao == Opcoes.Delete)
-            {
-                <select asp-for="TipoContaCorrenteId" class="select2-single form-control" asp-items="@ViewBag.TContaCorrente" disabled="disabled">
-                    <option value="">Selecione a Conta Corrente  </option>
-                </select>
-
-            }
-            else
-            {
-                <div class="form-group">
-
-                    <select asp-for="TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.TContaCorrente" onchange="CarregaMunicipio()">
-                        <option value="">Selecione a Conta Corrente  </option>
-                    </select>
+                        <div class="form-group col-5">
+                            <label asp-for="Fantasia"></label>
+                            <input asp-for="Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
+                            <span asp-validation-for="Fantasia" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
-
-            }
-            <span asp-validation-for="TipoContaCorrenteId" class="text-danger"></span>
-
-
+            </div>
         </div>
+        <div class="card">
+            <div class="card-header" role="tab" id="headingTwo">
+                <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Lançamentos
+                    </a>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="form-group col-3">
+
+                            <label asp-for="TipoContaCorrenteId"></label>
+
+                            <div class="form-group">
+
+                                <select asp-for="TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.TContaCorrente">
+                                    <option value="">Selecione a Conta Corrente  </option>
+                                </select>
+                            </div>
 
 
+                            <span asp-validation-for="TipoContaCorrenteId" class="text-danger"></span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="form-group col-2">
+                            <label asp-for="Data"></label>
+                            <input asp-for="Data" class="form-control" placeholder="Data do Lançamento">
+                            <span asp-validation-for="Data" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-2">
+                            <label asp-for="Valor"></label>
+                            <input asp-for="Valor" class="form-control" placeholder="Valor do Lançamento">
+                            <span asp-validation-for="Valor" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="D_C"></label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" checked>
+                                <label class="custom-control-label" for="customRadio3">Débito</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio4">Crédito</label>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-3">
+                            <label asp-for="Historico"></label>
+                            <input asp-for="Historico" class="form-control" placeholder="Historico">
+                            <span asp-validation-for="Historico" class="text-danger"></span>
+                        </div>
+
+
+
+                        <button accesskey="s" onclick="GravarLancamento" class="btn btn-outline-primary">
+                            <i class="fas fa-save"></i> <strong>S</strong>alvar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" role="tab" id="headingThree">
+                <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Histórico
+                    </a>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
 
 
-
-    @await Component.InvokeAsync("CRUD_Acao")
 
 </form>
 
 
 <script type="text/javascript">
-    function CarregaMunicipio() {
+    function GravarLancamento() {
 
         IdUF = $('#select2SingleUF').val();
 

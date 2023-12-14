@@ -1,4 +1,19 @@
-﻿
+﻿<div class="alert alert-dismissible fade show bg-white shadow-lg" role="alert">
+   
+    <h1 class="text-info font-weight-bold text-monospace text-center">@Html.Raw(ViewBag.Crud.Titulo)</h1>
+    
+    <h4 class="text-secondary">@Html.Raw(@ViewBag.Crud.SubTitulo)</h4>
+    <h6 class="text-secondary">@Html.Raw(ViewBag.Crud.Descricao)</h6>
+    
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+</div>
+
+@*
+
+--> Versão Antiga
 <div class="shadow-lg p-3 mb-5 bg-white rounded">
 
     <h1 class="text-info font-weight-bold text-monospace text-center">@Html.Raw(ViewBag.Crud.Titulo)</h1>
@@ -6,3 +21,4 @@
     <h4 class="text-secondary">@Html.Raw(@ViewBag.Crud.SubTitulo)</h4>
     <h6 class="text-secondary">@Html.Raw(ViewBag.Crud.Descricao)</h6>
 </div>
+*@
