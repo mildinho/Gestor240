@@ -40,21 +40,6 @@ namespace Dominio.DTO
 
         public int PagadorId { get; set; } = 0;
 
-        [Display(Name = "CNPJ / CPF")]
-        public string? CNPJ_CPF { get; set; } = String.Empty;
-
-
-        [Display(Name = "Nome")]
-        public string? Nome { get; set; } = String.Empty;
-
-
-        [Display(Name = "Fantasia")]
-        public string? Fantasia { get; set; } = String.Empty;
-
-
-        [Display(Name = "Saldo C/C")]
-        public double SaldoCC { get; set; } = 0.00;
-
 
         public ContaCorrenteDTO() { }
 

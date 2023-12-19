@@ -5,7 +5,7 @@ using Web.Biblioteca.CRUD;
 using Web.Biblioteca.Filtro;
 using Web.Biblioteca.msgDefault;
 using Web.Biblioteca.Notification;
-
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -37,15 +37,22 @@ namespace Web.Controllers
             var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetbyId");
             PagadorDTO objRetorno = JsonConvert.DeserializeObject<PagadorDTO>(retornoApi.data);
 
-            ContaCorrenteDTO contaCorrenteDTO = new ContaCorrenteDTO
+            CCViewModel CVM = new CCViewModel
             {
-                CNPJ_CPF = objRetorno.CNPJ_CPF,
-                Nome = objRetorno.Nome,
-                Fantasia = objRetorno.Fantasia
+                Pagador = new PagadorVM
+                {
+                    CNPJ_CPF = objRetorno.CNPJ_CPF,
+                    Nome = objRetorno.Nome,
+                    Fantasia = objRetorno.Fantasia
+                },
+
+                ContaCorrenteDTO = new ContaCorrenteDTO(),
+                ListaCCDTO = new List<ContaCorrenteDTO>()
+
             };
 
 
-            return View("Manutencao", contaCorrenteDTO);
+            return View("Manutencao", CVM);
         }
 
 

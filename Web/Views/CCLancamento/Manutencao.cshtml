@@ -1,4 +1,4 @@
-﻿@model ContaCorrenteDTO;
+﻿@model CCViewModel;
 
 @{
 
@@ -13,10 +13,7 @@
 
 
 
-    @if (ViewBag.Crud.Operacao != Opcoes.Create)
-    {
-        <input type="hidden" asp-for="Id" />
-    }
+    
     <div id="accordion" role="tablist" aria-multiselectable="true">
         <div class="card">
             <div class="card-header" role="tab" id="headingOne">
@@ -31,23 +28,23 @@
                     <div class="row">
 
                         <div class="form-group col-2">
-                            <label asp-for="CNPJ_CPF"></label>
-                            <input asp-for="CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
-                            <span asp-validation-for="CNPJ_CPF" class="text-danger"></span>
+                            <label asp-for="Pagador.CNPJ_CPF"></label>
+                            <input asp-for="Pagador.CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
+                            <span asp-validation-for="Pagador.CNPJ_CPF" class="text-danger"></span>
                         </div>
 
 
                         <div class="form-group col-5">
-                            <label asp-for="Nome"></label>
-                            <input asp-for="Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
-                            <span asp-validation-for="Nome" class="text-danger"></span>
+                            <label asp-for="Pagador.Nome"></label>
+                            <input asp-for="Pagador.Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
+                            <span asp-validation-for="Pagador.Nome" class="text-danger"></span>
                         </div>
 
 
                         <div class="form-group col-5">
-                            <label asp-for="Fantasia"></label>
-                            <input asp-for="Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
-                            <span asp-validation-for="Fantasia" class="text-danger"></span>
+                            <label asp-for="Pagador.Fantasia"></label>
+                            <input asp-for="Pagador.Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
+                            <span asp-validation-for="Pagador.Fantasia" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -67,17 +64,17 @@
                     <div class="row">
                         <div class="form-group col-3">
 
-                            <label asp-for="TipoContaCorrenteId"></label>
+                            <label asp-for="ContaCorrenteDTO.TipoContaCorrenteId"></label>
 
                             <div class="form-group">
 
-                                <select asp-for="TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.TContaCorrente">
+                                <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.TContaCorrente">
                                     <option value="">Selecione a Conta Corrente  </option>
                                 </select>
                             </div>
 
 
-                            <span asp-validation-for="TipoContaCorrenteId" class="text-danger"></span>
+                            <span asp-validation-for="ContaCorrenteDTO.TipoContaCorrenteId" class="text-danger"></span>
 
 
                         </div>
@@ -88,21 +85,27 @@
 
                     <div class="row align-items-end">
 
-                        <div class="form-group col-2">
-                            <label asp-for="Data"></label>
-                            <input asp-for="Data" class="form-control" placeholder="Data do Lançamento">
-                            <span asp-validation-for="Data" class="text-danger"></span>
+                        <div class="form-group col-1">
+                            <label asp-for="ContaCorrenteDTO.Data"></label>
+                            <input asp-for="ContaCorrenteDTO.Data" class="form-control" placeholder="Data do Lançamento">
+                            <span asp-validation-for="ContaCorrenteDTO.Data" class="text-danger"></span>
                         </div>
 
+                        <div class="input-group date col-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                        </div>
 
                         <div class="form-group col-2">
-                            <label asp-for="Valor"></label>
-                            <input asp-for="Valor" class="form-control" placeholder="Valor do Lançamento">
-                            <span asp-validation-for="Valor" class="text-danger"></span>
+                            <label asp-for="ContaCorrenteDTO.Valor"></label>
+                            <input asp-for="ContaCorrenteDTO.Valor" class="form-control" placeholder="Valor do Lançamento">
+                            <span asp-validation-for="ContaCorrenteDTO.Valor" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="D_C"></label>
+                            <label asp-for="ContaCorrenteDTO.D_C"></label>
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" checked>
                                 <label class="custom-control-label" for="customRadio3">Débito</label>
@@ -115,9 +118,9 @@
                         </div>
 
                         <div class="form-group col-3">
-                            <label asp-for="Historico"></label>
-                            <input asp-for="Historico" class="form-control" placeholder="Historico">
-                            <span asp-validation-for="Historico" class="text-danger"></span>
+                            <label asp-for="ContaCorrenteDTO.Historico"></label>
+                            <input asp-for="ContaCorrenteDTO.Historico" class="form-control" placeholder="Historico">
+                            <span asp-validation-for="ContaCorrenteDTO.Historico" class="text-danger"></span>
                         </div>
 
 
@@ -161,8 +164,8 @@
         IdUF = $('#select2SingleUF').val();
 
         $.ajax({
-            type: 'GET',
-            url: 'https://localhost:7092/v1/Municipio/GetbyIdUF/' + IdUF,
+            type: 'POST',
+            url: 'https://localhost:7092/v1/CCLancamento/Cadastrar/',
             contentType: 'application/json',
             dataType: "JSON",
             success: function (r) {
