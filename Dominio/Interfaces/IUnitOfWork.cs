@@ -24,6 +24,9 @@
         ILoginRepository Login { get; }
         ILoginHistoricoRepository LoginHistorico { get; }
 
+
+        IContaCorrenteRepository ContaCorrente { get; }
+
         Task<int> SaveAsync();
 
     }

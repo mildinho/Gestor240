@@ -19,6 +19,15 @@ $(document).ready(function () {
 
     $('.toast').toast('show');
 
+    // Bootstrap Date Picker
+    $('#simple-date1 .input-group.date').datepicker({
+        format: 'dd/mm/yyyy',
+        todayBtn: 'linked',
+        todayHighlight: true,
+        autoclose: true,
+        language: 'pt-BR'
+    });
+
     $("#frm_manutencao_update").submit(function (event) {
         document.getElementById('PrecoVenda').value = AjustaPreco('PrecoVenda');
         document.getElementById('PrecoMedio').value = AjustaPreco('PrecoMedio');

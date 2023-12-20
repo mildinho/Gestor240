@@ -28,6 +28,7 @@ namespace Infra.Data.Repositories
 
         public ILoginRepository Login { get; private set; }
         public ILoginHistoricoRepository LoginHistorico { get; private set; }
+        public IContaCorrenteRepository ContaCorrente { get; private set; }
 
 
         public UnitOfWork(DBContexto context)
@@ -54,6 +55,7 @@ namespace Infra.Data.Repositories
             TipoContaCorrente = new TipoContaCorrenteRepository(_context);
             Login = new LoginRepository(_context);
             LoginHistorico = new LoginHistoricoRepository(_context);
+            ContaCorrente = new ContaCorrenteRepository(_context);
         }
 
 

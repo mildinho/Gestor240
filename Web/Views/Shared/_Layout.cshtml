@@ -14,12 +14,14 @@
     <title>Gestor 240 - Dashboard</title>
     <link href="~/thema/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/thema/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/thema/vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" />
     <link href="~/thema/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/thema/css/ruang-admin.min.css" rel="stylesheet">
     <link href="~/thema/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="~/thema/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/limonte-sweetalert2/sweetalert2.min.css" />
+
 
 </head>
 
@@ -308,7 +310,8 @@
                                     @if (sessaoUsuario.GetToken().SexoMasculino)
                                     {
                                         <img class="img-profile rounded-circle" src="~/imagens/man.png" style="max-width: 60px">
-                                    } else
+                                    }
+                                    else
                                     {
                                         <img class="img-profile rounded-circle" src="~/imagens/girl.png" style="max-width: 60px">
 
@@ -383,6 +386,7 @@
                 <script src="~/lib/jquery.mask/jquery.mask.js"></script>
                 <script src="~/lib/limonte-sweetalert2/sweetalert2.all.min.js"></script>
                 <script src="~/thema/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+                <script src="~/thema/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
                 <script src="~/js/site.js" asp-append-version="true"></script>
                 @await RenderSectionAsync("Scripts", required: false)
 
