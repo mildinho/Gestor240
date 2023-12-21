@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,25 +17,24 @@ namespace Dominio.DTO
         [Display(Name = "Tipo Conta Corrente")]
         [ForeignKey("TipoContaCorrente")]
         public int TipoContaCorrenteId { get; set; }
-        public virtual TipoContaCorrente? TipoContaCorrente { get; set; }
-
+     
 
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Display(Name = "Pagador")]
         [ForeignKey("Pagador")]
         public int PagadorID { get; set; }
-        public virtual Pagador? Pagador { get; set; }
-
 
 
         [Display(Name = "Data")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public DateOnly Data { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Data { get; set; } = DateTime.Today;
 
         [Display(Name = "D/C")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [StringLength(1)]
-        public string D_C { get; set; } = String.Empty;
+        public string D_C { get; set; } = "D";
 
 
         [Display(Name = "Historico")]
@@ -45,9 +45,6 @@ namespace Dominio.DTO
         [Display(Name = "Valor")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         public double Valor { get; set; } = 0.00;
-
-        public int PagadorId { get; set; } = 0;
-
 
         public ContaCorrenteDTO() { }
 
@@ -63,7 +60,8 @@ namespace Dominio.DTO
                 D_C = ccDTO.D_C,
                 Historico = ccDTO.Historico,
                 Valor = ccDTO.Valor,
-                TipoContaCorrenteId = ccDTO.TipoContaCorrenteId
+                TipoContaCorrenteId = ccDTO.TipoContaCorrenteId,
+                PagadorID = ccDTO.PagadorID
 
             };
         }
@@ -81,7 +79,8 @@ namespace Dominio.DTO
                     D_C = item.D_C,
                     Historico = item.Historico,
                     Valor = item.Valor,
-                    TipoContaCorrenteId = item.TipoContaCorrenteId
+                    TipoContaCorrenteId = item.TipoContaCorrenteId,
+                    PagadorID = item.PagadorID
                 });
             }
             return ccDTO;
@@ -97,7 +96,8 @@ namespace Dominio.DTO
                 D_C = cc.D_C,
                 Historico = cc.Historico,
                 Valor = cc.Valor,
-                TipoContaCorrenteId = cc.TipoContaCorrenteId
+                TipoContaCorrenteId = cc.TipoContaCorrenteId,
+                PagadorID = cc.PagadorID
 
             };
         }

@@ -402,6 +402,33 @@ namespace Infra.Data.Contexto
                 dbContext.SaveChanges();
             }
 
+            if (!dbContext.TipoContaCorrente.Any())
+            {
+                var registros = new TipoContaCorrente[]
+                {
+                    new TipoContaCorrente{
+                    Id = 1,
+                    Descricao = "Sucata"
+                    },
+
+                new TipoContaCorrente{
+                    Id = 2,
+                    Descricao = "IPTU"
+                    },
+
+                new TipoContaCorrente{
+                    Id = 3,
+                    Descricao = "Imposto de Renda"
+                    },
+
+                };
+
+                foreach (var ObjetoRegistro in registros)
+                    dbContext.TipoContaCorrente.Add(ObjetoRegistro);
+
+                dbContext.SaveChanges();
+            }
+
 
             if (!dbContext.Financas.Any())
             {

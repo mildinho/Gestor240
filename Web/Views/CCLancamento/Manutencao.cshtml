@@ -62,40 +62,37 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="form-group col-3">
-
+                        <div class="form-group col-5">
                             <label asp-for="ContaCorrenteDTO.TipoContaCorrenteId"></label>
 
                             <div class="form-group">
 
-                                <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleUF" asp-items="@ViewBag.TContaCorrente">
+                                <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente">
                                     <option value="">Selecione a Conta Corrente  </option>
                                 </select>
                             </div>
 
-
                             <span asp-validation-for="ContaCorrenteDTO.TipoContaCorrenteId" class="text-danger"></span>
 
-
                         </div>
-
-
                     </div>
 
-
+                
                     <div class="row align-items-end">
 
-                        <div class="form-group col-2" id="simple-date1">
+                        <div class="form-group col-2">
                             <label asp-for="ContaCorrenteDTO.Data"></label>
-                            <div class="input-group date">
+                            <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                 </div>
-                                <input asp-for="ContaCorrenteDTO.Data" class="form-control" value=@DateTime.Today.ToString("dd/MM/yyyy") id="simpleDataInput" placeholder="Data do Lançamento">
+                                <input asp-for="ContaCorrenteDTO.Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data do Lançamento">
                                 <span asp-validation-for="ContaCorrenteDTO.Data" class="text-danger"></span>
 
                             </div>
                         </div>
+
+
 
                         <div class="form-group col-2">
                             <label asp-for="ContaCorrenteDTO.Valor"></label>
@@ -103,10 +100,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">R$</span>
                                 </div>
-                                <input asp-for="ContaCorrenteDTO.Valor" class="form-control" placeholder="Valor do Lançamento">
+                                <input asp-for="ContaCorrenteDTO.Valor" class="form-control" onkeyup="formatarMoeda();" id="ValorLanctoCC" placeholder="Valor do Lançamento">
                                 <span asp-validation-for="ContaCorrenteDTO.Valor" class="text-danger"></span>
                             </div>
                         </div>
+
 
                         <div class="form-group col-1">
                             <label asp-for="ContaCorrenteDTO.D_C"></label>
@@ -166,7 +164,7 @@
 <script type="text/javascript">
     function GravarLancamento() {
 
-        IdUF = $('#select2SingleUF').val();
+        IdUF = $('#select2SingleTCC').val();
 
         $.ajax({
             type: 'POST',
@@ -177,13 +175,7 @@
                 console.log("RESULT", r);
 
 
-                $('#select2SingleMunicipio').empty();
-
-                for (let i = 0; i < r.length; i = i + 1) {
-                    var option = new Option(r[i].nome, r[i].id, true, true);
-                    $('#select2SingleMunicipio').append(option).trigger('change');
-
-                }
+               
             },
             error: function (xhr, status, error) {
                 var err = eval("(" + xhr.responseText + ")");

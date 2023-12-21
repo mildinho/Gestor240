@@ -31,8 +31,8 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("ContaCorrente/{IdTipoCC}/{IdPagador}")]
-        public async Task<ActionResult<ContaCorrenteDTO>> Codigo(int IdTipoCC, int IdPagador)
+        [HttpGet("GetbyIdCCIdPagador/{IdTipoCC}/{IdPagador}")]
+        public async Task<ActionResult<ContaCorrenteDTO>> GetbyIdCCIdPagador(int IdTipoCC, int IdPagador)
         {
             IEnumerable<ContaCorrente> ObjetoLista = await _UOW.ContaCorrente.PesquisarPorTipoCC_PagadorAsync(IdTipoCC, IdPagador);
             if (ObjetoLista.Count() <= 0)
@@ -53,6 +53,19 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ContaCorrenteDTO>> Post(ContaCorrenteDTO tabela)
         {
+
+            Pagador ObjPagador = await _UOW.Pagador.PesquisarPorIdAsync(tabela.PagadorID);
+            if (ObjPagador == null)
+            {
+                return NotFound(Mensagens.MSG_E002);
+            }
+
+            TipoContaCorrente ObjTipoCC = await _UOW.TipoContaCorrente.PesquisarPorIdAsync(tabela.TipoContaCorrenteId);
+            if (ObjTipoCC == null)
+            {
+                return NotFound(Mensagens.MSG_E002);
+            }
+
 
 
             if (ModelState.IsValid)

@@ -27,7 +27,7 @@ namespace Dominio.Entidades
 
         [Display(Name = "Data")]
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
-        public DateOnly Data { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateTime Data { get; set; } = DateTime.Today;
 
 
         [Display(Name = "D/C")]
