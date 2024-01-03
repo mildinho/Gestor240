@@ -120,22 +120,3 @@ app.MapControllers();
 
 
 app.Run();
-
-
-
-
-/*
- * TODO: FAZER O CRUD DA TABELA AGENCIA;
- * TODO: AJUSTAR OS CAMPOS CONFORME O LAYOUT - TABELA HEADERARQUIVO;
- * TODO: AJUSTAR OS CAMPOS CONFORME O LAYOUT - TABELA HEADERLOTE;
- * TODO: AJUSTAR OS CAMPOS CONFORME O LAYOUT - TABELA TRAILERARQUIVO;
- * TODO: AJUSTAR OS CAMPOS CONFORME O LAYOUT - TABELA TRAILERLOTE;
- * TODO: ENTENDER QUAL A DIFERENCA DO G100 x G103
- * 
- * --- fontes/remessa.prg --> layout
- * https://themewagon.com/themes/free-bootstrap-4-html-5-admin-dashboard-website-template-ruang/
- * https://themewagon.github.io/ruang-admin/datatables.html
- * https://www.codeproject.com/Articles/741207/Repository-with-Unit-of-Work-IoC-and-Unit-Test
- * https://codewithmukesh.com/blog/dapper-in-aspnet-core/
- * https://macoratti.net/21/07/netcore_reptrandapp1.htm
- */

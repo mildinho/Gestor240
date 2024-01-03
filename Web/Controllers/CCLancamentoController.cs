@@ -43,7 +43,8 @@ namespace Web.Controllers
                 {
                     CNPJ_CPF = objRetorno.CNPJ_CPF,
                     Nome = objRetorno.Nome,
-                    Fantasia = objRetorno.Fantasia
+                    Fantasia = objRetorno.Fantasia,
+                    Id = objRetorno.Id
                 },
 
                 ContaCorrenteDTO = new ContaCorrenteDTO(),
@@ -54,85 +55,6 @@ namespace Web.Controllers
 
             return View("Manutencao", CVM);
         }
-
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Manutencao([FromForm] ContaDTO conta, Opcoes operacao)
-        {
-            ViewBag.TContaCorrente = await ListaTipoContaCorrente();
-
-            if (Opcoes.Delete == (Opcoes)operacao)
-            {
-
-                ExecutaAPI.ParametrosAPI.Add(conta.Id.ToString());
-
-                var retornoApi = await ExecutaAPI.DeleteAPI("Conta");
-                if (retornoApi.success)
-                {
-                    AlertNotification.Success(mensagens.MSG_S003);
-                }
-                else
-                {
-                    AlertNotification.Error(retornoApi.data);
-                }
-
-
-                return RedirectToAction(nameof(Index));
-            }
-            else if (ModelState.IsValid)
-            {
-                ViewBag.CRUD = ConfiguraMensagem(operacao);
-
-
-                if (Opcoes.Create == (Opcoes)operacao)
-                {
-                    var retornoApi = await ExecutaAPI.PostAPI("Conta", conta);
-
-
-                    if (retornoApi.success)
-                    {
-                        AlertNotification.Success(mensagens.MSG_S001);
-                    }
-                    else
-                    {
-                        AlertNotification.Error(retornoApi.data);
-
-                        return View("Manutencao", conta);
-                    }
-                }
-                else if (Opcoes.Update == (Opcoes)operacao)
-                {
-                    ExecutaAPI.ParametrosAPI.Add(conta.Id.ToString());
-
-                    var retornoApi = await ExecutaAPI.PutAPI("Conta", conta);
-                    if (retornoApi.success)
-                    {
-                        AlertNotification.Success(mensagens.MSG_S002);
-                    }
-                    else
-                    {
-                        AlertNotification.Error(retornoApi.data);
-
-                        return View("Manutencao", conta);
-                    }
-
-
-                }
-
-                return RedirectToAction(nameof(Index));
-
-            }
-
-
-            ViewBag.CRUD = ConfiguraMensagem(operacao);
-
-            return View();
-
-        }
-
 
 
         private static CRUD ConfiguraMensagem(Opcoes opcoes)
