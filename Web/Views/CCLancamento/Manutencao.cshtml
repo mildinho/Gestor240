@@ -228,28 +228,27 @@
         ObjCC.Data = $('#ContaCorrenteDTO_Data').val();
         ObjCC.Historico = $('#ContaCorrenteDTO_Historico').val();
         ObjCC.Valor = AjustaPreco('ValorLanctoCC');
-        
+
         var ele = document.getElementsByName('customRadio');
-        if(ele[0].checked ) {
+        if (ele[0].checked) {
             ObjCC.D_C = 'D';
-              
+
         } else {
             ObjCC.D_C = 'C';
-               
+
         }
-            
-    
-        if (ObjCC.TipoContaCorrenteId <= 0)
-        {
+
+
+        if (ObjCC.TipoContaCorrenteId <= 0) {
             alertsw("Você deve Informar o Tipo de Conta Corrente", 'error');
         }
-        else if (ObjCC.Data.trim().length !=10) {
+        else if (ObjCC.Data.trim().length != 10) {
             alertsw("Você deve Informar a Data Correta", 'error');
         }
         else if (ObjCC.Historico.trim().length === 0) {
             alertsw("Você deve Informar o Histórico", 'error');
         }
-        else if (false ){
+        else if (false) {
 
             $.ajax({
                 type: 'POST',
