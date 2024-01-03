@@ -189,15 +189,6 @@
                                             <td>@detalhe.Valor</td>
                                             <td>@detalhe.D_C</td>
                                             <td>@detalhe.Historico</td>
-                                            <td>
-                                                @*
-                                            <a asp-action="Cadastrar" asp-route-id="@detalhe.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Gestão da C/C">
-                                            <span class="material-symbols-outlined">
-                                            dictionary
-                                            </span>
-                                            </a>
-                                            *@
-                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -248,7 +239,7 @@
         else if (ObjCC.Historico.trim().length === 0) {
             alertsw("Você deve Informar o Histórico", 'error');
         }
-        else if (false) {
+        else {
 
             $.ajax({
                 type: 'POST',
@@ -261,7 +252,7 @@
                 },
                 error: function (r) {
                     console.log(r);
-                    alertsw("Porra! Deu Pau de Novo", 'error');
+                    alertsw("Ops! algo deu Errado", 'error');
 
 
                 }

@@ -19,7 +19,9 @@ namespace Infra.Data.Contexto
                     new Login{
                         Email="mildinho@gmail.com",
                         Password = "NjhQI/aFYQikKjc478qUVQ==",
-                        Nome = "Casagrande"
+                        Nome = "Casagrande",
+                        SexoMasculino = true,
+                        DataNascimento = DateTime.Now,
                     }
 
                 };
