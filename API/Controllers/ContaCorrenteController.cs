@@ -31,7 +31,7 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("GetbyIdCCIdPagador/{IdTipoCC}/{IdPagador}")]
+        [HttpGet("GetbyIdCCIdPagador")]
         public async Task<ActionResult<ContaCorrenteDTO>> GetbyIdCCIdPagador(int IdTipoCC, int IdPagador)
         {
             IEnumerable<ContaCorrente> ObjetoLista = await _UOW.ContaCorrente.PesquisarPorTipoCC_PagadorAsync(IdTipoCC, IdPagador);

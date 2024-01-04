@@ -67,7 +67,7 @@
 
                         <div class="form-group">
 
-                            <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente">
+                            <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente" onchange="CarregaCC()">
                                 <option value="">Selecione a Conta Corrente  </option>
                             </select>
                         </div>
@@ -258,5 +258,29 @@
                 }
             });
         }
+    }
+
+
+    function CarregaCC() {
+
+        const ObjCC = new Object();
+        ObjCC.TipoContaCorrenteId = $('#select2SingleTCC').val();
+        ObjCC.PagadorID = $('#PagadorID').val();
+
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:7092/v1/ContaCorrente/GetbyIdCCIdPagador?IdTipoCC=' + ObjCC.TipoContaCorrenteId + '&IdPagador=' + ObjCC.PagadorID,
+            contentType: 'application/json',
+            dataType: "JSON",
+            success: function (r) {
+                alertswinformativo("Lançamento Feito", 'success');
+            },
+            error: function (r) {
+                alertswinformativo("Não Há Registros para Esta C/C", 'info');
+
+
+            }
+        });
+
     }
 </script>

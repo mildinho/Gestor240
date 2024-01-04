@@ -28,3 +28,11 @@ https://macoratti.net/21/07/netcore_reptrandapp1.htm
 https://programtown.com/how-to-create-custom-user-login-authentication-with-session-in-asp-net-core-mvc-visual-studio-2022/
 https://learn.microsoft.com/pt-br/aspnet/core/fundamentals/app-state?view=aspnetcore-8.0
 https://learn.microsoft.com/pt-br/aspnet/core/security/authentication/cookie?view=aspnetcore-8.0
+
+
+=== para pegar os itens do datatable
+https://copyprogramming.com/howto/retrieving-row-data-after-filtering-jquery-datatables
+
+
+== minuto 10 preencher o datatable dinamicamente
+https://www.youtube.com/watch?v=nZPgzFR2t58
