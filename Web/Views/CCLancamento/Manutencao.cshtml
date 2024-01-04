@@ -166,8 +166,6 @@
                                         <th> @Html.DisplayNameFor(model => model.ContaCorrenteDTO.D_C)</th>
                                         <th> @Html.DisplayNameFor(model => model.ContaCorrenteDTO.Historico)</th>
 
-                                        <th> Ação</th>
-
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -177,7 +175,6 @@
                                         <th> @Html.DisplayNameFor(model => model.ContaCorrenteDTO.Valor)</th>
                                         <th> @Html.DisplayNameFor(model => model.ContaCorrenteDTO.D_C)</th>
                                         <th> @Html.DisplayNameFor(model => model.ContaCorrenteDTO.Historico)</th>
-                                        <th> Ação</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -202,7 +199,7 @@
         </div>
     </div>
 </div>
-    </div>
+  
 
 
 
@@ -248,6 +245,7 @@
                 dataType: "JSON",
                 data: JSON.stringify(ObjCC),
                 success: function (r) {
+                    CarregaCC(0);
                     alertswinformativo("Lançamento Feito", 'success');
                 },
                 error: function (r) {
@@ -261,23 +259,40 @@
     }
 
 
-    function CarregaCC() {
+    function CarregaCC(mostraMsg) {
 
         const ObjCC = new Object();
         ObjCC.TipoContaCorrenteId = $('#select2SingleTCC').val();
         ObjCC.PagadorID = $('#PagadorID').val();
+
+        var table = $('#dataTableHover').DataTable();
 
         $.ajax({
             type: 'GET',
             url: 'https://localhost:7092/v1/ContaCorrente/GetbyIdCCIdPagador?IdTipoCC=' + ObjCC.TipoContaCorrenteId + '&IdPagador=' + ObjCC.PagadorID,
             contentType: 'application/json',
             dataType: "JSON",
-            success: function (r) {
-                alertswinformativo("Lançamento Feito", 'success');
+            success: function (data) {
+
+                table.clear();
+
+                for (let i = 0; i < data.length; i++) {
+                    table.row.add([data[i].id, data[i].data.substring(0, 10), data[i].valor, data[i].d_C, data[i].historico]);
+                }
+                
+                table.draw();
+                if (mostraMsg != 0) { 
+                    alertswinformativo("Conta Corrente Atualizada", 'success');
+                }
+
             },
             error: function (r) {
-                alertswinformativo("Não Há Registros para Esta C/C", 'info');
 
+                table.clear();
+                table.draw();
+                if (mostraMsg != 0) {
+                    alertswinformativo("Conta Corrente Sem Informação", 'info');
+                }
 
             }
         });
