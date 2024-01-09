@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Rotativa.AspNetCore;
 using Web.Biblioteca.Middleware;
 using Web.Biblioteca.Notification;
 using Web.Interface;
@@ -70,4 +71,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseRotativa();
 app.Run();

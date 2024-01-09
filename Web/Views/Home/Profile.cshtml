@@ -1,0 +1,89 @@
+﻿@model LoginRegistroDTO;
+@{
+    ViewData["Title"] = "Perfil de Usuário";
+}
+<body class="bg-gradient-login">
+    <!-- Login Content -->
+    <div class="container-login">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-12 col-md-9">
+                <div class="card shadow-sm my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="login-form">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Configuração do Usuário</h1>
+                                    </div>
+                                    <form method="post" asp-action="Profile" class="user">
+                                        <input type="hidden" asp-for="Id" />
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-book-open" aria-hidden="true"></i></span>
+                                            </div>
+
+                                            <input asp-for="Nome" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu Nome">
+                                        </div>
+                                        <span asp-validation-for="Nome" class="text-danger"></span>
+
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">&#64;</span>
+                                            </div>
+                                            <input asp-for="Email" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu E-Mail">
+                                        </div>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                            <input asp-for="DataNascimento" type="date" class="form-control" placeholder="Informe a Data Nascimento">
+                                        </div>
+                                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                            </div>
+                                            <input asp-for="Password" class="form-control" placeholder="Senha">
+                                        </div>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                            </div>
+                                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirme a Senha">
+                                        </div>
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+                                        <div class="form-group">
+                                     
+                                            <button accesskey="s" type="submit" class="btn btn-primary btn-block">
+                                                <i class="fas fa-lock"></i> Salvar
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <hr>
+
+                                    <div class="text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Content -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/ruang-admin.min.js"></script>
+</body>

@@ -9,6 +9,9 @@ namespace Dominio.DTO
         public DateTime Data { get; set; }
         public string IP { get; set; }
         public string EMail { get; set; }
+        public string Nome { get; set; }
+        public string IdUsuario { get; set; }
+
 
         public LoginHistoricoDTO() { }
 
@@ -22,6 +25,8 @@ namespace Dominio.DTO
                 Data = login.Data,
                 EMail = login.EMail,
                 IP = login.IP,
+                Nome = login.Nome,
+                IdUsuario = login.IdUsuario,
 
             };
 
@@ -38,6 +43,8 @@ namespace Dominio.DTO
                     Data = item.Data,
                     EMail = item.EMail,
                     IP = item.IP,
+                    Nome = item.Nome,
+                    IdUsuario = item.IdUsuario,
                 });
             }
             return loginDTO;
@@ -51,6 +58,8 @@ namespace Dominio.DTO
                 Data = login.Data,
                 EMail = login.EMail,
                 IP = login.IP,
+                Nome = login.Nome,
+                IdUsuario = login.IdUsuario,
             };
         }
     }

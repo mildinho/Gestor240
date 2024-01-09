@@ -1,11 +1,11 @@
 ﻿using Dominio.DTO;
-using Dominio.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Rotativa.AspNetCore;
 using System.Diagnostics;
 using Web.Biblioteca.msgDefault;
 using Web.Biblioteca.Notification;
-using Web.Biblioteca.Session;
 using Web.Interface;
 using Web.Models;
 
@@ -87,7 +87,7 @@ namespace Web.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public IActionResult Logout()
         {
             UsuarioLogado.Logout();
@@ -95,7 +95,7 @@ namespace Web.Controllers
 
         }
 
-        [HttpGet]
+        [AllowAnonymous]
         public IActionResult AddUser()
         {
             return View();
@@ -125,6 +125,71 @@ namespace Web.Controllers
             return View("AddUser", addUser);
 
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+
+            ExecutaAPI.ParametrosAPI.Add(UsuarioLogado.GetToken().Id.ToString());
+
+            return await Editar_Geral<LoginRegistroDTO>("Usuario/GetbyId", "Profile");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Profile([FromForm] LoginRegistroDTO profileUser)
+        {
+
+            if (ModelState.IsValid)
+            {
+                ExecutaAPI.ParametrosAPI.Add(profileUser.Id.ToString());
+                var retornoApi = await ExecutaAPI.PutAPI("Usuario/Profile", profileUser);
+
+                if (retornoApi.success)
+                {
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    AlertNotification.Error(mensagens.MSG_E002);
+                    return View("Profile", profileUser);
+                }
+            }
+
+            return View("Profile", profileUser);
+
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Relatorio_LogUsuario()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Relatorio_LogUsuario(DateTime Inicio , DateTime Fim)
+        {
+            ExecutaAPI.ParametrosAPI.Clear();
+            ExecutaAPI.ParametrosAPI.Add(Inicio.ToString("yyyy-MM-dd")+ " 00:00:00");
+            ExecutaAPI.ParametrosAPI.Add(Fim.ToString("yyyy-MM-dd") + " 23:59:59");
+            var retornoApi = await ExecutaAPI.GetAPI("Usuario/LogbyDate");
+
+            if (retornoApi.success)
+            {
+                return new ViewAsPdf("Profile", retornoApi.data);
+            }
+            else
+            {
+                AlertNotification.Error("Não Há Registro de Atividades");
+                return RedirectToAction("Index", "Home");
+                
+            }
+        }
+
 
     }
 }

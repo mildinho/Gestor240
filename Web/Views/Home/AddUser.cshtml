@@ -17,7 +17,11 @@
                                     </div>
                                     <form method="post" asp-action="AddUser" class="user">
 
-                                        <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-book-open" aria-hidden="true"></i></span>
+                                            </div>
+
                                             <input asp-for="Nome" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu Nome">
                                         </div>
                                         <span asp-validation-for="Nome" class="text-danger"></span>

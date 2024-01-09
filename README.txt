@@ -4,7 +4,12 @@ Camada API:
 -Fazer a INCLUSAO do TOKENBEARER Nas API;
 
 Camada WEB
--Desenvolver a Opção de Relatorio;
+Pendencia
+	-Desenvolver a Opção de Relatorio;
+	-Desenvolver relatorio de Log de Sistema;
+
+Realizado
+-Desenvolver a Tela de Edição de Profile;
 
 
 
@@ -36,3 +41,8 @@ https://copyprogramming.com/howto/retrieving-row-data-after-filtering-jquery-dat
 
 == minuto 10 preencher o datatable dinamicamente
 https://www.youtube.com/watch?v=nZPgzFR2t58
+
+
+==ROTATIVA
+https://www.youtube.com/watch?v=QQeFlHPNXdI
+

@@ -19,6 +19,22 @@ namespace API.Controllers
         }
 
 
+
+        [HttpGet("GetbyId/{Id}")]
+        public async Task<ActionResult<LoginRegistroDTO>> GetbyId(int Id)
+        {
+            var Objeto = await _UOW.Login.PesquisarPorIdAsync(Id);
+            if (Objeto == null)
+            {
+                return NotFound(Mensagens.MSG_E002);
+            }
+            var ObjetoDTO = LoginRegistroDTO.ToDTO(Objeto);
+            ObjetoDTO.Password = _UOW.Login.DesCriptografar(ObjetoDTO.Password);
+
+            return Ok(ObjetoDTO);
+        }
+
+
         [HttpPost("Login")]
         public async Task<ActionResult<TokenUsuarioDTO>> Login(LoginDTO login)
         {
@@ -32,8 +48,10 @@ namespace API.Controllers
 
 
             TokenUsuarioDTO tokenUsuario = TokenService.Generate(login);
+            tokenUsuario.Id = Objeto.Id.ToString();
             tokenUsuario.Nome = Objeto.Nome.Trim();
             tokenUsuario.PrimeiroNome = tokenUsuario.Nome;
+
 
             if (tokenUsuario.Nome.IndexOf(' ') > 0)
                 tokenUsuario.PrimeiroNome = tokenUsuario.Nome.Substring(0, tokenUsuario.Nome.IndexOf(' '));
@@ -44,9 +62,11 @@ namespace API.Controllers
             {
                 Data = DateTime.Now,
                 EMail = tokenUsuario.Email,
-                IP = remoteIpAddress
+                IP = remoteIpAddress,
+                Nome = tokenUsuario.Nome,
+                IdUsuario = tokenUsuario.Id
             };
-            
+
 
             _UOW.LoginHistorico.InserirAsync(loginHistorico);
             _UOW.SaveAsync();
@@ -68,6 +88,7 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
+                login.Id = 0;
                 login.Password = _UOW.Login.Criptografar(login.Password);
 
                 var ObjetoEntitade = LoginRegistroDTO.ToEntidade(login);
@@ -81,6 +102,52 @@ namespace API.Controllers
 
 
 
+        }
+
+        [HttpPut("Profile/{Id}")]
+        public async Task<ActionResult<bool>> Profile(int Id, LoginRegistroDTO tabela)
+        {
+            if (Id != tabela.Id)
+                return BadRequest(Mensagens.MSG_E001);
+
+
+            Login ObjetoPesquisa = await _UOW.Login.PesquisarPorIdAsync(tabela.Id);
+            if (ObjetoPesquisa == null)
+            {
+                return BadRequest(Mensagens.MSG_E002);
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                tabela.Password = _UOW.Login.Criptografar(tabela.Password);
+                
+                var ObjetoEntitade = LoginRegistroDTO.ToEntidade(tabela);
+
+
+                Login Objeto = await _UOW.Login.AtualizarAsync(ObjetoEntitade);
+
+                await _UOW.SaveAsync();
+
+                return Ok(true);
+
+            }
+            return BadRequest();
+
+        }
+
+
+        [HttpGet("LogbyDate/{dataInicial}/{dataFinal}")]
+        public async Task<ActionResult<LoginRegistroDTO>> LogbyDate(DateTime dataInicial, DateTime dataFinal)
+        {
+            var Objeto = await _UOW.LoginHistorico.PesquisarPorDataAsync(dataInicial, dataFinal);
+            if (Objeto == null)
+            {
+                return NotFound(Mensagens.MSG_E002);
+            }
+            var ObjetoDTO = LoginHistoricoDTO.ToDTO(Objeto);
+
+            return Ok(ObjetoDTO);
         }
 
 
