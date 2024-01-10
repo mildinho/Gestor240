@@ -180,7 +180,13 @@ namespace Web.Controllers
 
             if (retornoApi.success)
             {
-                return new ViewAsPdf("Profile", retornoApi.data);
+                return new ViewAsPdf("pdf_Relatorio01", retornoApi.data)
+                {
+                    FileName = "Atividades.pdf",
+                    PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
+                    PageSize = Rotativa.AspNetCore.Options.Size.A4
+                };
+               
             }
             else
             {

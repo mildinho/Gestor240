@@ -69,7 +69,7 @@ namespace API.Controllers
 
 
             _UOW.LoginHistorico.InserirAsync(loginHistorico);
-            _UOW.SaveAsync();
+            await _UOW.SaveAsync();
 
             return Ok(tokenUsuario);
 
