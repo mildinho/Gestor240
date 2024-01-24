@@ -1,0 +1,304 @@
+﻿@model CCViewModel;
+
+@{
+
+    ViewData["Title"] = ViewBag.Crud.Titulo;
+}
+
+@await Component.InvokeAsync("CRUD")
+
+<input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
+<input type="hidden" id="PagadorID" value="@Model.Pagador.Id">
+
+
+
+
+
+<div id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Dados do Beneficiário
+                </a>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="form-group col-2">
+                        <label asp-for="Pagador.CNPJ_CPF"></label>
+                        <input asp-for="Pagador.CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
+                        <span asp-validation-for="Pagador.CNPJ_CPF" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-5">
+                        <label asp-for="Pagador.Nome"></label>
+                        <input asp-for="Pagador.Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
+                        <span asp-validation-for="Pagador.Nome" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-5">
+                        <label asp-for="Pagador.Fantasia"></label>
+                        <input asp-for="Pagador.Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
+                        <span asp-validation-for="Pagador.Fantasia" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Dados do Pagador
+                </a>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="form-group col-2">
+                        <label asp-for="Pagador.CNPJ_CPF"></label>
+                        <input asp-for="Pagador.CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
+                        <span asp-validation-for="Pagador.CNPJ_CPF" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-5">
+                        <label asp-for="Pagador.Nome"></label>
+                        <input asp-for="Pagador.Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
+                        <span asp-validation-for="Pagador.Nome" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-5">
+                        <label asp-for="Pagador.Fantasia"></label>
+                        <input asp-for="Pagador.Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
+                        <span asp-validation-for="Pagador.Fantasia" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+            <h5 class="mb-0">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Lançamentos
+                </a>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="form-group col-5">
+                        <label asp-for="ContaCorrenteDTO.TipoContaCorrenteId"></label>
+
+                        <div class="form-group">
+
+                            <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente" onchange="CarregaCC()">
+                                <option value="">Selecione a Conta Corrente  </option>
+                            </select>
+                        </div>
+
+                        <span asp-validation-for="ContaCorrenteDTO.TipoContaCorrenteId" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+
+                <div class="row align-items-end">
+
+                    <div class="form-group col-2">
+                        <label asp-for="ContaCorrenteDTO.Data"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input asp-for="ContaCorrenteDTO.Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data do Lançamento">
+                            <span asp-validation-for="ContaCorrenteDTO.Data" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group col-2">
+                        <label asp-for="ContaCorrenteDTO.Valor"></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">R$</span>
+                            </div>
+                            <input asp-for="ContaCorrenteDTO.Valor" class="form-control" onkeyup="formatarMoeda();" id="ValorLanctoCC" placeholder="Valor do Lançamento">
+                            <span asp-validation-for="ContaCorrenteDTO.Valor" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-1">
+                        <label asp-for="ContaCorrenteDTO.D_C"></label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="customRadio1">Débito</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadio2">Crédito</label>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-4">
+                        <label asp-for="ContaCorrenteDTO.Historico"></label>
+                        <input asp-for="ContaCorrenteDTO.Historico" class="form-control" placeholder="Historico">
+                        <span asp-validation-for="ContaCorrenteDTO.Historico" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="pb-3">
+                        <button accesskey="s" onclick="GravarLancamento()" id="btnGravarLancamento" class="btn btn-outline-primary pb-2">
+                            <i class="fas fa-save"></i> <strong>S</strong>alvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function GravarLancamento() {
+
+        const ObjCC = new Object();
+        const button = document.getElementById("btnGravarLancamento");
+
+        let _DC = '';
+
+        button.disabled = true;
+
+        ObjCC.Id = 0;
+        ObjCC.TipoContaCorrenteId = $('#select2SingleTCC').val();
+        ObjCC.PagadorID = $('#PagadorID').val();
+        ObjCC.Data = $('#ContaCorrenteDTO_Data').val();
+        ObjCC.Historico = $('#ContaCorrenteDTO_Historico').val();
+        ObjCC.Valor = AjustaPreco('ValorLanctoCC');
+
+        var ele = document.getElementsByName('customRadio');
+        if (ele[0].checked) {
+            ObjCC.D_C = 'D';
+
+        } else {
+            ObjCC.D_C = 'C';
+
+        }
+
+
+        if (ObjCC.TipoContaCorrenteId <= 0) {
+            alertsw("Você deve Informar o Tipo de Conta Corrente", 'error');
+        }
+        else if (ObjCC.Data.trim().length != 10) {
+            alertsw("Você deve Informar a Data Correta", 'error');
+        }
+        else if (ObjCC.Historico.trim().length === 0) {
+            alertsw("Você deve Informar o Histórico", 'error');
+        }
+        else {
+
+            $.ajax({
+                type: 'POST',
+                url: 'https://localhost:7092/v1/ContaCorrente/',
+                contentType: 'application/json',
+                dataType: "JSON",
+                data: JSON.stringify(ObjCC),
+
+                success: function (r) {
+                    CarregaCC(0);
+                    alertswinformativo("Lançamento Feito", 'success');
+                },
+                error: function (r) {
+                    console.log(r);
+                    alertsw("Ops! algo deu Errado", 'error');
+
+
+                }
+            });
+        }
+
+        button.disabled = false;
+    }
+
+
+    function CarregaCC(mostraMsg) {
+
+        const ObjCC = new Object();
+        ObjCC.TipoContaCorrenteId = $('#select2SingleTCC').val();
+        ObjCC.PagadorID = $('#PagadorID').val();
+
+        var table = $('#dataTableHover').DataTable();
+
+        let TotalLC = 0;
+        let TotalLD = 0;
+        let TotalLCD = 0;
+
+        $("#TotalLC").html("Crédito: R$ 0");
+        $("#TotalLD").html("Débito: R$ 0");
+        $("#TotalLCD").html("Total: R$ 0");
+
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:7092/v1/ContaCorrente/GetbyIdCCIdPagador?IdTipoCC=' + ObjCC.TipoContaCorrenteId + '&IdPagador=' + ObjCC.PagadorID,
+            contentType: 'application/json',
+            dataType: "JSON",
+            success: function (data) {
+
+                table.clear();
+
+                for (let i = 0; i < data.length; i++) {
+                    table.row.add([data[i].id, data[i].data.substring(0, 10), data[i].valor, data[i].d_C, data[i].historico]);
+                    if (data[i].d_C == "C") {
+                        TotalLC += data[i].valor;
+                    }
+                    else {
+                        TotalLD += data[i].valor;
+                    }
+
+                }
+                TotalLCD = TotalLC - TotalLD;
+
+                $("#TotalLC").html("Crédito: R$ " + TotalLC);
+                $("#TotalLD").html("Débito: R$ " + TotalLD);
+                $("#TotalLCD").html("Total: R$ " + TotalLCD);
+
+
+                table.draw();
+                if (mostraMsg != 0) {
+                    alertswinformativo("Conta Corrente Atualizada", 'success');
+                }
+
+            },
+            error: function (r) {
+
+                table.clear();
+                table.draw();
+                if (mostraMsg != 0) {
+                    alertswinformativo("Conta Corrente Sem Informação", 'info');
+                }
+
+            }
+        });
+
+    }
+</script>

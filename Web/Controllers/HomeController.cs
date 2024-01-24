@@ -177,14 +177,19 @@ namespace Web.Controllers
             ExecutaAPI.ParametrosAPI.Add(Inicio.ToString("yyyy-MM-dd")+ " 00:00:00");
             ExecutaAPI.ParametrosAPI.Add(Fim.ToString("yyyy-MM-dd") + " 23:59:59");
             var retornoApi = await ExecutaAPI.GetAPI("Usuario/LogbyDate");
-
+          
+           
             if (retornoApi.success)
             {
-                return new ViewAsPdf("pdf_Relatorio01", retornoApi.data)
+                string footer = "--footer-center \"Impresso em: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "  Pág.: [page]/[toPage]\"" + " --footer-line --footer-font-size \"12\" --footer-spacing 1 --footer-font-name \"calibri light\"";
+
+                var objRetorno = JsonConvert.DeserializeObject<List<LoginHistoricoDTO>>(retornoApi.data);
+                return new ViewAsPdf("pdf_Relatorio01", objRetorno)
                 {
                     FileName = "Atividades.pdf",
                     PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
-                    PageSize = Rotativa.AspNetCore.Options.Size.A4
+                    PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                    CustomSwitches = footer
                 };
                
             }
