@@ -49,22 +49,7 @@ namespace Web.Controllers
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Banco/GetbyId");
-
-            if (retornoApi.statuscode == 401)
-                return RedirectToAction("Login", "Home");
-
-            if (retornoApi.success)
-            {
-                var objRetorno = JsonConvert.DeserializeObject<BancoDTO>(retornoApi.data);
-                return View("Manutencao", objRetorno);
-            }
-            else
-            {
-                AlertNotification.Error(retornoApi.data);
-                return RedirectToAction(nameof(Index));
-
-            }
+            return await Editar_Geral<BancoDTO>("Banco/GetbyId", "Manutencao");
         }
 
 

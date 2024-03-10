@@ -43,27 +43,18 @@ namespace Web.Controllers
         }
 
 
+
         [HttpGet]
         public async Task<IActionResult> Consultar(int Id)
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetbyId");
-            if (retornoApi.success)
-            {
-                var objRetorno = JsonConvert.DeserializeObject<TipoServicoDTO>(retornoApi.data);
-                return View("Manutencao", objRetorno);
-            }
-            else
-            {
-                AlertNotification.Error(retornoApi.data);
-                return RedirectToAction(nameof(Index));
-
-            }
+            return await Editar_Geral<TipoServicoDTO>("TipoServico/GetbyId", "Manutencao");
         }
 
 
+    
         [HttpGet]
         public async Task<IActionResult> Deletar(int Id)
         {

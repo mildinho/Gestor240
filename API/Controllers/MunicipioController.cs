@@ -1,6 +1,7 @@
 ﻿using Dominio.DTO;
 using Dominio.Entidades;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -8,6 +9,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
+    [Authorize]
     public class MunicipioController : Controller
     {
         private readonly IUnitOfWork _UOW;

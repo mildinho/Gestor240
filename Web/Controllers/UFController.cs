@@ -43,26 +43,16 @@ namespace Web.Controllers
             return await Editar_Geral<UFDTO>("UF/GetbyId", "Manutencao");
         }
 
-
+      
         [HttpGet]
         public async Task<IActionResult> Consultar(int Id)
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("UF/GetbyId");
-            if (retornoApi.success)
-            {
-                var objRetorno = JsonConvert.DeserializeObject<UFDTO>(retornoApi.data);
-                return View("Manutencao", objRetorno);
-            }
-            else
-            {
-                AlertNotification.Error(retornoApi.data);
-                return RedirectToAction(nameof(Index));
-
-            }
+            return await Editar_Geral<UFDTO>("UF/GetbyId", "Manutencao");
         }
+
 
 
         [HttpGet]

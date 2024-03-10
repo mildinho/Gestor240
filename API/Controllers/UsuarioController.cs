@@ -2,6 +2,7 @@
 using Dominio.DTO;
 using Dominio.Entidades;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
+    [Authorize]
     public class UsuarioController : Controller
     {
         private readonly IUnitOfWork _UOW;
@@ -36,6 +38,7 @@ namespace API.Controllers
 
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public async Task<ActionResult<TokenUsuarioDTO>> Login(LoginDTO login)
         {
             login.Password = _UOW.Login.Criptografar(login.Password);

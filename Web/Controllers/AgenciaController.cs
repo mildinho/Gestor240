@@ -53,25 +53,12 @@ namespace Web.Controllers
         public async Task<IActionResult> Consultar(int Id)
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Read);
-            ViewBag.Bancos = await ListaBancos();
-
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Agencia/GetbyId");
-            if (retornoApi.success)
-            {
-                var objRetorno = JsonConvert.DeserializeObject<AgenciaDTO>(retornoApi.data);
-
-                return View("Manutencao", objRetorno);
-            }
-            else
-            {
-                AlertNotification.Error(retornoApi.data);
-                return RedirectToAction(nameof(Index));
-
-            }
+            return await Editar_Geral<AgenciaDTO>("Agencia/GetbyId", "Manutencao");
         }
 
+       
 
         [HttpGet]
         public async Task<IActionResult> Deletar(int Id)

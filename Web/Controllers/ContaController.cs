@@ -59,22 +59,10 @@ namespace Web.Controllers
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Conta/GetbyId");
-            if (retornoApi.success)
-            {
-                var objRetorno = JsonConvert.DeserializeObject<ContaDTO>(retornoApi.data);
-
-                return View("Manutencao", objRetorno);
-            }
-            else
-            {
-                AlertNotification.Error(retornoApi.data);
-                return RedirectToAction(nameof(Index));
-
-            }
+            return await Editar_Geral<ContaDTO>("Conta/GetbyId", "Manutencao");
         }
 
-
+      
         [HttpGet]
         public async Task<IActionResult> Deletar(int Id)
         {

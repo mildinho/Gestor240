@@ -47,7 +47,6 @@ namespace Web.Controllers
             return await Editar_Geral<MunicipioDTO>("Municipio/GetbyId", "Manutencao");
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Consultar(int Id)
         {
@@ -56,21 +55,10 @@ namespace Web.Controllers
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Municipio/GetbyId");
-            if (retornoApi.success)
-            {
-                var objRetorno = JsonConvert.DeserializeObject<MunicipioDTO>(retornoApi.data);
-
-                return View("Manutencao", objRetorno);
-            }
-            else
-            {
-                AlertNotification.Error(retornoApi.data);
-                return RedirectToAction(nameof(Index));
-
-            }
+            return await Editar_Geral<MunicipioDTO>("Municipio/GetbyId", "Manutencao");
         }
 
+       
 
         [HttpGet]
         public async Task<IActionResult> Deletar(int Id)

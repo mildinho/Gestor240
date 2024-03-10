@@ -1,5 +1,6 @@
 ﻿using Dominio.Entidades;
 using Dominio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-
+    [Authorize]
     public class RemessaController : Controller
     {
         private readonly IUnitOfWork _UOW;

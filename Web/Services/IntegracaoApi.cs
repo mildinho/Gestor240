@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using Web.Biblioteca.Session;
 using Web.Interface;
 
 namespace Web.Services
@@ -7,6 +8,8 @@ namespace Web.Services
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
+        private readonly SessaoUsuario _sessaoUsuario;
+      
 
 
         public string TokenBearer { get; set; } = string.Empty;
@@ -14,10 +17,12 @@ namespace Web.Services
 
 
 
-        public IntegracaoApi(IConfiguration configuration)
+        public IntegracaoApi(IConfiguration configuration, SessaoUsuario sessaoUsuario)
         {
+            _sessaoUsuario = sessaoUsuario;
+            
             _configuration = configuration;
-
+            
             _httpClient = new();
             _httpClient.BaseAddress = new Uri(_configuration["APIConfig:UrlBase"]);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -34,6 +39,12 @@ namespace Web.Services
             foreach (var item in ParametrosAPI)
             {
                 nameApi = string.Concat(nameApi, "/" + item);
+            }
+
+            if (_sessaoUsuario != null)
+            {
+                if (_sessaoUsuario.GetToken() != null)
+                    TokenBearer = _sessaoUsuario.GetToken().Token;
             }
 
             if (!String.IsNullOrEmpty(TokenBearer))
@@ -56,6 +67,12 @@ namespace Web.Services
                 nameApi = string.Concat(nameApi, "/" + item);
             }
 
+            if (_sessaoUsuario != null) 
+            {
+                if (_sessaoUsuario.GetToken() != null)
+                    TokenBearer = _sessaoUsuario.GetToken().Token;
+            }
+
             if (!String.IsNullOrEmpty(TokenBearer))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
@@ -76,6 +93,12 @@ namespace Web.Services
                 nameApi = string.Concat(nameApi, "/" + item);
             }
 
+            if (_sessaoUsuario != null)
+            {
+                if (_sessaoUsuario.GetToken() != null)
+                    TokenBearer = _sessaoUsuario.GetToken().Token;
+            }
+
             if (!String.IsNullOrEmpty(TokenBearer))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
@@ -94,6 +117,13 @@ namespace Web.Services
             {
                 nameApi = string.Concat(nameApi, "/" + item);
             }
+
+            if (_sessaoUsuario != null)
+            {
+                if (_sessaoUsuario.GetToken() != null)
+                    TokenBearer = _sessaoUsuario.GetToken().Token;
+            }
+
             if (!String.IsNullOrEmpty(TokenBearer))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenBearer);
