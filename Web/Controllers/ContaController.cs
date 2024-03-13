@@ -91,11 +91,12 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Manutencao([FromForm] ContaDTO conta, Opcoes operacao)
         {
             ViewBag.Bancos = await ListaBancos();
             ViewBag.Agencias = await ListaAgencias();
+            ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
 
             if (Opcoes.Delete == (Opcoes)operacao)
             {

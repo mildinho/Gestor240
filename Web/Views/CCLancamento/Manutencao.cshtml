@@ -9,10 +9,7 @@
 
 <input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
 <input type="hidden" id="PagadorID" value="@Model.Pagador.Id">
-
-
-
-
+<input type="hidden" id="TokenID" value="@ViewBag.Token">
 
 <div id="accordion" role="tablist" aria-multiselectable="true">
     <div class="card">
@@ -262,6 +259,9 @@
                 contentType: 'application/json',
                 dataType: "JSON",
                 data: JSON.stringify(ObjCC),
+                headers: {
+                    Authorization: 'Bearer ' + $('#TokenID').val()
+                },
 
                 success: function (r) {
                     CarregaCC(0);
@@ -301,6 +301,9 @@
             url: 'https://localhost:7092/v1/ContaCorrente/GetbyIdCCIdPagador?IdTipoCC=' + ObjCC.TipoContaCorrenteId + '&IdPagador=' + ObjCC.PagadorID,
             contentType: 'application/json',
             dataType: "JSON",
+            headers: {
+                Authorization: 'Bearer ' + $('#TokenID').val()
+            },
             success: function (data) {
 
                 table.clear();

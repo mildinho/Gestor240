@@ -1,12 +1,8 @@
 ===========Pendencias do Projeto===============
 
-Camada API:
--Fazer a INCLUSAO do TOKENBEARER Nas API;
-
 Camada WEB
 Pendencia
 	-Desenvolver a Opção de Relatorio;
-	-Desenvolver relatorio de Log de Sistema;
 
 Realizado
 -Desenvolver a Tela de Edição de Profile;

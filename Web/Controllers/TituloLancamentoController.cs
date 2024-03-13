@@ -18,7 +18,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return await Index_Geral<PagadorDTO>("Pagador/GetAll", "Index");
+            return await Index_Geral<BeneficiarioDTO>("Beneficiario/GetAll", "Index");
 
         }
 
@@ -32,12 +32,12 @@ namespace Web.Controllers
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
-            var retornoApi = await ExecutaAPI.GetAPI("Pagador/GetbyId");
-            PagadorDTO objRetorno = JsonConvert.DeserializeObject<PagadorDTO>(retornoApi.data);
+            var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
+            BeneficiarioDTO objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
 
             CCViewModel CVM = new CCViewModel
             {
-                Pagador = new PagadorVM
+                Beneficiario = new BeneficiarioVM
                 {
                     CNPJ_CPF = objRetorno.CNPJ_CPF,
                     Nome = objRetorno.Nome,

@@ -8,7 +8,7 @@
 @await Component.InvokeAsync("CRUD")
 
 <input type="hidden" name="operacao" value="@ViewBag.Crud.Operacao">
-<input type="hidden" id="PagadorID" value="@Model.Pagador.Id">
+<input type="hidden" id="BeneficiarioID" value="@Model.Beneficiario.Id">
 
 
 
@@ -16,40 +16,42 @@
 
 <div id="accordion" role="tablist" aria-multiselectable="true">
     <div class="card">
-        <div class="card-header" role="tab" id="headingOne">
+        <div class="card-header" role="tab" id="headingZero">
             <h5 class="mb-0">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
                     Dados do Beneficiário
                 </a>
             </h5>
         </div>
-        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapseZero" class="collapse show" role="tabpanel" aria-labelledby="headingZero">
             <div class="card-body">
                 <div class="row">
 
                     <div class="form-group col-2">
-                        <label asp-for="Pagador.CNPJ_CPF"></label>
-                        <input asp-for="Pagador.CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
-                        <span asp-validation-for="Pagador.CNPJ_CPF" class="text-danger"></span>
+                        <label asp-for="Beneficiario.CNPJ_CPF"></label>
+                        <input asp-for="Beneficiario.CNPJ_CPF" class="form-control" disabled="disabled">
+                        <span asp-validation-for="Beneficiario.CNPJ_CPF" class="text-danger"></span>
                     </div>
 
 
                     <div class="form-group col-5">
-                        <label asp-for="Pagador.Nome"></label>
-                        <input asp-for="Pagador.Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
-                        <span asp-validation-for="Pagador.Nome" class="text-danger"></span>
+                        <label asp-for="Beneficiario.Nome"></label>
+                        <input asp-for="Beneficiario.Nome" class="form-control" disabled="disabled">
+                        <span asp-validation-for="Beneficiario.Nome" class="text-danger"></span>
                     </div>
 
 
                     <div class="form-group col-5">
-                        <label asp-for="Pagador.Fantasia"></label>
-                        <input asp-for="Pagador.Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
-                        <span asp-validation-for="Pagador.Fantasia" class="text-danger"></span>
+                        <label asp-for="Beneficiario.Fantasia"></label>
+                        <input asp-for="Beneficiario.Fantasia" class="form-control" disabled="disabled">
+                        <span asp-validation-for="Beneficiario.Fantasia" class="text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="card">
         <div class="card-header" role="tab" id="headingOne">
             <h5 class="mb-0">
@@ -85,10 +87,12 @@
             </div>
         </div>
     </div>
+ 
+    
     <div class="card">
         <div class="card-header" role="tab" id="headingTwo">
             <h5 class="mb-0">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     Lançamentos
                 </a>
             </h5>
@@ -96,22 +100,7 @@
         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="card-body">
 
-                <div class="row">
-                    <div class="form-group col-5">
-                        <label asp-for="ContaCorrenteDTO.TipoContaCorrenteId"></label>
-
-                        <div class="form-group">
-
-                            <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente" onchange="CarregaCC()">
-                                <option value="">Selecione a Conta Corrente  </option>
-                            </select>
-                        </div>
-
-                        <span asp-validation-for="ContaCorrenteDTO.TipoContaCorrenteId" class="text-danger"></span>
-
-                    </div>
-                </div>
-
+               
 
                 <div class="row align-items-end">
 

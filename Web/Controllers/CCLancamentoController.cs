@@ -28,8 +28,11 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Cadastrar(int Id)
         {
+            ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
+
             ViewBag.TContaCorrente = await ListaTipoContaCorrente();
+            ViewBag.Token = ExecutaAPI.TokenBearer;
 
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
