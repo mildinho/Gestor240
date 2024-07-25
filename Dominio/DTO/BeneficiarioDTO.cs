@@ -24,7 +24,7 @@ namespace Dominio.DTO
 
 
         [Display(Name = "Fantasia")]
-        public string? Fantasia { get; set; } = String.Empty;
+        public string Fantasia { get; set; } = String.Empty;
 
 
         [Display(Name = "Endereço")]
@@ -40,7 +40,7 @@ namespace Dominio.DTO
         public string Bairro { get; set; } = String.Empty;
 
         [Display(Name = "Complemento")]
-        public string? Complemento { get; set; } = String.Empty;
+        public string Complemento { get; set; } = String.Empty;
 
         [Display(Name = "Cidade")]
         public string Cidade { get; set; } = String.Empty;

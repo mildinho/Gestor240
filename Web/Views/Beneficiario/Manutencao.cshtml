@@ -255,6 +255,7 @@
             url: 'https://localhost:7092/v1/Municipio/GetbyIdUF/' + IdUF,
             contentType: 'application/json',
             dataType: "JSON",
+            headers: { "Authorization": "Bearer " + localStorage.getItem('token') },
             success: function (r) {
                 console.log("RESULT", r);
 

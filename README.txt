@@ -1,13 +1,15 @@
 ===========Pendencias do Projeto===============
 
 Camada WEB
-Pendencia
+Pendencia com Erro:
+	-Na tela de Login, fazer uma forma de devolver o TokenUsuarioDTO, pois quando executar alguma api, preciso passar o token;
+	( ver este site: https://www.codeproject.com/Articles/5160941/ASP-NET-CORE-Token-Authentication-and-Authorizatio)
+	-Na tela do Pagador, quando está pesquisando o cep, nao está trazendo automaticamento a UF e MUNICIPIO;
+	-Na tela do Pagador, quando está pesquisando o cep, nao está trazendo automaticamento a UF e MUNICIPIO;
+
+Melhorias:
 	-Desenvolver a Opção de Relatorio;
-
-Realizado
--Desenvolver a Tela de Edição de Profile;
-
-
+	-Melhorar os Dados do DashBorad;
 
 
  * TODO: FAZER O CRUD DA TABELA AGENCIA;

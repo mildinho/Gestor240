@@ -23,7 +23,7 @@
                 </a>
             </h5>
         </div>
-        <div id="collapseZero" class="collapse show" role="tabpanel" aria-labelledby="headingZero">
+        <div id="collapseZero" class="collapse" role="tabpanel" aria-labelledby="headingZero">
             <div class="card-body">
                 <div class="row">
 
@@ -52,48 +52,81 @@
     </div>
 
 
-    <div class="card">
-        <div class="card-header" role="tab" id="headingOne">
-            <h5 class="mb-0">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Dados do Pagador
-                </a>
-            </h5>
-        </div>
-        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-            <div class="card-body">
-                <div class="row">
-
-                    <div class="form-group col-2">
-                        <label asp-for="Pagador.CNPJ_CPF"></label>
-                        <input asp-for="Pagador.CNPJ_CPF" class="form-control" placeholder="Digite o CPF ou CNPJ" disabled="disabled">
-                        <span asp-validation-for="Pagador.CNPJ_CPF" class="text-danger"></span>
-                    </div>
+    <!-- Row -->
+    <div class="row">
+        <!-- DataTable with Hover -->
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Pagador</h6>
 
 
-                    <div class="form-group col-5">
-                        <label asp-for="Pagador.Nome"></label>
-                        <input asp-for="Pagador.Nome" class="form-control" placeholder="Digite o Nome do Pagador" disabled="disabled">
-                        <span asp-validation-for="Pagador.Nome" class="text-danger"></span>
-                    </div>
+                    <a asp-action="Cadastrar" asp-controller="Pagador" class="btn btn-outline-primary btn-sm mb-1"> <strong>Novo Registro</strong></a>
 
+                </div>
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.Id)</th>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.CNPJ_CPF)</th>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.Nome)</th>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.Cidade)</th>
+                                <th> Ação</th>
 
-                    <div class="form-group col-5">
-                        <label asp-for="Pagador.Fantasia"></label>
-                        <input asp-for="Pagador.Fantasia" class="form-control" placeholder="Digite o Nome Fantasia" disabled="disabled">
-                        <span asp-validation-for="Pagador.Fantasia" class="text-danger"></span>
-                    </div>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.Id)</th>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.CNPJ_CPF)</th>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.Nome)</th>
+                                <th> @Html.DisplayNameFor(model => model.Pagador.Cidade)</th>
+                                <th> Ação</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (PagadorDTO pagador in Model.Pagador_Lista)
+                            {
+                                <tr>
+                                    <td>@pagador.Id</td>
+                                    <td>@pagador.CNPJ_CPF</td>
+                                    <td>@pagador.Nome</td>
+                                    <td>@pagador.Cidade</td>
+                                    <td>
+
+                                        <a asp-action="Editar" asp-route-id="@pagador.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Editar">
+                                            <span class="material-symbols-outlined">
+                                                box_edit
+                                            </span>
+                                        </a>
+                                        <a asp-action="Consultar" asp-route-id="@pagador.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Consultar">
+                                            <span class="material-symbols-outlined">
+                                                dictionary
+                                            </span>
+                                        </a>
+                                        <a asp-action="Deletar" asp-route-id="@pagador.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Excluir">
+                                            <span class="material-symbols-outlined">
+                                                delete_forever
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+    <!--Row-->
  
     
     <div class="card">
         <div class="card-header" role="tab" id="headingTwo">
             <h5 class="mb-0">
                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    Lançamentos
+                    Dados do Título
                 </a>
             </h5>
         </div>

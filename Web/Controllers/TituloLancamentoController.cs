@@ -33,20 +33,27 @@ namespace Web.Controllers
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
 
             var retornoApi = await ExecutaAPI.GetAPI("Beneficiario/GetbyId");
-            BeneficiarioDTO objRetorno = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+            BeneficiarioDTO objRetorno01 = JsonConvert.DeserializeObject<BeneficiarioDTO>(retornoApi.data);
+
+
+            ExecutaAPI.ParametrosAPI.Clear();
+            var retornoApi02 = await ExecutaAPI.GetAPI("Pagador/GetAll");
+            List<PagadorDTO> objRetorno02 = JsonConvert.DeserializeObject<List<PagadorDTO>>(retornoApi02.data);
+      
 
             CCViewModel CVM = new CCViewModel
             {
                 Beneficiario = new BeneficiarioVM
                 {
-                    CNPJ_CPF = objRetorno.CNPJ_CPF,
-                    Nome = objRetorno.Nome,
-                    Fantasia = objRetorno.Fantasia,
-                    Id = objRetorno.Id
+                    CNPJ_CPF = objRetorno01.CNPJ_CPF,
+                    Nome = objRetorno01.Nome,
+                    Fantasia = objRetorno01.Fantasia,
+                    Id = objRetorno01.Id
                 },
 
                 ContaCorrenteDTO = new ContaCorrenteDTO(),
-                ListaCCDTO = new List<ContaCorrenteDTO>()
+                ListaCCDTO = new List<ContaCorrenteDTO>(),
+                Pagador_Lista = objRetorno02
 
             };
 

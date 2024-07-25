@@ -8,6 +8,9 @@ namespace Web.Models
     {
         public PagadorVM Pagador { get; set; } = new();
         public BeneficiarioVM Beneficiario { get; set; } = new();
+
+        public List<PagadorDTO> Pagador_Lista { get; set; } = new();
+
         public List<ContaCorrenteDTO> ListaCCDTO { get; set; } = new();
         public ContaCorrenteDTO ContaCorrenteDTO { get; set; } = new();
 
@@ -27,6 +30,9 @@ namespace Web.Models
 
         [Display(Name = "Fantasia")]
         public string Fantasia { get; set; } = String.Empty;
+
+        [Display(Name = "Cidade")]
+        public string Cidade { get; set; } = String.Empty;
     }
 
 
