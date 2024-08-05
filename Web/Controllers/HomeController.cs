@@ -32,7 +32,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromForm] LoginDTO login)
+        public async Task<IActionResult> Login( LoginDTO login)
         {
 
             if (ModelState.IsValid)
@@ -45,14 +45,15 @@ namespace Web.Controllers
 
                     UsuarioLogado.GravaToken(obj);
 
-                    AlertNotification.Success("É bom tê-lo de volta, " + obj.Nome);
+                    //AlertNotification.Success("É bom tê-lo de volta, " + obj.Nome);
 
-                    return RedirectToAction("Index", "Home");
+                    return Ok(obj);
                 }
                 else
                 {
-                    AlertNotification.Info(mensagens.MSG_E001);
-                    return View("Login", login);
+                    //AlertNotification.Info(mensagens.MSG_E001);
+                    return NotFound(retornoApi.data);
+                    //return View("Login", login);
                 }
             }
 
@@ -171,14 +172,14 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Relatorio_LogUsuario(DateTime Inicio , DateTime Fim)
+        public async Task<IActionResult> Relatorio_LogUsuario(DateTime Inicio, DateTime Fim)
         {
             ExecutaAPI.ParametrosAPI.Clear();
-            ExecutaAPI.ParametrosAPI.Add(Inicio.ToString("yyyy-MM-dd")+ " 00:00:00");
+            ExecutaAPI.ParametrosAPI.Add(Inicio.ToString("yyyy-MM-dd") + " 00:00:00");
             ExecutaAPI.ParametrosAPI.Add(Fim.ToString("yyyy-MM-dd") + " 23:59:59");
             var retornoApi = await ExecutaAPI.GetAPI("Usuario/LogbyDate");
-          
-           
+
+
             if (retornoApi.success)
             {
                 string footer = "--footer-center \"Impresso em: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "  Pág.: [page]/[toPage]\"" + " --footer-line --footer-font-size \"12\" --footer-spacing 1 --footer-font-name \"calibri light\"";
@@ -191,13 +192,13 @@ namespace Web.Controllers
                     PageSize = Rotativa.AspNetCore.Options.Size.A4,
                     CustomSwitches = footer
                 };
-               
+
             }
             else
             {
                 AlertNotification.Error("Não Há Registro de Atividades");
                 return RedirectToAction("Index", "Home");
-                
+
             }
         }
 

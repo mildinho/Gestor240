@@ -1,8 +1,14 @@
-﻿@model LoginDTO;
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@model LoginDTO;
 @{
 
     ViewData["Title"] = "Identificação do Usuário";
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
 }
+<input id="__RequestVerificationToken" type="hidden" value="@requestToken" />
+
+
 <body class="bg-gradient-login">
     <!-- Login Content -->
     <div class="container-login">
@@ -16,44 +22,42 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Identificação do Usuário</h1>
                                     </div>
-                                    <form method="post" asp-action="Login" class="user">
 
-                                       <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">&#64;</span>
-                                            </div>
-                                            <input asp-for="Email" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu E-Mail">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">&#64;</span>
                                         </div>
-                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                        <input id="Email" class="form-control" aria-describedby="emailHelp" placeholder="Informe seu E-Mail">
+                                    </div>
 
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
-                                            </div>
-                                            <input asp-for="Password" class="form-control" placeholder="Senha">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></span>
                                         </div>
-                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                        <input type="password" id="Password" class="form-control" placeholder="Senha">
+                                    </div>
 
 
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">
-                                                    Salvar Senha
-                                                </label>
-                                            </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">
+                                                Salvar Senha
+                                            </label>
                                         </div>
-                                        <div class="form-group">
+                                    </div>
+                                    <div class="form-group">
 
-                                            <button accesskey="s" type="submit" class="btn btn-primary btn-block">
-                                                <i class="fas fa-lock"></i> Acessar
-                                            </button>
-                                        </div>
-                                    </form>
+                                        <button accesskey="s" onclick="MyPersonalLogin()" class="btn btn-primary btn-block">
+                                            <i class="fas fa-lock"></i> Acessar
+                                        </button>
+                                    </div>
+
                                     <hr>
                                     <div class="text-center">
                                         <a class="font-weight-bold small" asp-controller="Home" asp-action="AddUser">Criar uma Conta</a>
                                     </div>
+
                                     <div class="text-center">
                                     </div>
                                 </div>
@@ -70,3 +74,41 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="js/ruang-admin.min.js"></script>
 </body>
+
+
+
+@section scripts {
+
+    <script>
+
+        function MyPersonalLogin() {
+            let email = document.getElementById("Email").value;
+            let password = document.getElementById("Password").value;
+
+            var jsonData = { Email: email, Password: password };
+
+            $.ajax({
+                type: "POST",
+                url: 'Login',
+                data: jsonData,
+                headers: {
+                    RequestVerificationToken:
+                        document.getElementById("__RequestVerificationToken").value
+                },
+                success: function (result) {
+               
+                    sessionStorage.setItem("gestor240", JSON.stringify(result));
+                    window.location.href = "/";
+                },
+                error: function (result) {
+
+                    console.log('Error de login');
+                  
+                    alertsw("Login Inválido, Tente Novamente.", "error");
+                }
+            });
+        }
+     
+
+    </script>
+}
