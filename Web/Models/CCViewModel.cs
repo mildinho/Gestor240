@@ -14,6 +14,10 @@ namespace Web.Models
         public List<ContaCorrenteDTO> ListaCCDTO { get; set; } = new();
         public ContaCorrenteDTO ContaCorrenteDTO { get; set; } = new();
 
+        public List<FinancasDTO> ListaFinancasDTO { get; set; } = new();
+        public FinancasDTO FinancasDTO { get; set; } = new();
+
+
     }
 
     public class PagadorVM

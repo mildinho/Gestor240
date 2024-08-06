@@ -28,6 +28,8 @@ namespace Web.Controllers
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
             ViewBag.TContaCorrente = await ListaTipoContaCorrente();
+            ViewBag.TFormaLancamento = await ListaFormaLancamento();
+            ViewBag.TTipoServico = await ListaTipoServico();
 
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());

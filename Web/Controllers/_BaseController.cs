@@ -1,4 +1,5 @@
 ﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -73,6 +74,28 @@ namespace Web.Controllers
             return ViewBag.TContaCorrente;
         }
 
+        public async Task<IEnumerable<SelectListItem>> ListaFormaLancamento()
+        {
+            ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
+            var retornoApi = await ExecutaAPI.GetAPI("FormaLancamento/GetAll");
+            List<FormaLancamentoDTO> objRetorno = JsonConvert.DeserializeObject<List<FormaLancamentoDTO>>(retornoApi.data);
+
+            ViewBag.TFormaLancamento = objRetorno.Select(a => new SelectListItem(a.Codigo + " - " + a.Descricao, a.Id.ToString()));
+
+            return ViewBag.TFormaLancamento;
+        }
+
+
+        public async Task<IEnumerable<SelectListItem>> ListaTipoServico()
+        {
+            ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
+            var retornoApi = await ExecutaAPI.GetAPI("TipoServico/GetAll");
+            List<TipoServicoDTO> objRetorno = JsonConvert.DeserializeObject<List<TipoServicoDTO>>(retornoApi.data);
+
+            ViewBag.TTipoServico = objRetorno.Select(a => new SelectListItem(a.Codigo + " - " + a.Descricao, a.Id.ToString()));
+
+            return ViewBag.TTipoServico;
+        }
 
         public async Task<IActionResult> Index_Geral<T>(string Rota, string ViewName)
         {

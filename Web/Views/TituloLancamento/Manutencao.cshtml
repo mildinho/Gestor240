@@ -61,8 +61,6 @@
                     <h6 class="m-0 font-weight-bold text-primary">Pagador</h6>
 
 
-                    <a asp-action="Cadastrar" asp-controller="Pagador" class="btn btn-outline-primary btn-sm mb-1"> <strong>Novo Registro</strong></a>
-
                 </div>
                 <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
@@ -94,12 +92,20 @@
                                     <td>@pagador.Nome</td>
                                     <td>@pagador.Cidade</td>
                                     <td>
+                                        @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                Launch demo modal
+                                            </button>*@
+                                        @*<a asp-action="Consultar" asp-route-id="@pagador.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Ficha Financeira">
+                                                <span class="material-symbols-outlined">
+                                                    dictionary
+                                                </span>
+                                            </a>*@
 
-                                        <a asp-action="Consultar" asp-route-id="@pagador.Id" class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Ficha Financeira">
-                                            <span class="material-symbols-outlined">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                            <span class="material-symbols-outlined" data-toggle="tooltip" data-placement="top" title="Ficha Financeira">
                                                 dictionary
                                             </span>
-                                        </a>
+                                        </button>
 
                                     </td>
                                 </tr>
@@ -111,79 +117,98 @@
         </div>
     </div>
     <!--Row-->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> <strong>Lançamento de Títulos</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
 
+                        <div class="row">
+                            <div class="form-group col-5">
+                                <label asp-for="ContaCorrenteDTO.TipoContaCorrenteId"></label>
 
-    <div class="card">
-        <div class="card-header" role="tab" id="headingTwo">
-            <h5 class="mb-0">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    Dados do Título
-                </a>
-            </h5>
-        </div>
-        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="card-body">
+                                <div class="form-group">
 
+                                    <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente" onchange="CarregaCC()">
+                                        <option value="">Selecione a Conta Corrente  </option>
+                                    </select>
+                                </div>
 
+                                <span asp-validation-for="ContaCorrenteDTO.TipoContaCorrenteId" class="text-danger"></span>
 
-                <div class="row align-items-end">
-
-                    <div class="form-group col-2">
-                        <label asp-for="ContaCorrenteDTO.Data"></label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
-                            <input asp-for="ContaCorrenteDTO.Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data do Lançamento">
-                            <span asp-validation-for="ContaCorrenteDTO.Data" class="text-danger"></span>
-
                         </div>
-                    </div>
 
 
+                        <div class="row align-items-end">
 
-                    <div class="form-group col-2">
-                        <label asp-for="ContaCorrenteDTO.Valor"></label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
+                            <div class="form-group col-2">
+                                <label asp-for="ContaCorrenteDTO.Data"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input asp-for="ContaCorrenteDTO.Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data do Lançamento">
+                                    <span asp-validation-for="ContaCorrenteDTO.Data" class="text-danger"></span>
+
+                                </div>
                             </div>
-                            <input asp-for="ContaCorrenteDTO.Valor" class="form-control" onkeyup="formatarMoeda();" id="ValorLanctoCC" placeholder="Valor do Lançamento">
-                            <span asp-validation-for="ContaCorrenteDTO.Valor" class="text-danger"></span>
+
+
+
+                            <div class="form-group col-2">
+                                <label asp-for="ContaCorrenteDTO.Valor"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">R$</span>
+                                    </div>
+                                    <input asp-for="ContaCorrenteDTO.Valor" class="form-control" onkeyup="formatarMoeda();" id="ValorLanctoCC" placeholder="Valor do Lançamento">
+                                    <span asp-validation-for="ContaCorrenteDTO.Valor" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-1">
+                                <label asp-for="ContaCorrenteDTO.D_C"></label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="customRadio1">Débito</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio2">Crédito</label>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-4">
+                                <label asp-for="ContaCorrenteDTO.Historico"></label>
+                                <input asp-for="ContaCorrenteDTO.Historico" class="form-control" placeholder="Historico">
+                                <span asp-validation-for="ContaCorrenteDTO.Historico" class="text-danger"></span>
+                            </div>
+
+
+                           
                         </div>
                     </div>
 
 
-                    <div class="form-group col-1">
-                        <label asp-for="ContaCorrenteDTO.D_C"></label>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                            <label class="custom-control-label" for="customRadio1">Débito</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio2">Crédito</label>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group col-4">
-                        <label asp-for="ContaCorrenteDTO.Historico"></label>
-                        <input asp-for="ContaCorrenteDTO.Historico" class="form-control" placeholder="Historico">
-                        <span asp-validation-for="ContaCorrenteDTO.Historico" class="text-danger"></span>
-                    </div>
-
-
-                    <div class="pb-3">
-                        <button accesskey="s" onclick="GravarLancamento()" id="btnGravarLancamento" class="btn btn-outline-primary pb-2">
-                            <i class="fas fa-save"></i> <strong>S</strong>alvar
-                        </button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar Lançamentos</button>
                 </div>
             </div>
-
         </div>
     </div>
+
 </div>
 
 
