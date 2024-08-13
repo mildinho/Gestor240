@@ -132,16 +132,32 @@
 
                         <div class="row">
                             <div class="form-group col-5">
-                                <label asp-for="ContaCorrenteDTO.TipoContaCorrenteId"></label>
+                                <label asp-for="TipoServicoDTO.Codigo"></label>
 
                                 <div class="form-group">
 
-                                    <select asp-for="ContaCorrenteDTO.TipoContaCorrenteId" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TContaCorrente" onchange="CarregaCC()">
-                                        <option value="">Selecione a Conta Corrente  </option>
+                                    <select asp-for="TipoServicoDTO.Id" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TTipoServico">
+                                        <option value="">Selecione o Tipo de Serviço </option>
                                     </select>
                                 </div>
 
-                                <span asp-validation-for="ContaCorrenteDTO.TipoContaCorrenteId" class="text-danger"></span>
+                                <span asp-validation-for="TipoServicoDTO.Id" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-5">
+                                <label asp-for="FormaLancamentoDTO.Codigo"></label>
+
+                                <div class="form-group">
+
+                                    <select asp-for="FormaLancamentoDTO.Id" class="select2-single form-control form-control-lg" style="width:250px;" id="select2SingleTCC" asp-items="@ViewBag.TFormaLancamento">
+                                        <option value="">Selecione a Forma Lançamento </option>
+                                    </select>
+                                </div>
+
+                                <span asp-validation-for="FormaLancamentoDTO.Id" class="text-danger"></span>
 
                             </div>
                         </div>
@@ -150,13 +166,26 @@
                         <div class="row align-items-end">
 
                             <div class="form-group col-2">
-                                <label asp-for="ContaCorrenteDTO.Data"></label>
+                                <label asp-for="FinancasDTO.Emissao"></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
-                                    <input asp-for="ContaCorrenteDTO.Data" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data do Lançamento">
-                                    <span asp-validation-for="ContaCorrenteDTO.Data" class="text-danger"></span>
+                                    <input asp-for="FinancasDTO.Emissao" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data de Emissão">
+                                    <span asp-validation-for="FinancasDTO.Emissao" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-2">
+                                <label asp-for="FinancasDTO.Vencimento"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input asp-for="FinancasDTO.Vencimento" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Data de Vencimento">
+                                    <span asp-validation-for="FinancasDTO.Vencimento" class="text-danger"></span>
 
                                 </div>
                             </div>
@@ -164,39 +193,64 @@
 
 
                             <div class="form-group col-2">
-                                <label asp-for="ContaCorrenteDTO.Valor"></label>
+                                <label asp-for="FinancasDTO.ValorPrincipal"></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">R$</span>
                                     </div>
-                                    <input asp-for="ContaCorrenteDTO.Valor" class="form-control" onkeyup="formatarMoeda();" id="ValorLanctoCC" placeholder="Valor do Lançamento">
-                                    <span asp-validation-for="ContaCorrenteDTO.Valor" class="text-danger"></span>
+                                    <input asp-for="FinancasDTO.ValorPrincipal" class="form-control" onkeyup="formatarMoeda();" id="ValorPrincipalTitulo" placeholder="Valor Principal do Título">
+                                    <span asp-validation-for="FinancasDTO.ValorPrincipal" class="text-danger"></span>
                                 </div>
                             </div>
 
 
-                            <div class="form-group col-1">
-                                <label asp-for="ContaCorrenteDTO.D_C"></label>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
-                                    <label class="custom-control-label" for="customRadio1">Débito</label>
+                            <div class="form-group col-2">
+                                <label asp-for="FinancasDTO.Abatimento"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">R$</span>
+                                    </div>
+                                    <input asp-for="FinancasDTO.Abatimento" class="form-control" onkeyup="formatarMoeda();" id="ValorAbatimento" placeholder="Valor do Abatimento do Título">
+                                    <span asp-validation-for="FinancasDTO.Abatimento" class="text-danger"></span>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio2">Crédito</label>
-                                </div>
-
                             </div>
 
-                            <div class="form-group col-4">
-                                <label asp-for="ContaCorrenteDTO.Historico"></label>
-                                <input asp-for="ContaCorrenteDTO.Historico" class="form-control" placeholder="Historico">
-                                <span asp-validation-for="ContaCorrenteDTO.Historico" class="text-danger"></span>
+                            <div class="form-group col-2">
+                                <label asp-for="FinancasDTO.Acrescimo"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">R$</span>
+                                    </div>
+                                    <input asp-for="FinancasDTO.Acrescimo" class="form-control" onkeyup="formatarMoeda();" id="ValorAcrescimo" placeholder="Valor do Acréscimo do Título">
+                                    <span asp-validation-for="FinancasDTO.Acrescimo" class="text-danger"></span>
+                                </div>
                             </div>
 
 
-                           
+
+
+
                         </div>
+
+                        <div class="row align-items-end">
+                            <div class="form-group col-4">
+                                <label asp-for="FinancasDTO.Barras"></label>
+                                <input asp-for="FinancasDTO.Barras" class="form-control" placeholder="Código de Barras">
+                                <span asp-validation-for="FinancasDTO.Barras" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row align-items-end">
+                            <div class="form-group col-4">
+                                <label asp-for="FinancasDTO.Historico"></label>
+                                <input asp-for="FinancasDTO.Historico" class="form-control" placeholder="Histórico">
+                                <span asp-validation-for="FinancasDTO.Historico" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
                     </div>
 
 
@@ -279,64 +333,5 @@
     }
 
 
-    function CarregaCC(mostraMsg) {
 
-        const ObjCC = new Object();
-        ObjCC.TipoContaCorrenteId = $('#select2SingleTCC').val();
-        ObjCC.PagadorID = $('#PagadorID').val();
-
-        var table = $('#dataTableHover').DataTable();
-
-        let TotalLC = 0;
-        let TotalLD = 0;
-        let TotalLCD = 0;
-
-        $("#TotalLC").html("Crédito: R$ 0");
-        $("#TotalLD").html("Débito: R$ 0");
-        $("#TotalLCD").html("Total: R$ 0");
-
-        $.ajax({
-            type: 'GET',
-            url: 'https://localhost:7092/v1/ContaCorrente/GetbyIdCCIdPagador?IdTipoCC=' + ObjCC.TipoContaCorrenteId + '&IdPagador=' + ObjCC.PagadorID,
-            contentType: 'application/json',
-            dataType: "JSON",
-            success: function (data) {
-
-                table.clear();
-
-                for (let i = 0; i < data.length; i++) {
-                    table.row.add([data[i].id, data[i].data.substring(0, 10), data[i].valor, data[i].d_C, data[i].historico]);
-                    if (data[i].d_C == "C") {
-                        TotalLC += data[i].valor;
-                    }
-                    else {
-                        TotalLD += data[i].valor;
-                    }
-
-                }
-                TotalLCD = TotalLC - TotalLD;
-
-                $("#TotalLC").html("Crédito: R$ " + TotalLC);
-                $("#TotalLD").html("Débito: R$ " + TotalLD);
-                $("#TotalLCD").html("Total: R$ " + TotalLCD);
-
-
-                table.draw();
-                if (mostraMsg != 0) {
-                    alertswinformativo("Conta Corrente Atualizada", 'success');
-                }
-
-            },
-            error: function (r) {
-
-                table.clear();
-                table.draw();
-                if (mostraMsg != 0) {
-                    alertswinformativo("Conta Corrente Sem Informação", 'info');
-                }
-
-            }
-        });
-
-    }
 </script>

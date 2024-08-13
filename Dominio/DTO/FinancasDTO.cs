@@ -50,6 +50,8 @@ namespace Dominio.DTO
         public string Carteira { get; set; } = String.Empty;
         public string Barras { get; set; } = String.Empty;
 
+        public string Historico { get; set; } = String.Empty;
+
         [Required(ErrorMessage = "Campo Obrigatório!", AllowEmptyStrings = false)]
         [Display(Name = "Banco")]
         [ForeignKey("Banco")]

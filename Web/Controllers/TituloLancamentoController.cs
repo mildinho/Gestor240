@@ -1,6 +1,8 @@
 ﻿using Dominio.DTO;
+using Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using Web.Biblioteca.CRUD;
 using Web.Biblioteca.Filtro;
 using Web.Models;
@@ -27,9 +29,12 @@ namespace Web.Controllers
         public async Task<IActionResult> Cadastrar(int Id)
         {
             ViewBag.CRUD = ConfiguraMensagem(Opcoes.Create);
-            ViewBag.TContaCorrente = await ListaTipoContaCorrente();
+
+            //ViewBag.TContaCorrente = await ListaTipoContaCorrente();
             ViewBag.TFormaLancamento = await ListaFormaLancamento();
             ViewBag.TTipoServico = await ListaTipoServico();
+            ViewBag.TTipoPix = await ListaTipoPix();
+            ViewBag.TTipoOperacao = await ListaTipoOperacao();
 
 
             ExecutaAPI.ParametrosAPI.Add(Id.ToString());
@@ -41,7 +46,7 @@ namespace Web.Controllers
             ExecutaAPI.ParametrosAPI.Clear();
             var retornoApi02 = await ExecutaAPI.GetAPI("Pagador/GetAll");
             List<PagadorDTO> objRetorno02 = JsonConvert.DeserializeObject<List<PagadorDTO>>(retornoApi02.data);
-      
+
 
             CCViewModel CVM = new CCViewModel
             {
@@ -53,11 +58,15 @@ namespace Web.Controllers
                     Id = objRetorno01.Id
                 },
 
-                ContaCorrenteDTO = new ContaCorrenteDTO(),
-                ListaCCDTO = new List<ContaCorrenteDTO>(),
+                TipoServicoDTO = new TipoServicoDTO(),
+                ListaTSDTO = new List<TipoServicoDTO>(),
+
+                FinancasDTO = new FinancasDTO(),
+
                 Pagador_Lista = objRetorno02
 
             };
+
 
 
             return View("Manutencao", CVM);

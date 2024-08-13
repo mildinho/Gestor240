@@ -14,6 +14,13 @@ namespace Web.Models
         public List<ContaCorrenteDTO> ListaCCDTO { get; set; } = new();
         public ContaCorrenteDTO ContaCorrenteDTO { get; set; } = new();
 
+        public List<TipoServicoDTO> ListaTSDTO { get; set; } = new();
+        public TipoServicoDTO TipoServicoDTO { get; set; } = new();
+
+
+        public List<FormaLancamentoDTO> ListaFLDTO { get; set; } = new();
+        public FormaLancamentoDTO FormaLancamentoDTO { get; set; } = new();
+
         public List<FinancasDTO> ListaFinancasDTO { get; set; } = new();
         public FinancasDTO FinancasDTO { get; set; } = new();
 

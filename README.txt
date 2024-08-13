@@ -2,10 +2,13 @@
 
 Camada WEB
 Pendencia com Erro:
-	-Na tela de Login, fazer uma forma de devolver o TokenUsuarioDTO, pois quando executar alguma api, preciso passar o token;
-	( ver este site: https://www.codeproject.com/Articles/5160941/ASP-NET-CORE-Token-Authentication-and-Authorizatio)
-	-Na tela do Pagador, quando está pesquisando o cep, nao está trazendo automaticamento a UF e MUNICIPIO;
-	-Na tela do Pagador, quando está pesquisando o cep, nao está trazendo automaticamento a UF e MUNICIPIO;
+	- Desenvolver Tela de Lancamento de Titulo; 
+		-Feito - FormaLancamento; Precisa
+		-Feito - Pegar TipoPix; Precisa 
+		-Feito - Pegar TipoServico;  Verificar se bate com a FormaLancamento;
+		-Feito - Pegar TipoOperacao; Não sei se necessário
+
+
 
 Melhorias:
 	-Desenvolver a Opção de Relatorio;

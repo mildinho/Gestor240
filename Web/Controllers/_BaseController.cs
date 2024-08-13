@@ -97,6 +97,32 @@ namespace Web.Controllers
             return ViewBag.TTipoServico;
         }
 
+
+        public async Task<IEnumerable<SelectListItem>> ListaTipoPix()
+        {
+            ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
+            var retornoApi = await ExecutaAPI.GetAPI("TipoPix/GetAll");
+            List<TipoPixDTO> objRetorno = JsonConvert.DeserializeObject<List<TipoPixDTO>>(retornoApi.data);
+
+            ViewBag.TTipoPix = objRetorno.Select(a => new SelectListItem(a.Codigo + " - " + a.Descricao, a.Id.ToString()));
+
+            return ViewBag.TTipoPix;
+        }
+
+
+        public async Task<IEnumerable<SelectListItem>> ListaTipoOperacao()
+        {
+            ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
+            var retornoApi = await ExecutaAPI.GetAPI("TipoOperacao/GetAll");
+            List<TipoOperacaoDTO> objRetorno = JsonConvert.DeserializeObject<List<TipoOperacaoDTO>>(retornoApi.data);
+
+            ViewBag.TTipoOperacao = objRetorno.Select(a => new SelectListItem(a.Codigo + " - " + a.Descricao, a.Id.ToString()));
+
+            return ViewBag.TTipoOperacao;
+        }
+
+
+
         public async Task<IActionResult> Index_Geral<T>(string Rota, string ViewName)
         {
             ExecutaAPI.TokenBearer = UsuarioLogado.GetToken().Token;
